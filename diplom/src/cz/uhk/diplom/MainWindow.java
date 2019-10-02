@@ -122,7 +122,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 				test++;
 			} 
 		}		
-
+		//wefwgf
 		//System.out.println("=============================================");
 
 
