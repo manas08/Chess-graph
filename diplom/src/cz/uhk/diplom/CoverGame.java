@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import cz.uhk.diplom.model.Edge;
 import cz.uhk.diplom.model.Image;
 import cz.uhk.diplom.model.Vertex;
 

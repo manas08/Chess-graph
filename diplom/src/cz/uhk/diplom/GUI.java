@@ -179,7 +179,7 @@ public class GUI {
 		defaultGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(0);
+				frame.switchGame(0, 0);
 			}
 		});
 		game.add(defaultGame);
@@ -194,7 +194,7 @@ public class GUI {
 		cover4x4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(1);
+				frame.switchGame(1, 2);
 			}
 		});
 		coverGame.add(cover4x4);
@@ -204,7 +204,7 @@ public class GUI {
 		cover5x5.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(2);
+				frame.switchGame(1, 3);
 			}
 		});
 		coverGame.add(cover5x5);
@@ -214,13 +214,49 @@ public class GUI {
 		cover6x6.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(3);
+				frame.switchGame(1, 4);
 			}
 		});
 		coverGame.add(cover6x6);
 		gameGroup.add(cover6x6);
 		
+
+		JMenu simulation = new JMenu("  Simulation  ");
+		simulation.setFont(new Font("times new roman", Font.PLAIN, 16));
+		
+		JCheckBoxMenuItem simulation4x4 = new JCheckBoxMenuItem("   4x4   ");
+		simulation4x4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.switchGame(2, 2);
+			}
+		});
+		simulation.add(simulation4x4);
+		gameGroup.add(simulation4x4);
+
+		JCheckBoxMenuItem simulation5x5 = new JCheckBoxMenuItem("   5x5   ");
+		simulation5x5.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.switchGame(2, 3);
+			}
+		});
+		simulation.add(simulation5x5);
+		gameGroup.add(simulation5x5);
+
+		JCheckBoxMenuItem simulation6x6 = new JCheckBoxMenuItem("   6x6   ");
+		simulation6x6.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.switchGame(2, 4);
+			}
+		});
+		simulation.add(simulation6x6);
+		gameGroup.add(simulation6x6);
+		
+		
 		game.add(coverGame);
+		game.add(simulation);
 		
 		nabidka.add(soubor);
 		nabidka.add(efekty);

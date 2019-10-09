@@ -1,64 +1,41 @@
 package cz.uhk.diplom.model;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vertex implements GraphicsObject {
+public class HamVertex implements GraphicsObject {
 	private int x1, y1, x2, y2; // X2 a Y2 zde znaci velikost pixelu 
 	private BufferedImage img;
-	private int mode;
-	private boolean enable = true;
+	private boolean navstiveno = false;
 	private boolean white = true;
 	private int row;
 	private int collumn;
 	private int id;
-	private List<Vertex> visited;
-	private boolean navstiveno = false;
+	private List<Integer> visited;
 
-	public Vertex(int x1, int y1, int x2, int y2) {
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = y2;
-		this.y2 = y2;
-		this.mode = 1;
-		this.visited = new ArrayList<Vertex>();
-	}
-
-	public Vertex(int x1, int y1, BufferedImage img, int mode, boolean white) {
+	public HamVertex(int x1, int y1, BufferedImage img, boolean white) {
 		this.x1 = x1;
 		this.y1 = y1;
 		this.img = img;
-		this.mode = mode;
 		this.white = white;
-		this.visited = new ArrayList<Vertex>();
+		this.navstiveno = false;
+		this.visited = new ArrayList<Integer>();
 	}
 
-	public Vertex(int x1, int y1, BufferedImage img, int mode) {
+	public HamVertex(int x1, int y1, BufferedImage img) {
 		this.x1 = x1;
 		this.y1 = y1;
 		this.img = img;
-		this.mode = mode;
-		this.visited = new ArrayList<Vertex>();
+		this.navstiveno = false;
+		this.visited = new ArrayList<Integer>();
 	}
 	
 	
 	@Override
 	public void nakresli(Graphics2D g) {
-		if(mode == 1)
-			g.setColor(new Color(255,0,0));
-			g.fillOval(x1, y1, x2, y2);
-		if(mode == 2)
-			g.drawImage(img, x1, y1, null);
-			//g.setColor(new Color(40,40,40));
-			//g.fillRect(700,200,20,20);
-		if(mode == 3)
-			g.drawImage(img, x1-22, y1-28, null);
-		if(mode == 3)
-			g.fillRect(x1, y1, x2, y2);
+		g.drawImage(img, x1, y1, null);
 	}
 
 	@Override
@@ -100,21 +77,21 @@ public class Vertex implements GraphicsObject {
 	public int getY2() {
 		return y2;
 	}
-
-	public List<Vertex> getVisited() {
+	
+	public List<Integer> getVisited() {
 		return visited;
 	}
 
-	public void setVisited(List<Vertex> visited) {
+	public void setVisited(List<Integer> visited) {
 		this.visited = visited;
 	}
 
-	public boolean isEnable() {
-		return enable;
+	public boolean isNavstiveno() {
+		return navstiveno;
 	}
 
-	public void setEnable(boolean enable) {
-		this.enable = enable;
+	public void setNavstiveno(boolean navstiveno) {
+		this.navstiveno = navstiveno;
 	}
 
 	public int getRow() {
@@ -155,14 +132,6 @@ public class Vertex implements GraphicsObject {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public boolean isNavstiveno() {
-		return navstiveno;
-	}
-
-	public void setNavstiveno(boolean navstiveno) {
-		this.navstiveno = navstiveno;
 	}
 
 }
