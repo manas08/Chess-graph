@@ -25,7 +25,8 @@ public class Simulation {
 	Vertex vertex, kun;
 	Edge edge;
 	boolean prohledej = true;
-
+	private int policko = 0;
+	
 	private List<Vertex> vertices = new ArrayList<>();
 	private List<Vertex> kone = new ArrayList<>();
 	private List<Vertex> steps = new ArrayList<>();
@@ -90,6 +91,7 @@ public class Simulation {
 		}
 		this.kun.setRow(1);
 		this.kun.setCollumn(1);
+		this.kun.setId(policko);
 		this.kone.add(kun);
 		this.obrazek.pridej(kun);
 
@@ -284,6 +286,14 @@ public class Simulation {
 			}
 		}
 		*/
+
+		// UZAVRENE CESTY
+		/*
+		if (path.size() == 25) {
+			vertices.get(0).setEnable(true);
+		}
+		*/
+		
 		steps = new ArrayList<>();
 		Vertex vertex = null;
 		
@@ -518,33 +528,23 @@ public class Simulation {
 			if (v.getVisited().contains(steps.get(i))) {
 				steps.get(i).setEnable(false);
 			}
-		}
-		/*
-		for (Vertex v1 : steps) {
-			if (v1.isWhite()) {
-				v1.setImg(img4G);
-			}else {
-				v1.setImg(img3G);
-			}
-		}
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!2");
-		*/
+		}	
 		
 	}
 	
 	public boolean searchHam(List<Vertex> vertices, MainWindow main) {
 		this.vertices = vertices;
-		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4");
+		
 		if (path.size() == 0) {
+			this.kun.setId(policko);
 			setAvailableVertices(this.vertices, kun);
 		}
 
 		edge = new Edge(kun.getX1()+16, kun.getY1()+14, kun.getX1()+16, kun.getY1()+14);
 		
-		//main.mainRepaint();
 		/*
 		try {
-			TimeUnit.MILLISECONDS.sleep(1);
+			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -552,9 +552,12 @@ public class Simulation {
 		*/
 		Vertex actual = this.vertices.get(kun.getId());
 		if (path.size() == 0) {
+			actual = this.vertices.get(policko);
+			actual.setId(policko);
 			path.add(actual);
 			actual.setEnable(false);
 			this.vertices.get(actual.getId()).setEnable(false);
+			//System.out.println(this.steps.get(0).isEnable() + " " + this.steps.get(0).getId() + " ENABLE " + this.vertices.get(0).isEnable() + " " + actual.getId() + " " +actual.isEnable());
 		}
 
 		boolean correct = false;
@@ -576,6 +579,7 @@ public class Simulation {
 				kun.setId(steps.get(i).getId());
 				steps.get(i).setEnable(false);
 				this.vertices.get(steps.get(i).getId()).setEnable(false);
+
 				path.add(steps.get(i));
 				actual.getVisited().add(steps.get(i));
 				correct = true;
@@ -598,6 +602,8 @@ public class Simulation {
 	}
 
 	public Vertex moveHorse(MainWindow main) {
+
+		//System.out.println(path.size() + " SIZE");
 		if (prohledej) {
 			
 			kun.setX1(path.get(path.size()-1).getX1() + 35);
@@ -609,6 +615,44 @@ public class Simulation {
 			path.get(path.size()-1).setEnable(true);
 			path.get(path.size()-1).setVisited(new ArrayList<>());
 			path.remove(path.size()-1);
+
+			//System.out.println(path.size() + " SIZE");
+			
+			if (path.size()-1 < 0) {
+				obrazek.odeber(kun);
+
+				//System.out.println(path.size() + " SIZE CoREECT " + policko + " " + kun.getId() + " " + kun.getCollumn() + " " + kun.getRow());
+				System.out.println(main.getPocet() + " POCET CoREECT");
+				
+				policko++;
+				kun.setId(policko);
+				if ((policko % (mode+2)) == 0) {
+					kun.setCollumn(1);
+					kun.setRow(kun.getRow()+1);
+				}else {
+					kun.setCollumn(kun.getCollumn()+1);
+				}
+				
+				edges = new ArrayList<>();
+				path = new ArrayList<>();
+				edges.clear();
+				kone.clear();
+				kone.add(kun);
+				obrazek.pridej(kun);
+
+				main.setKone(this.kone);
+				main.setObrazek(this.obrazek);
+				for (Vertex vertex : vertices) {
+					vertex.setEnable(true);
+				}
+				main.setVertices(this.vertices);
+				main.setEdges(this.edges);
+
+				//System.out.println(path.size() + " SIZE CoREECT " + policko + " " + kun.getId() + " " + kun.getCollumn() + " " + kun.getRow());
+				System.out.println();
+				setAvailableVertices(vertices, kun);
+				return kun;
+			}
 			
 			kun.setId(path.get(path.size()-1).getId());
 			kun.setX1(path.get(path.size()-1).getX1() + 35);
@@ -648,4 +692,11 @@ public class Simulation {
 		return kun;
 	}
 	
+	public int getPolicko() {
+		return policko;
+	}
+	
+	public void setPolicko() {
+		policko = 0;
+	}
 }

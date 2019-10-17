@@ -43,6 +43,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	private JMenuBar jMenuBar;
 	private boolean isCoverGame = false;
 	private int idKun;
+	int pocet;
 	
 	public MainWindow() {
 		setTitle("Grafika");
@@ -317,8 +318,8 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			simulation = new Simulation(obrazek);
 			simulation.setBoard(kone, vertices,edges, obrazek, this, size);
 			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!3");
-			int pocet = 0;
-			while(pocet < 10) {
+			pocet = 0;
+			while(simulation.getPolicko() < (size+2)*(size+2)) {
 				if (simulation.getPath().size() != (size+2)*(size+2)) {
 					if (simulation.searchHam(vertices, this)) {
 						this.vertex = simulation.moveHorse(this);
@@ -329,25 +330,27 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 					}else {
 						this.vertex = simulation.moveHorse(this);
 						//obrazek.odeber(edges.get(edges.size()-1));
-						edges.remove(edges.get(edges.size()-1));
+						if (edges.size() > 0) {
+							edges.remove(edges.get(edges.size()-1));
+						}
 						//obrazek.pridej(vertex);
 					}
 					//mainRepaint();
-				}else {
-					for (Vertex v : simulation.getPath()) {
-						System.out.println(v.getId());
-					}
-					System.out.println();
-					System.out.println("---------------------------------------");
-					System.out.println();
-					System.out.println(pocet + " pocet");
-					pocet++;
-					if (pocet < 10) {
-						this.vertex = simulation.nextPath();
-						//obrazek.odeber(edges.get(edges.size()-1));
-						edges.remove(edges.get(edges.size()-1));
-						//obrazek.pridej(vertex);
-					}
+				}else {	//if(simulation.getPath().get(0) == simulation.getPath().get(simulation.getPath().size()-1) && simulation.getPath().size() == (size+2)*(size+2)+1)
+						for (Vertex v : simulation.getPath()) {
+							//System.out.println(v.getId());
+						}
+						//System.out.println();
+						//System.out.println("---------------------------------------");
+						//System.out.println();
+						//System.out.println(pocet + " pocet " + size);
+						pocet++;
+						if (simulation.getPolicko() < (size+2)*(size+2)) {
+							this.vertex = simulation.nextPath();
+							//obrazek.odeber(edges.get(edges.size()-1));
+							edges.remove(edges.get(edges.size()-1));
+							//obrazek.pridej(vertex);
+						}
 				}
 				
 			}
@@ -384,5 +387,9 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
         getContentPane().revalidate();
         getContentPane().repaint();
 		platno.repaint(platno.getGraphics());
+	}
+	
+	public int getPocet() {
+		return pocet;
 	}
 }
