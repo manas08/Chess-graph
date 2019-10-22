@@ -699,4 +699,8 @@ public class Simulation {
 	public void setPolicko() {
 		policko = 0;
 	}
+	
+	public void generateAllSolutions() {
+		
+	}
 }

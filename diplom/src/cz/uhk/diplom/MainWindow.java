@@ -14,6 +14,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JToolBar;
 import cz.uhk.diplom.model.GraphicsObject;
 import cz.uhk.diplom.model.Vertex;
+import cz.uhk.diplom.prochazka.KnightsTour;
 import cz.uhk.diplom.utils.Filer;
 import cz.uhk.diplom.model.Edge;
 import cz.uhk.diplom.model.Image;
@@ -43,10 +44,11 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	private JMenuBar jMenuBar;
 	private boolean isCoverGame = false;
 	private int idKun;
+	private Image icon;
 	int pocet;
 	
 	public MainWindow() {
-		setTitle("Grafika");
+		setTitle("ChessGraph");
 		setSize(500, 500);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
@@ -59,9 +61,6 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		jMenuBar.setPreferredSize(new Dimension(500, 30));
         getContentPane().add(jMenuBar, BorderLayout.SOUTH);
         
-		
-		//add(new JButton("Hi!"));
-		//obrazek.pridej(new Obdelnik(0, 0, 20, 30));	
 		platno.addMouseListener(this);
 		platno.addMouseMotionListener(this);
 		getContentPane().setBackground(Color.GRAY); 
@@ -106,6 +105,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		test = 0;
 
 		for (Vertex vertex : kone) {
+			System.out.println("=============================================");
 			//System.out.println(vertex.getX1() + " " + vertex.getY1());
 			if (vertex.getX1() <= clickX && vertex.getX1()+50 >= clickX && vertex.getY1() <= clickY && vertex.getY1()+77 >= clickY) {
 				this.vertex = vertex;
@@ -114,18 +114,18 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 				saveY = vertex.getY1();
 				
 				if (!isCoverGame) {
-					edge = new Edge(vertex.getX1()+16, vertex.getY1()+14, vertex.getX1()+16, vertex.getY1()+14);
-					edges.add(edge);
-					obrazek.pridej(edge);
+						System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+						edge = new Edge(vertex.getX1()+16, vertex.getY1()+14, vertex.getX1()+16, vertex.getY1()+14);
+						edges.add(edge);
+						obrazek.pridej(edge);					
 				}
+				
 				idKun = vertex.getId();
 				platno.repaint();
 				tvar++;
 				test++;
 			} 
 		}		
-		//System.out.println("=============================================");
-
 
 	}
 
@@ -148,8 +148,6 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 						if (!isCoverGame) {
 							edge.setX2(vertex.getX1()+50);
 							edge.setY2(vertex.getY1()+50);
-							edges.add(edge);
-							obrazek.pridej(edge);
 							
 							Vertex point = new Vertex(vertex.getX1()+35, vertex.getY1()+35, 30, 30);
 							point.setRow(vertex.getRow());
@@ -194,6 +192,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		if (counter == vertices.size()) {
 			this.vertex.setX1(saveX);
 			this.vertex.setY1(saveY);
+			kone.remove(getKone(idKun));
 			kone.add(this.vertex);
 			obrazek.pridej(this.vertex);
 			if (!isCoverGame) {
@@ -317,8 +316,8 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			isCoverGame = true;
 			simulation = new Simulation(obrazek);
 			simulation.setBoard(kone, vertices,edges, obrazek, this, size);
-			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!3");
 			pocet = 0;
+			
 			while(simulation.getPolicko() < (size+2)*(size+2)) {
 				if (simulation.getPath().size() != (size+2)*(size+2)) {
 					if (simulation.searchHam(vertices, this)) {
@@ -337,9 +336,6 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 					}
 					//mainRepaint();
 				}else {	//if(simulation.getPath().get(0) == simulation.getPath().get(simulation.getPath().size()-1) && simulation.getPath().size() == (size+2)*(size+2)+1)
-						for (Vertex v : simulation.getPath()) {
-							//System.out.println(v.getId());
-						}
 						//System.out.println();
 						//System.out.println("---------------------------------------");
 						//System.out.println();
@@ -354,6 +350,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 				}
 				
 			}
+			
 			Vertex v = simulation.getPath().get(0);
 			Vertex v1 = null;
 			for (int j = 1; j<simulation.getPath().size(); j++) {
@@ -364,6 +361,8 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 				v = v1;
 			}
 			platno.repaint();
+			break;
+		case 3:
 			break;
 		default:
 			break;
@@ -391,5 +390,42 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	
 	public int getPocet() {
 		return pocet;
+	}
+
+	public void krokZpet() {
+		//System.out.println(points.size() + " !!!!!!!!!!!!!!!!");
+		//System.out.println(edges.size() + " !!!!!!!!!!!!!!!!");
+		Vertex kun = null;
+		for (Vertex vertex : kone) {
+			//System.out.println(vertex.getRow() + " " + vertex.getCollumn() + " XXXXXXXXXXXXXXXX");
+			for (int i = 0; i < vertices.size(); i++) {
+				if (vertices.get(i).getRow() == vertex.getRow() && vertices.get(i).getCollumn() == vertex.getCollumn()) {
+					vertices.get(i).setEnable(true);
+				}
+			}
+			vertex.setX1(points.get(points.size()-2).getX1());
+			vertex.setY1(points.get(points.size()-2).getY1());
+			vertex.setRow(points.get(points.size()-2).getRow());
+			vertex.setCollumn(points.get(points.size()-2).getCollumn());
+			kun = vertex;
+		}
+		//System.out.println(getKone(idKun).getRow() + " !!!!!!!!!!!!!!!! " + getKone(idKun).getCollumn());
+		
+		obrazek.odeber(points.get(points.size()-1));
+		obrazek.odeber(edges.get(edges.size()-1));
+		
+		edges.remove(edges.get(edges.size()-1));
+		points.remove(points.get(points.size()-1));
+		
+		//getKone(idKun).setX1(points.get(points.size()-1).getX1());
+		//getKone(idKun).setY1(points.get(points.size()-1).getY1());
+
+
+		for (int j = 0; j < vertices.size(); j++) {
+			if (vertices.get(j).getRow() == kun.getRow() && vertices.get(j).getCollumn() == kun.getCollumn()) {
+				settings.setAvailableVertices(vertices, j, vertices.get(j).getRow());
+			}
+		}
+		platno.repaint();
 	}
 }

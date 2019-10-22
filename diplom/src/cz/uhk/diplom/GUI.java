@@ -13,13 +13,18 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+import cz.uhk.diplom.model.Image;
+import cz.uhk.diplom.prochazka.KnightsTour;
 import cz.uhk.diplom.utils.Filer;
 
 public class GUI {
@@ -27,9 +32,17 @@ public class GUI {
 	private static ButtonGroup effectsGroup, gameGroup;
 	static JPanel p;
 	JMenuItem kun = new JMenuItem("    Nový kùn    ");
+	JMenuItem zpet = new JMenuItem("    Krok zpìt    ");
 
 	public JMenuBar createGUI(MainWindow frame, int width,int height) {
 		frame.setBackground(Color.WHITE);
+
+        java.awt.Image icon = null;
+        try {
+        	icon = ImageIO.read(getClass().getResource("/textures/icon4.png"));
+        } catch (IOException ex) {
+        }
+        frame.setIconImage(icon);
 		// Hlavní menu
 		JMenuBar nabidka = new JMenuBar();
 		nabidka.setPreferredSize(new Dimension(width, 30));
@@ -254,9 +267,51 @@ public class GUI {
 		simulation.add(simulation6x6);
 		gameGroup.add(simulation6x6);
 		
+
+		JCheckBoxMenuItem generateSolutions = new JCheckBoxMenuItem("Generate Solutions", true);
+		generateSolutions.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			  String[] options = {"3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+			  String[] options1 = {"3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+		      JPanel myPanel = new JPanel();
+		      myPanel.add(new JLabel("Výška šachovnice: "));
+		      JComboBox<String> c = new JComboBox<>(options);
+		      JComboBox<String> c1 = new JComboBox<>(options1);
+		      myPanel.add(c);
+		      myPanel.add(Box.createHorizontalStrut(25)); // a spacer
+		      myPanel.add(new JLabel("Šíøka šachovnice: "));
+		      myPanel.add(c1);
+
+		      int result = JOptionPane.showConfirmDialog(null, myPanel, 
+		               "Velikost šachovnice", JOptionPane.OK_CANCEL_OPTION);
+			      
+		        /*
+				//String[] options = {"3", "4", "5", "6"};
+		        String n = (String)JOptionPane.showInputDialog(null, "Výška šachovnice??", 
+		                "Výška šachovnice", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+				String[] options1 = {"3", "4", "5", "6"};
+		        String n1 = (String)JOptionPane.showInputDialog(null, "Šíøka šachovnice??", 
+		                "Šíøka šachovnice", JOptionPane.QUESTION_MESSAGE, null, options1, options1[0]);
+		        */
+		      if (result != 2 && result != -1) {
+				String[] options2 = {"otevøené cesty", "uzavøené cesty"};
+		        String n2 = (String)JOptionPane.showInputDialog(null, "Typ cesty??", 
+		                "Typ cesty", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
+
+			      System.out.println(n2 + " +++++");
+			      if (n2 != null) {
+					KnightsTour kt = new KnightsTour(c.getSelectedIndex()+3, c1.getSelectedIndex()+3, n2);
+			      }
+		      }
+			}
+		});
+		gameGroup.add(generateSolutions);
 		
 		game.add(coverGame);
 		game.add(simulation);
+		game.add(generateSolutions);
 		
 		nabidka.add(soubor);
 		nabidka.add(efekty);
@@ -269,7 +324,19 @@ public class GUI {
 	public JMenuBar changeBottomMenu(int game, JMenuBar jMenuBar, MainWindow frame) {
 		if (game == 0) {
 			jMenuBar.remove(kun);
+
+			zpet.setFont(new Font("times new roman", Font.PLAIN, 16));
+
+			zpet.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					frame.krokZpet();
+				}
+			});
+	        jMenuBar.add(zpet);
 		} else {
+			jMenuBar.remove(zpet);
+			
 			kun.setFont(new Font("times new roman", Font.PLAIN, 16));
 
 			kun.addActionListener(new ActionListener() {

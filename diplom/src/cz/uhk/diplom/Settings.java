@@ -103,10 +103,10 @@ public class Settings {
 	private void drawBoard3x3() {
 		// prvni vykresleni
 		vertex = new Vertex(20, 20, img1, 3);
-		kone.add(vertex);
+		//kone.add(vertex);
 		obrazek.pridej(vertex);
 		vertex = new Vertex(50, 50, img2, 3);
-		kone.add(vertex);
+		//kone.add(vertex);
 		obrazek.pridej(vertex);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -164,10 +164,10 @@ public class Settings {
 	private void drawBoard4x4() {
 		// prvni vykresleni
 		vertex = new Vertex(20, 20, img1, 3);
-		kone.add(vertex);
+		//kone.add(vertex);
 		obrazek.pridej(vertex);
 		vertex = new Vertex(50, 50, img2, 3);
-		kone.add(vertex);
+		//kone.add(vertex);
 		obrazek.pridej(vertex);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -227,10 +227,10 @@ public class Settings {
 	private void drawBoard5x5() {
 		// prvni vykresleni
 		vertex = new Vertex(20, 20, img1, 3);
-		kone.add(vertex);
+		//kone.add(vertex);
 		obrazek.pridej(vertex);
 		vertex = new Vertex(50, 50, img2, 3);
-		kone.add(vertex);
+		//kone.add(vertex);
 		obrazek.pridej(vertex);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -284,10 +284,10 @@ public class Settings {
 	private void drawBoard6x6() {
 		// prvni vykresleni
 		vertex = new Vertex(20, 20, img1, 3);
-		kone.add(vertex);
+		//kone.add(vertex);
 		obrazek.pridej(vertex);
 		vertex = new Vertex(50, 50, img2, 3);
-		kone.add(vertex);
+		//kone.add(vertex);
 		obrazek.pridej(vertex);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -584,7 +584,7 @@ public class Settings {
 		}
 		
 		for (Vertex vertex2 : points) {
-			System.out.println("++++++++" + vertex2.getRow() + " " + vertex2.getCollumn());
+			//System.out.println("++++++++" + vertex2.getRow() + " " + vertex2.getCollumn());
 			int rowV = vertex2.getRow();
 			int collumnV = vertex2.getCollumn();
 			for (Vertex vertex3 : vertices) {
@@ -601,7 +601,7 @@ public class Settings {
 				v.setImg(img3G);
 			}
 		}
-		System.out.println("++++++++" + points.size());
+		//System.out.println("++++++++" + points.size());
 	}
 	
 }
