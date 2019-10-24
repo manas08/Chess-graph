@@ -87,7 +87,7 @@ public class Settings {
 		this.vertex.setCollumn(1);
 		this.kone.add(vertex);
 		
-		Vertex point = new Vertex(vertex.getX1(), vertex.getY1(), 30, 30);
+		Vertex point = new Vertex(vertex.getX1(), vertex.getY1(), 30, 30, 1);
 		point.setRow(1);
 		point.setCollumn(1);
 		this.points.add(point);
@@ -343,8 +343,8 @@ public class Settings {
 		vertices.get(0).setEnable(false);
 	}
 	
-	public void setAvailableVertices(List<Vertex> vertices, int i, int row) {
-		System.out.println(vertices.size() + "///////////" + steps.size());
+	public void setAvailableVertices(List<Vertex> vertices, int i, int row, int collumn) {
+		//System.out.println(vertices.size() + "///////////" + steps.size());
 
 		for (Vertex v : steps) {
 			if (v.isWhite()) {
@@ -408,7 +408,7 @@ public class Settings {
 		case 2:
 			if (i-9 >= 0) {
 				vertex = vertices.get(i-9);
-				if (vertex != null && vertex.getRow()<row) {
+				if (vertex != null && vertex.getRow()<row && collumn>vertex.getCollumn()) {
 					vertex.setEnable(true);
 					steps.add(vertex);
 				}
@@ -457,7 +457,7 @@ public class Settings {
 			}
 			if (i+9 <= 15) {
 				vertex = vertices.get(i+9);
-				if (vertex != null && vertex.getRow()>row) {
+				if (vertex != null && vertex.getRow()>row  && collumn<vertex.getCollumn()) {
 					vertex.setEnable(true);
 					steps.add(vertex);
 				}

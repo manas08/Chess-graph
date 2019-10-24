@@ -33,8 +33,11 @@ public class GUI {
 	static JPanel p;
 	JMenuItem kun = new JMenuItem("    Nový kùn    ");
 	JMenuItem zpet = new JMenuItem("    Krok zpìt    ");
+	JMenuItem hranaZpet = new JMenuItem("    Krok zpìt    ");
 
 	public JMenuBar createGUI(MainWindow frame, int width,int height) {
+		setButtonsFunctions(frame);
+		
 		frame.setBackground(Color.WHITE);
 
         java.awt.Image icon = null;
@@ -308,10 +311,20 @@ public class GUI {
 			}
 		});
 		gameGroup.add(generateSolutions);
+
+		JCheckBoxMenuItem drawHamilton = new JCheckBoxMenuItem("Find Hamilton", true);
+		drawHamilton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.switchGame(3, 0);				
+			}
+		});
+		gameGroup.add(drawHamilton);
 		
 		game.add(coverGame);
 		game.add(simulation);
 		game.add(generateSolutions);
+		game.add(drawHamilton);
 		
 		nabidka.add(soubor);
 		nabidka.add(efekty);
@@ -321,30 +334,48 @@ public class GUI {
 		return nabidka;
 	}
 
+	private void setButtonsFunctions(MainWindow frame) {
+
+		hranaZpet.setFont(new Font("times new roman", Font.PLAIN, 16));
+
+		hranaZpet.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.hranaZpet();
+			}
+		});
+		
+		zpet.setFont(new Font("times new roman", Font.PLAIN, 16));
+
+		zpet.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.krokZpet();
+			}
+		});
+		
+		kun.setFont(new Font("times new roman", Font.PLAIN, 16));
+
+		kun.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.pridatKone();
+			}
+		});
+	}
+
 	public JMenuBar changeBottomMenu(int game, JMenuBar jMenuBar, MainWindow frame) {
 		if (game == 0) {
 			jMenuBar.remove(kun);
-
-			zpet.setFont(new Font("times new roman", Font.PLAIN, 16));
-
-			zpet.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					frame.krokZpet();
-				}
-			});
+			jMenuBar.remove(hranaZpet);
 	        jMenuBar.add(zpet);
-		} else {
+		} else if (game == 3) {
 			jMenuBar.remove(zpet);
-			
-			kun.setFont(new Font("times new roman", Font.PLAIN, 16));
-
-			kun.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					frame.pridatKone();
-				}
-			});
+			jMenuBar.remove(kun);
+	        jMenuBar.add(hranaZpet);
+		}else {
+			jMenuBar.remove(zpet);
+			jMenuBar.remove(hranaZpet);
 	        jMenuBar.add(kun);
 		}
 		return jMenuBar;

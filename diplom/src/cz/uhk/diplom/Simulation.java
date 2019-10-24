@@ -301,7 +301,7 @@ public class Simulation {
 		case 2:
 			if (v.getId()-9 >= 0) {
 				vertex = vertices.get(v.getId()-9);
-				if (vertex != null && vertex.getRow()<v.getRow()) {
+				if (vertex != null && vertex.getRow()<v.getRow() && v.getCollumn()>vertex.getCollumn()) {
 					if (vertex.isEnable()) {
 						vertex.setId(v.getId()-9);
 						steps.add(vertex);
@@ -364,7 +364,7 @@ public class Simulation {
 			}
 			if (v.getId()+9 <= 15) {
 				vertex = vertices.get(v.getId()+9);
-				if (vertex != null && vertex.getRow()>v.getRow()) {
+				if (vertex != null && vertex.getRow()>v.getRow() && v.getCollumn()<vertex.getCollumn()) {
 					if (vertex.isEnable()) {
 						vertex.setId(v.getId()+9);
 						steps.add(vertex);
@@ -540,7 +540,7 @@ public class Simulation {
 			setAvailableVertices(this.vertices, kun);
 		}
 
-		edge = new Edge(kun.getX1()+16, kun.getY1()+14, kun.getX1()+16, kun.getY1()+14);
+		edge = new Edge(kun.getX1()+16, kun.getY1()+14, kun.getX1()+16, kun.getY1()+14, 1);
 		
 		/*
 		try {
@@ -622,7 +622,7 @@ public class Simulation {
 				obrazek.odeber(kun);
 
 				//System.out.println(path.size() + " SIZE CoREECT " + policko + " " + kun.getId() + " " + kun.getCollumn() + " " + kun.getRow());
-				System.out.println(main.getPocet() + " POCET CoREECT");
+				//System.out.println(main.getPocet() + " POCET CoREECT");
 				
 				policko++;
 				kun.setId(policko);

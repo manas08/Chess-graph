@@ -4,13 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import cz.uhk.diplom.model.GraphicsObject;
 import cz.uhk.diplom.model.Vertex;
@@ -40,12 +45,12 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	private Settings settings;
 	private CoverGame coverGame;
 	private Simulation simulation;
+	private Hamilton hamilton;
 	private int test = 0;
 	private JMenuBar jMenuBar;
-	private boolean isCoverGame = false;
+	private boolean isCoverGame = false, isHamiltonGame = false;
 	private int idKun;
 	private Image icon;
-	int pocet;
 	
 	public MainWindow() {
 		setTitle("ChessGraph");
@@ -67,7 +72,8 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		
 		settings = new Settings();
 		settings.setBoard(kone, vertices, points, obrazek, this, chesssize);
-		settings.setAvailableVertices(vertices, 0, 1);
+		settings.setAvailableVertices(vertices, 0, 1, 1);
+		jMenuBar = gui.changeBottomMenu(0, jMenuBar, this);
 
 		//vykresleni platna
 		platno.repaint();
@@ -83,16 +89,28 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	public void mouseClicked(MouseEvent e) {
 
 	}
+
+	public static double calculateAngle(int x1, int y1, int x2, int y2)
+	{
+	    double angle = Math.toDegrees(Math.atan2(x2 - x1, y2 - y1));
+	    return angle + Math.ceil( -angle / 360 ) * 360;
+	}
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
+		
 		if (test != 0) {
-			if (!isCoverGame) {
-				edge.setX2(e.getX()+16);
-				edge.setY2(e.getY()+14);
+			if (!isHamiltonGame) {
+				if (!isCoverGame) {
+					edge.setX2(e.getX()+16);
+					edge.setY2(e.getY()+14);
+				}
+				vertex.setX1(e.getX());
+				vertex.setY1(e.getY());
+			}else {
+				edge.setX2(e.getX());
+				edge.setY2(e.getY());
 			}
-			vertex.setX1(e.getX());
-			vertex.setY1(e.getY());
 			platno.repaint();
 		}
 	}
@@ -103,29 +121,56 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		clickY = e.getY();
 		tvar = 0;
 		test = 0;
+		Color c = new Color(0,255,0);
+		if (isHamiltonGame) {
+			for (Vertex vertex : points) {
+				//System.out.println(vertex.getX1() + " " + vertex.getY1());
+				if (vertex.getX1() <= clickX && vertex.getX1()+20 >= clickX && vertex.getY1() <= clickY && vertex.getY1()+20 >= clickY && vertex.getColor().getGreen() == c.getGreen()) {
+					this.vertex = vertex;
+					
+					saveX = vertex.getX1();
+					saveY = vertex.getY1();
+					
+					this.vertex.setColor(new Color(255,0,0));
+					if (vertices.size() != 0) {
+						vertices.add(this.vertex);
+					}
+					
+					edge = new Edge(vertex.getX1()+10, vertex.getY1()+10, vertex.getX1()+10, vertex.getY1()+10, 1);
+					edges.add(edge);
+					obrazek.pridej(edge);
+					obrazek.pridej(vertex);	//mozna zbytecne ..jen aby se prekryla lajna					
+					
+					idKun = vertex.getId();
+					platno.repaint();
+					test++;
+					tvar++;
+				} 
+			}	
+		}else {
 
-		for (Vertex vertex : kone) {
-			System.out.println("=============================================");
-			//System.out.println(vertex.getX1() + " " + vertex.getY1());
-			if (vertex.getX1() <= clickX && vertex.getX1()+50 >= clickX && vertex.getY1() <= clickY && vertex.getY1()+77 >= clickY) {
-				this.vertex = vertex;
-				
-				saveX = vertex.getX1();
-				saveY = vertex.getY1();
-				
-				if (!isCoverGame) {
-						System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-						edge = new Edge(vertex.getX1()+16, vertex.getY1()+14, vertex.getX1()+16, vertex.getY1()+14);
-						edges.add(edge);
-						obrazek.pridej(edge);					
-				}
-				
-				idKun = vertex.getId();
-				platno.repaint();
-				tvar++;
-				test++;
-			} 
-		}		
+			for (Vertex vertex : kone) {
+				//System.out.println(vertex.getX1() + " " + vertex.getY1());
+				if (vertex.getX1() <= clickX && vertex.getX1()+50 >= clickX && vertex.getY1() <= clickY && vertex.getY1()+77 >= clickY) {
+					this.vertex = vertex;
+					
+					saveX = vertex.getX1();
+					saveY = vertex.getY1();
+					
+					if (!isCoverGame) {
+							edge = new Edge(vertex.getX1()+16, vertex.getY1()+14, vertex.getX1()+16, vertex.getY1()+14, 1);
+							edges.add(edge);
+							obrazek.pridej(edge);					
+					}
+					
+					idKun = vertex.getId();
+					platno.repaint();
+					tvar++;
+					test++;
+				} 
+			}	
+		}
+	
 
 	}
 
@@ -134,74 +179,120 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		clickX = e.getX();
 		clickY = e.getY();
 		
-		if (tvar != 0) {	
-			//System.out.println(vertices.size() + "+++++++++");
-			for (int i = 0; i < vertices.size(); i++) {
-				Vertex vertex = vertices.get(i);
-				if (vertex.getX1() <= clickX && vertex.getX1()+99 >= clickX && vertex.getY1() <= clickY && vertex.getY1()+99 >= clickY) {
-					if (vertex.isEnable()) {
-						this.vertex.setX1(vertex.getX1()+35);
-						this.vertex.setY1(vertex.getY1()+38);
-						this.vertex.setRow(vertex.getRow());
-						this.vertex.setCollumn(vertex.getCollumn());
-						
-						if (!isCoverGame) {
-							edge.setX2(vertex.getX1()+50);
-							edge.setY2(vertex.getY1()+50);
-							
-							Vertex point = new Vertex(vertex.getX1()+35, vertex.getY1()+35, 30, 30);
-							point.setRow(vertex.getRow());
-							point.setCollumn(vertex.getCollumn());
-							points.add(point);
-							obrazek.pridej(point);
+		if (isHamiltonGame) {
+			if (tvar != 0) {
+				counter = 0;
+				for (Vertex vertex : points) {
+					//System.out.println(vertex.getX1() + " " + vertex.getY1());
+					if (vertex.getX1() <= clickX && vertex.getX1()+20 >= clickX && vertex.getY1() <= clickY && vertex.getY1()+20 >= clickY) {
+						for (Edge edge : edges) {
+							if ((edge.getV1ID() == vertex.getId() && edge.getV2ID() == this.vertex.getId()) || (edge.getV2ID() == vertex.getId() && edge.getV1ID() == this.vertex.getId())) {
+								counter++;
+								this.edge.setX2(vertex.getX1()+10);
+								this.edge.setY2(vertex.getY1()+10);
+								obrazek.pridej(vertex);	
+								vertex.setColor(new Color(0,255,0));
+								vertices.add(vertex);
+							}
 						}
+					} 
+				}	
+				if(counter == 0) {
+					obrazek.odeber(edge);
+					edges.remove(edge);
+				}
+				platno.repaint();
+			}
 
-						kone.remove(getKone(idKun));
-						this.vertex.setId(i);
-						kone.add(this.vertex);
-						obrazek.pridej(this.vertex);
-						platno.repaint();
-						
-						if (!isCoverGame) {
-							vertex.setEnable(false);
-							settings.setAvailableVertices(vertices, i, vertex.getRow());
+			if (edges.size() == 2*hamilton.getNumberOfEdges()) {
+		        JOptionPane.showMessageDialog(
+		        	    null, 
+		        	    "Správnì dokonèená hamiltonovská cesta! \n\n"
+		        	    + "Postupujete do dalšího levelu.", 
+		        	    "Hotovo",
+		        	    JOptionPane.INFORMATION_MESSAGE, 
+		        	    null); 
+				obrazek = new Image();
+				platno.setObrazek(obrazek);
+		        hamilton.nextLevel(obrazek);
+			}
+		}else {
+			if (tvar != 0) {	
+				//System.out.println(vertices.size() + "+++++++++");
+				for (int i = 0; i < vertices.size(); i++) {
+					Vertex vertex = vertices.get(i);
+					if (vertex.getX1() <= clickX && vertex.getX1()+99 >= clickX && vertex.getY1() <= clickY && vertex.getY1()+99 >= clickY) {
+						if (vertex.isEnable()) {
+							this.vertex.setX1(vertex.getX1()+35);
+							this.vertex.setY1(vertex.getY1()+38);
+							this.vertex.setRow(vertex.getRow());
+							this.vertex.setCollumn(vertex.getCollumn());
+							
+							if (!isCoverGame) {
+								edge.setX2(vertex.getX1()+50);
+								edge.setY2(vertex.getY1()+50);
+								
+								Vertex point = new Vertex(vertex.getX1()+35, vertex.getY1()+35, 30, 30, 1);
+								point.setRow(vertex.getRow());
+								point.setCollumn(vertex.getCollumn());
+								points.add(point);
+								obrazek.pridej(point);
+							}
+
+							kone.remove(getKone(idKun));
+							this.vertex.setId(i);
+							kone.add(this.vertex);
+							obrazek.pridej(this.vertex);
+							
+							if (!isCoverGame) {
+								vertex.setEnable(false);
+								settings.setAvailableVertices(vertices, i, vertex.getRow(), vertex.getCollumn());
+							}else {
+								coverGame.setAvailableVertices(vertices, kone, vertex.getRow());
+							}
 						}else {
-							coverGame.setAvailableVertices(vertices, kone, vertex.getRow());
+							this.vertex.setX1(saveX);
+							this.vertex.setY1(saveY);
+							kone.remove(getKone(idKun));
+							kone.add(this.vertex);
+							obrazek.pridej(this.vertex);
+
+							if (!isCoverGame) {
+								obrazek.odeber(edge);
+								edges.remove(edge);
+							}
 						}
 					}else {
-						this.vertex.setX1(saveX);
-						this.vertex.setY1(saveY);
-						kone.remove(getKone(idKun));
-						kone.add(this.vertex);
-						obrazek.pridej(this.vertex);
-
-						if (!isCoverGame) {
-							obrazek.odeber(edge);
-							edges.remove(edge);
-						}
-						
-						platno.repaint();
+						counter++;
 					}
-				}else {
-					counter++;
 				}
 			}
+
+			//System.out.println(vertex.getX1() + " " + vertex.getY1() + " " + vertex.isEnable());
+			if (counter == vertices.size()) {
+				this.vertex.setX1(saveX);
+				this.vertex.setY1(saveY);
+				kone.remove(getKone(idKun));
+				kone.add(this.vertex);
+				obrazek.pridej(this.vertex);
+				if (!isCoverGame) {
+					obrazek.odeber(edge);
+					edges.remove(edge);
+				}
+			}
+			counter = 0;
+			platno.repaint();
+			
+			if (points.size() == (chesssize+2)*(chesssize+2) && !isCoverGame) {
+		        JOptionPane.showMessageDialog(
+		        	    null, 
+		        	    "Správnì dokonèená hamiltonovská cesta! :)", 
+		        	    "Hotovo",
+		        	    JOptionPane.INFORMATION_MESSAGE, 
+		        	    null); 
+			}
 		}
 
-		//System.out.println(vertex.getX1() + " " + vertex.getY1() + " " + vertex.isEnable());
-		if (counter == vertices.size()) {
-			this.vertex.setX1(saveX);
-			this.vertex.setY1(saveY);
-			kone.remove(getKone(idKun));
-			kone.add(this.vertex);
-			obrazek.pridej(this.vertex);
-			if (!isCoverGame) {
-				obrazek.odeber(edge);
-				edges.remove(edge);
-			}
-			platno.repaint();
-		}
-		counter = 0;
 	}
 
 	@Override
@@ -220,8 +311,20 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
+		if (isHamiltonGame) {
+			if (edges.size() == hamilton.getNumberOfEdges()) {
+				for (Vertex vertex : points) {
+					if (vertex.getX1() < e.getX() && vertex.getX1()+20 > e.getX() && e.getY() > vertex.getY1() && e.getY() < vertex.getY1()+20) {
+						vertex.setColor(new Color(0,255,0));
+						//System.out.println(vertex.getX1() + " " + vertex.getY1() + " " + e.getX() + " " + e.getY() + " " + vertex.getId());
+					}else {
+						vertex.setColor(new Color(0,0,0));
+					}
+				}
+				platno.repaint();
+			}
+		}
 	}
 	
 	public Vertex getKone(int id) {
@@ -288,7 +391,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		kone.clear();
 
 		settings.setBoard(kone, vertices, points, obrazek, this, chesssize);
-		settings.setAvailableVertices(vertices, 0, 1);
+		settings.setAvailableVertices(vertices, 0, 1, 1);
 		platno.repaint(platno.getGraphics());
 	}
 
@@ -304,21 +407,23 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		switch (i) {
 		case 0:
 			isCoverGame = false;
+			isHamiltonGame = false;
 			setSize(4);
 			break;
 		case 1:
 			isCoverGame = true;
+			isHamiltonGame = false;
 			coverGame = new CoverGame(obrazek);
 			coverGame.setBoard(kone, vertices, obrazek, this, size);
 			coverGame.setAvailableVertices(vertices, kone, 1);
 			break;
 		case 2:
 			isCoverGame = true;
+			isHamiltonGame = false;
 			simulation = new Simulation(obrazek);
 			simulation.setBoard(kone, vertices,edges, obrazek, this, size);
-			pocet = 0;
 			
-			while(simulation.getPolicko() < (size+2)*(size+2)) {
+			while(true) {
 				if (simulation.getPath().size() != (size+2)*(size+2)) {
 					if (simulation.searchHam(vertices, this)) {
 						this.vertex = simulation.moveHorse(this);
@@ -340,13 +445,14 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 						//System.out.println("---------------------------------------");
 						//System.out.println();
 						//System.out.println(pocet + " pocet " + size);
-						pocet++;
-						if (simulation.getPolicko() < (size+2)*(size+2)) {
+					/*	
+					if (simulation.getPolicko() < (size+2)*(size+2)) {
 							this.vertex = simulation.nextPath();
-							//obrazek.odeber(edges.get(edges.size()-1));
+							obrazek.odeber(edges.get(edges.size()-1));
 							edges.remove(edges.get(edges.size()-1));
-							//obrazek.pridej(vertex);
-						}
+							obrazek.pridej(vertex);
+						}*/
+						break;
 				}
 				
 			}
@@ -355,7 +461,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			Vertex v1 = null;
 			for (int j = 1; j<simulation.getPath().size(); j++) {
 				v1 = simulation.getPath().get(j);
-				this.edge = new Edge(v.getX1()+50, v.getY1()+50, v1.getX1()+50, v1.getY1()+50);
+				this.edge = new Edge(v.getX1()+50, v.getY1()+50, v1.getX1()+50, v1.getY1()+50, 1);
 				edges.add(edge);
 				obrazek.pridej(edge);
 				v = v1;
@@ -363,6 +469,10 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			platno.repaint();
 			break;
 		case 3:
+			isHamiltonGame = true;
+			isCoverGame = false;
+			hamilton = new Hamilton(obrazek, edges, points, this);
+			platno.repaint();
 			break;
 		default:
 			break;
@@ -387,45 +497,56 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
         getContentPane().repaint();
 		platno.repaint(platno.getGraphics());
 	}
-	
-	public int getPocet() {
-		return pocet;
-	}
 
 	public void krokZpet() {
-		//System.out.println(points.size() + " !!!!!!!!!!!!!!!!");
-		//System.out.println(edges.size() + " !!!!!!!!!!!!!!!!");
-		Vertex kun = null;
-		for (Vertex vertex : kone) {
-			//System.out.println(vertex.getRow() + " " + vertex.getCollumn() + " XXXXXXXXXXXXXXXX");
-			for (int i = 0; i < vertices.size(); i++) {
-				if (vertices.get(i).getRow() == vertex.getRow() && vertices.get(i).getCollumn() == vertex.getCollumn()) {
-					vertices.get(i).setEnable(true);
+		if (points.size()>1) {
+			Vertex kun = null;
+			for (Vertex vertex : kone) {
+				//System.out.println(vertex.getRow() + " " + vertex.getCollumn() + " XXXXXXXXXXXXXXXX");
+				for (int i = 0; i < vertices.size(); i++) {
+					if (vertices.get(i).getRow() == vertex.getRow() && vertices.get(i).getCollumn() == vertex.getCollumn()) {
+						vertices.get(i).setEnable(true);
+					}
+				}
+				vertex.setX1(points.get(points.size()-2).getX1());
+				vertex.setY1(points.get(points.size()-2).getY1());
+				vertex.setRow(points.get(points.size()-2).getRow());
+				vertex.setCollumn(points.get(points.size()-2).getCollumn());
+				kun = vertex;
+			}
+			//System.out.println(getKone(idKun).getRow() + " !!!!!!!!!!!!!!!! " + getKone(idKun).getCollumn());
+			
+			obrazek.odeber(points.get(points.size()-1));
+			obrazek.odeber(edges.get(edges.size()-1));
+			
+			edges.remove(edges.get(edges.size()-1));
+			points.remove(points.get(points.size()-1));
+			
+			for (int j = 0; j < vertices.size(); j++) {
+				if (vertices.get(j).getRow() == kun.getRow() && vertices.get(j).getCollumn() == kun.getCollumn()) {
+					settings.setAvailableVertices(vertices, j, vertices.get(j).getRow(),vertices.get(j).getCollumn());
 				}
 			}
-			vertex.setX1(points.get(points.size()-2).getX1());
-			vertex.setY1(points.get(points.size()-2).getY1());
-			vertex.setRow(points.get(points.size()-2).getRow());
-			vertex.setCollumn(points.get(points.size()-2).getCollumn());
-			kun = vertex;
+			platno.repaint();
 		}
-		//System.out.println(getKone(idKun).getRow() + " !!!!!!!!!!!!!!!! " + getKone(idKun).getCollumn());
-		
-		obrazek.odeber(points.get(points.size()-1));
-		obrazek.odeber(edges.get(edges.size()-1));
-		
-		edges.remove(edges.get(edges.size()-1));
-		points.remove(points.get(points.size()-1));
-		
-		//getKone(idKun).setX1(points.get(points.size()-1).getX1());
-		//getKone(idKun).setY1(points.get(points.size()-1).getY1());
+	}
 
-
-		for (int j = 0; j < vertices.size(); j++) {
-			if (vertices.get(j).getRow() == kun.getRow() && vertices.get(j).getCollumn() == kun.getCollumn()) {
-				settings.setAvailableVertices(vertices, j, vertices.get(j).getRow());
+	public void hranaZpet() {
+		if (edges.size() > hamilton.getNumberOfEdges()) {
+			if (vertices.size() > 0) {
+				vertices.get(vertices.size()-1).setColor(new Color(0,0,0));
+				vertices.remove(vertices.size()-1);
+				vertices.get(vertices.size()-1).setColor(new Color(0,255,0));
+				obrazek.odeber(edges.get(edges.size()-1));
+				edges.remove(edges.get(edges.size()-1));
 			}
+			if (vertices.size() == 1) {
+				for (Vertex vertex : points) {
+					vertex.setColor(new Color(0,0,0));
+				}
+				vertices.clear();
+			}
+			platno.repaint();
 		}
-		platno.repaint();
 	}
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Image implements Serializable {
 	private List<GraphicsObject> grafickeObjekty = new ArrayList<>();
+	private Graphics2D g;
 	
 	public void pridej(GraphicsObject o) {
 		// pridame objekt do kolekce
@@ -21,6 +22,7 @@ public class Image implements Serializable {
 	public void nakresliCelyObrazek(Graphics2D g) {
 		//Obdelnik o = new Obdelnik(0, 0, 600, 600);
 		//o.nakresli(g);
+		this.g = g;
 		for (GraphicsObject o : grafickeObjekty) {
 			o.nakresli(g);
 		}
@@ -34,5 +36,9 @@ public class Image implements Serializable {
 	
 	public List<GraphicsObject> getObjects(){
 		return grafickeObjekty;
+	}
+	
+	public Graphics2D getGraphics() {
+		return g;
 	}
 }

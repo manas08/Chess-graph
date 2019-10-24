@@ -55,6 +55,8 @@ public class KnightsTour {
      * @param ySize velikost sachovnice na ose y
      */
     public KnightsTour(int xSize, int ySize, String n2) {
+        this.xSize = xSize;
+        this.ySize = ySize;
     	if (n2 == "uzavøené cesty") {
 			uzav = true;
 			podm = false;
@@ -64,8 +66,6 @@ public class KnightsTour {
 		}
         solutionsCount = 0;
 
-        this.xSize = xSize;
-        this.ySize = ySize;
 
         solutionBoard = new int[ySize][xSize];
         for (int i = 0; i < ySize; i++) {
@@ -77,7 +77,7 @@ public class KnightsTour {
         System.out.println("<td>"+solutionsCount+"</td>");
         
         if (uzav) {
-            solutionsCount = solutionsCount/(2*(xSize*ySize));
+           solutionsCount = solutionsCount/2;
 		}
         JOptionPane.showMessageDialog(
         	    null, 
@@ -91,12 +91,17 @@ public class KnightsTour {
      * Resi jezdcovu prochazku
      */
     public void solve() {
-        for (int i = 0; i < ySize; i++) {
-            for (int j = 0; j < xSize; j++) {
-                takeTurn(j, i, 0);
-                solutionBoard[i][j] = NOT_VISITED; //reset pole
-            }
-        }
+    	if (uzav) {
+    		takeTurn(0, 0, 0);
+            solutionBoard[0][0] = NOT_VISITED; //reset pole
+		}else {
+	        for (int i = 0; i < ySize; i++) {
+	            for (int j = 0; j < xSize; j++) {
+	                takeTurn(j, i, 0);
+	                solutionBoard[i][j] = NOT_VISITED; //reset pole
+	            }
+	        }
+		}
     }
 
     /**

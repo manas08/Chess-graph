@@ -455,8 +455,8 @@ public class CoverGame {
 				v.setImg(img3G);
 			}
 		}
-		System.out.println(steps.size() + " ///////////////// " + kone.size() + " -- " + mode);
-		System.out.println();
+		//System.out.println(steps.size() + " ///////////////// " + kone.size() + " -- " + mode);
+		//System.out.println();
 	}
 
 
@@ -477,6 +477,7 @@ public class CoverGame {
 		default:
 			break;
 		}
+		System.out.println(kone.size() + " PPPPPP");
 		this.vertex.setId(0);
 		this.vertex.setRow(1);
 		this.vertex.setCollumn(1);

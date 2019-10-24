@@ -2,7 +2,7 @@ package cz.uhk.diplom.model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +18,26 @@ public class Vertex implements GraphicsObject {
 	private int id;
 	private List<Vertex> visited;
 	private boolean navstiveno = false;
+	private Color color;
+	private MouseAdapter ma;
 
-	public Vertex(int x1, int y1, int x2, int y2) {
+	public Vertex(int x1, int y1, int x2, int y2, int mode) {
 		this.x1 = x1;
 		this.y1 = y1;
 		this.x2 = y2;
 		this.y2 = y2;
-		this.mode = 1;
+		this.mode = mode;
 		this.visited = new ArrayList<Vertex>();
+		switch (mode) {
+		case 1:
+			color =new Color(255,0,0);
+			break;
+		case 4:
+			color = new Color(0,0,0);
+			break;
+		default:
+			break;
+		}
 	}
 
 	public Vertex(int x1, int y1, BufferedImage img, int mode, boolean white) {
@@ -43,22 +55,35 @@ public class Vertex implements GraphicsObject {
 		this.img = img;
 		this.mode = mode;
 		this.visited = new ArrayList<Vertex>();
+		switch (mode) {
+		case 1:
+			color =new Color(255,0,0);
+			break;
+		case 4:
+			color = new Color(0,0,0);
+			break;
+		default:
+			break;
+		}
 	}
 	
 	
 	@Override
 	public void nakresli(Graphics2D g) {
-		if(mode == 1)
-			g.setColor(new Color(255,0,0));
+		if(mode == 1) {
+			g.setColor(color);
 			g.fillOval(x1, y1, x2, y2);
+		}
 		if(mode == 2)
 			g.drawImage(img, x1, y1, null);
 			//g.setColor(new Color(40,40,40));
 			//g.fillRect(700,200,20,20);
 		if(mode == 3)
 			g.drawImage(img, x1-22, y1-28, null);
-		if(mode == 3)
-			g.fillRect(x1, y1, x2, y2);
+		if(mode == 4) {
+			g.setColor(color);
+			g.fillOval(x1, y1, x2, y2);
+		}
 	}
 
 	@Override
@@ -164,5 +189,12 @@ public class Vertex implements GraphicsObject {
 	public void setNavstiveno(boolean navstiveno) {
 		this.navstiveno = navstiveno;
 	}
+	
+	public Color getColor() {
+		return color;
+	}
 
+	public void setColor(Color color) {
+		this.color = color;
+	}
 }
