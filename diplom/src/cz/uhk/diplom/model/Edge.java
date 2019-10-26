@@ -3,12 +3,14 @@ package cz.uhk.diplom.model;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 
 public class Edge implements GraphicsObject {
 	private int x1, y1, x2, y2;
 	private int mode;
 	private int v1ID;
 	private int v2ID;
+	private boolean visited;
 
 	public Edge(int x1, int y1, int x2, int y2, int mode) {
 		this.x1 = x1;
@@ -16,6 +18,7 @@ public class Edge implements GraphicsObject {
 		this.x2 = x2;
 		this.y2 = y2;
 		this.mode = mode;
+		this.visited = false;
 	}
 
 	@Override
@@ -24,7 +27,12 @@ public class Edge implements GraphicsObject {
 			g.setColor(new Color(255,0,0));
 		    g.setStroke(new BasicStroke(3));
 			g.drawLine(x1, y1, x2, y2);	
-		}else {
+		}else if(mode == 3) {
+			g.setColor(new Color(238,238,238));
+		    Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+	        g.setStroke(dashed);
+			g.drawLine(x1, y1, x2, y2);	
+		} else {
 			g.setColor(new Color(238,238,238));
 		    g.setStroke(new BasicStroke(3));
 			g.drawLine(x1, y1, x2, y2);	
@@ -85,6 +93,22 @@ public class Edge implements GraphicsObject {
 
 	public void setV2ID(int v2id) {
 		v2ID = v2id;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
+
+	public int getMode() {
+		return mode;
+	}
+
+	public void setMode(int mode) {
+		this.mode = mode;
 	}
 
 }

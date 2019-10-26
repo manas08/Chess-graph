@@ -69,20 +69,25 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		platno.addMouseListener(this);
 		platno.addMouseMotionListener(this);
 		getContentPane().setBackground(Color.GRAY); 
+        gui.enabledMenu(false);
 		
 		settings = new Settings();
-		settings.setBoard(kone, vertices, points, obrazek, this, chesssize);
-		settings.setAvailableVertices(vertices, 0, 1, 1);
-		jMenuBar = gui.changeBottomMenu(0, jMenuBar, this);
+		coverGame = new CoverGame();
+		simulation = new Simulation();
+		//settings.setBoard(kone, vertices, points, obrazek, this, chesssize);
+		//settings.setAvailableVertices(vertices, 0, 1, 1);
 
 		//vykresleni platna
-		platno.repaint();
+		//platno.repaint();
 	}
 
 	public static void main(String[] args) {
 		MainWindow okno = new MainWindow();
 		okno.setVisible(true);
-
+		MainMenu mainMenu = new MainMenu(okno);
+		mainMenu.setVisible(true);
+		mainMenu.setAlwaysOnTop (true);
+		mainMenu.setFocusableWindowState(false);		
 	}
 
 	@Override
@@ -132,11 +137,12 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 					saveY = vertex.getY1();
 					
 					this.vertex.setColor(new Color(255,0,0));
-					if (vertices.size() != 0) {
+					if (vertices.size() == 0) {
 						vertices.add(this.vertex);
 					}
 					
 					edge = new Edge(vertex.getX1()+10, vertex.getY1()+10, vertex.getX1()+10, vertex.getY1()+10, 1);
+					edge.setV1ID(this.vertex.getId());
 					edges.add(edge);
 					obrazek.pridej(edge);
 					obrazek.pridej(vertex);	//mozna zbytecne ..jen aby se prekryla lajna					
@@ -186,25 +192,38 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 					//System.out.println(vertex.getX1() + " " + vertex.getY1());
 					if (vertex.getX1() <= clickX && vertex.getX1()+20 >= clickX && vertex.getY1() <= clickY && vertex.getY1()+20 >= clickY) {
 						for (Edge edge : edges) {
-							if ((edge.getV1ID() == vertex.getId() && edge.getV2ID() == this.vertex.getId()) || (edge.getV2ID() == vertex.getId() && edge.getV1ID() == this.vertex.getId())) {
+							if (((edge.getV1ID() == vertex.getId() && edge.getV2ID() == this.vertex.getId()) || (edge.getV2ID() == vertex.getId() && edge.getV1ID() == this.vertex.getId())) &&
+									(!edge.isVisited())) {
 								counter++;
 								this.edge.setX2(vertex.getX1()+10);
 								this.edge.setY2(vertex.getY1()+10);
-								obrazek.pridej(vertex);	
+								this.edge.setV2ID(vertex.getId());
+								edge.setVisited(true);
 								vertex.setColor(new Color(0,255,0));
-								vertices.add(vertex);
 							}
+						}
+						if (counter > 0) {
+							obrazek.pridej(vertex);	
+							vertices.add(vertex);
 						}
 					} 
 				}	
 				if(counter == 0) {
 					obrazek.odeber(edge);
 					edges.remove(edge);
+					this.vertex.setColor(new Color(0,255,0));
 				}
 				platno.repaint();
 			}
 
-			if (edges.size() == 2*hamilton.getNumberOfEdges()) {
+			int vis=0;
+			for (int i = 0; i < edges.size(); i++) {
+				if (edges.get(i).isVisited() && edges.get(i).getMode() == 2) {
+					vis++;
+				}
+			}
+			//System.out.println(vis + " " + (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges()) + " PPPPP");
+			if (vis == (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges())) {
 		        JOptionPane.showMessageDialog(
 		        	    null, 
 		        	    "Správnì dokonèená hamiltonovská cesta! \n\n"
@@ -248,7 +267,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 								vertex.setEnable(false);
 								settings.setAvailableVertices(vertices, i, vertex.getRow(), vertex.getCollumn());
 							}else {
-								coverGame.setAvailableVertices(vertices, kone, vertex.getRow());
+								coverGame.setAvailableVertices(vertices, kone, vertex.getRow(),vertex.getCollumn());
 							}
 						}else {
 							this.vertex.setX1(saveX);
@@ -396,7 +415,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	}
 
 	public void switchGame(int i, int size) {
-        
+        gui.enabledMenu(true);
 		obrazek = new Image();
 		platno.setObrazek(obrazek);
 		vertices.clear();
@@ -408,19 +427,17 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		case 0:
 			isCoverGame = false;
 			isHamiltonGame = false;
-			setSize(4);
+			setSize(size);
 			break;
 		case 1:
 			isCoverGame = true;
 			isHamiltonGame = false;
-			coverGame = new CoverGame(obrazek);
 			coverGame.setBoard(kone, vertices, obrazek, this, size);
-			coverGame.setAvailableVertices(vertices, kone, 1);
+			coverGame.setAvailableVertices(vertices, kone, 1, 1);
 			break;
 		case 2:
 			isCoverGame = true;
 			isHamiltonGame = false;
-			simulation = new Simulation(obrazek);
 			simulation.setBoard(kone, vertices,edges, obrazek, this, size);
 			
 			while(true) {
@@ -487,7 +504,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	
 	public void pridatKone() {
 		coverGame.pridatKone(this, obrazek, kone);
-		coverGame.setAvailableVertices(vertices, kone, 1);
+		coverGame.setAvailableVertices(vertices, kone, 1, 1);
 		platno.repaint();
 	}
 	
@@ -533,20 +550,51 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 
 	public void hranaZpet() {
 		if (edges.size() > hamilton.getNumberOfEdges()) {
-			if (vertices.size() > 0) {
-				vertices.get(vertices.size()-1).setColor(new Color(0,0,0));
-				vertices.remove(vertices.size()-1);
-				vertices.get(vertices.size()-1).setColor(new Color(0,255,0));
-				obrazek.odeber(edges.get(edges.size()-1));
-				edges.remove(edges.get(edges.size()-1));
-			}
-			if (vertices.size() == 1) {
+			if (vertices.size() == 2) {
 				for (Vertex vertex : points) {
 					vertex.setColor(new Color(0,0,0));
 				}
 				vertices.clear();
+				edges.clear();
+				//System.out.println("!!!!!!!!!!!!!!!!!!!!!");
+			}else if (vertices.size() > 2) {
+				/*
+				for (Vertex vertex : vertices) {
+					System.out.println(vertices.size() + " OOOOOO " + vertex.getId() + " " + vertex.getColor());
+				}
+				*/
+				for (Edge edge : edges) {
+					if ((edge.getV1ID() == vertices.get(vertices.size()-1).getId() || edge.getV2ID() == vertices.get(vertices.size()-1).getId()) && !edge.isVisited() && edge.getMode() == 2) {
+						vertices.get(vertices.size()-1).setColor(new Color(0,0,0));
+						break;
+					}else {
+						vertices.get(vertices.size()-1).setColor(new Color(255,0,0));
+					}
+				}
+				vertices.remove(vertices.size()-1);
+				vertices.get(vertices.size()-1).setColor(new Color(0,255,0));
+
+				//System.out.println(vertices.size() + " OOOOOO " +vertices.get(vertices.size()-1).getColor() + " " + vertices.get(vertices.size()-1).getId());
+				for (Edge edge : edges) {
+					if ((edge.getV1ID() == edges.get(edges.size()-1).getV1ID() && edge.getV2ID() == edges.get(edges.size()-1).getV2ID()) 
+							|| (edge.getV1ID() == edges.get(edges.size()-1).getV2ID() && edge.getV2ID() == edges.get(edges.size()-1).getV1ID())) {
+						edge.setVisited(false);
+					}
+				}
+				obrazek.odeber(edges.get(edges.size()-1));
+				edges.remove(edges.get(edges.size()-1));
 			}
 			platno.repaint();
 		}
+	}
+	
+	public void endGame() {
+		obrazek = new Image();
+		platno.setObrazek(obrazek);
+		vertices.clear();
+		edges.clear();
+		points.clear();
+		kone.clear();
+		platno.repaint();
 	}
 }

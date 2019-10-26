@@ -26,9 +26,7 @@ public class CoverGame {
 	private List<Vertex> kone = new ArrayList<>();
 	private List<Vertex> steps = new ArrayList<>();
 	
-	public CoverGame(Image image) {
-		this.obrazek=image;
-
+	public CoverGame() {
 		try {
 			img1 = ImageIO.read(getClass().getResourceAsStream("/textures/whitehorse.png"));
 			img2 = ImageIO.read(getClass().getResourceAsStream("/textures/blackhorse.png"));
@@ -263,7 +261,7 @@ public class CoverGame {
 		obrazek.pridej(vertex);		
 	}
 
-	public void setAvailableVertices(List<Vertex> vertices, List<Vertex> kone, int row) {
+	public void setAvailableVertices(List<Vertex> vertices, List<Vertex> kone, int row, int collumn) {
 		this.kone = kone;
 		
 		for (Vertex v : steps) {
@@ -282,7 +280,7 @@ public class CoverGame {
 			case 2:
 				if (v.getId()-9 >= 0) {
 					vertex = vertices.get(v.getId()-9);
-					if (vertex != null && vertex.getRow()<v.getRow()) {
+					if (vertex != null && vertex.getRow()<v.getRow() && collumn>vertex.getCollumn()) {
 						steps.add(vertex);
 					}
 				}
@@ -324,7 +322,7 @@ public class CoverGame {
 				}
 				if (v.getId()+9 <= 15) {
 					vertex = vertices.get(v.getId()+9);
-					if (vertex != null && vertex.getRow()>v.getRow()) {
+					if (vertex != null && vertex.getRow()>v.getRow() && collumn<vertex.getCollumn()) {
 						steps.add(vertex);
 					}
 				}

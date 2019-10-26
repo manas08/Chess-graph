@@ -33,9 +33,7 @@ public class Simulation {
 	private List<Edge> edges = new ArrayList<>();
 	private List<Vertex> path = new ArrayList<>();
 	
-	public Simulation(Image image) {
-		this.obrazek=image;
-
+	public Simulation() {
 		try {
 			img1 = ImageIO.read(getClass().getResourceAsStream("/textures/whitehorse.png"));
 			img2 = ImageIO.read(getClass().getResourceAsStream("/textures/blackhorse.png"));

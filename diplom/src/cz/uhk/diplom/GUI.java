@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -21,11 +23,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import cz.uhk.diplom.model.Image;
-import cz.uhk.diplom.prochazka.KnightsTour;
-import cz.uhk.diplom.utils.Filer;
 
 public class GUI {
 	public static JFrame frame;
@@ -34,6 +31,10 @@ public class GUI {
 	JMenuItem kun = new JMenuItem("    Nový kùn    ");
 	JMenuItem zpet = new JMenuItem("    Krok zpìt    ");
 	JMenuItem hranaZpet = new JMenuItem("    Krok zpìt    ");
+	JMenuBar nabidka = new JMenuBar();
+	JMenu soubor = new JMenu("  Soubor  ");
+	JMenu efekty = new JMenu("  Velikost šachovnice  ");
+	JMenu mainMenu = new JMenu("  Hlavní menu  ");
 
 	public JMenuBar createGUI(MainWindow frame, int width,int height) {
 		setButtonsFunctions(frame);
@@ -42,16 +43,14 @@ public class GUI {
 
         java.awt.Image icon = null;
         try {
-        	icon = ImageIO.read(getClass().getResource("/textures/icon4.png"));
+        	icon = ImageIO.read(getClass().getResource("/textures/kone1.png"));
         } catch (IOException ex) {
         }
         frame.setIconImage(icon);
 		// Hlavní menu
-		JMenuBar nabidka = new JMenuBar();
 		nabidka.setPreferredSize(new Dimension(width, 30));
 		
 		// Soubor
-		JMenu soubor = new JMenu("  Soubor  ");
 		soubor.setFont(new Font("times new roman", Font.PLAIN, 16));
 
 		// Open
@@ -138,7 +137,6 @@ public class GUI {
 		soubor.add(exitApp);
 
 		// Effects
-		JMenu efekty = new JMenu("  Velikost šachovnice  ");
 		efekty.setFont(new Font("times new roman", Font.PLAIN, 16));
 		effectsGroup = new ButtonGroup();
 
@@ -186,149 +184,47 @@ public class GUI {
 		efekty.add(chess6x6);
 		effectsGroup.add(chess6x6);
 
-		JMenu game = new JMenu("  Game  ");
-		game.setFont(new Font("times new roman", Font.PLAIN, 16));
-		gameGroup = new ButtonGroup();
-
-		// Brightness
-		JCheckBoxMenuItem defaultGame = new JCheckBoxMenuItem("Default Game", true);
-		defaultGame.addActionListener(new ActionListener() {
+		mainMenu.setFont(new Font("times new roman", Font.PLAIN, 16));
+		mainMenu.addMouseListener(new MouseListener() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(0, 0);
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+		        enabledMenu(false);
+				frame.endGame();
+				MainMenu main = new MainMenu(frame);
+				main.setVisible(true);
+				main.setAlwaysOnTop (true);
+				main.setFocusableWindowState(false);
 			}
 		});
-		game.add(defaultGame);
-		gameGroup.add(defaultGame);
-		
-		// Brightness
-
-		JMenu coverGame = new JMenu("  Cover Game  ");
-		coverGame.setFont(new Font("times new roman", Font.PLAIN, 16));
-		
-		JCheckBoxMenuItem cover4x4 = new JCheckBoxMenuItem("   4x4   ");
-		cover4x4.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(1, 2);
-			}
-		});
-		coverGame.add(cover4x4);
-		gameGroup.add(cover4x4);
-
-		JCheckBoxMenuItem cover5x5 = new JCheckBoxMenuItem("   5x5   ");
-		cover5x5.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(1, 3);
-			}
-		});
-		coverGame.add(cover5x5);
-		gameGroup.add(cover5x5);
-
-		JCheckBoxMenuItem cover6x6 = new JCheckBoxMenuItem("   6x6   ");
-		cover6x6.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(1, 4);
-			}
-		});
-		coverGame.add(cover6x6);
-		gameGroup.add(cover6x6);
-		
-
-		JMenu simulation = new JMenu("  Simulation  ");
-		simulation.setFont(new Font("times new roman", Font.PLAIN, 16));
-		
-		JCheckBoxMenuItem simulation4x4 = new JCheckBoxMenuItem("   4x4   ");
-		simulation4x4.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(2, 2);
-			}
-		});
-		simulation.add(simulation4x4);
-		gameGroup.add(simulation4x4);
-
-		JCheckBoxMenuItem simulation5x5 = new JCheckBoxMenuItem("   5x5   ");
-		simulation5x5.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(2, 3);
-			}
-		});
-		simulation.add(simulation5x5);
-		gameGroup.add(simulation5x5);
-
-		JCheckBoxMenuItem simulation6x6 = new JCheckBoxMenuItem("   6x6   ");
-		simulation6x6.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(2, 4);
-			}
-		});
-		simulation.add(simulation6x6);
-		gameGroup.add(simulation6x6);
-		
-
-		JCheckBoxMenuItem generateSolutions = new JCheckBoxMenuItem("Generate Solutions", true);
-		generateSolutions.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			  String[] options = {"3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-			  String[] options1 = {"3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-		      JPanel myPanel = new JPanel();
-		      myPanel.add(new JLabel("Výška šachovnice: "));
-		      JComboBox<String> c = new JComboBox<>(options);
-		      JComboBox<String> c1 = new JComboBox<>(options1);
-		      myPanel.add(c);
-		      myPanel.add(Box.createHorizontalStrut(25)); // a spacer
-		      myPanel.add(new JLabel("Šíøka šachovnice: "));
-		      myPanel.add(c1);
-
-		      int result = JOptionPane.showConfirmDialog(null, myPanel, 
-		               "Velikost šachovnice", JOptionPane.OK_CANCEL_OPTION);
-			      
-		        /*
-				//String[] options = {"3", "4", "5", "6"};
-		        String n = (String)JOptionPane.showInputDialog(null, "Výška šachovnice??", 
-		                "Výška šachovnice", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-				String[] options1 = {"3", "4", "5", "6"};
-		        String n1 = (String)JOptionPane.showInputDialog(null, "Šíøka šachovnice??", 
-		                "Šíøka šachovnice", JOptionPane.QUESTION_MESSAGE, null, options1, options1[0]);
-		        */
-		      if (result != 2 && result != -1) {
-				String[] options2 = {"otevøené cesty", "uzavøené cesty"};
-		        String n2 = (String)JOptionPane.showInputDialog(null, "Typ cesty??", 
-		                "Typ cesty", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
-
-			      System.out.println(n2 + " +++++");
-			      if (n2 != null) {
-					KnightsTour kt = new KnightsTour(c.getSelectedIndex()+3, c1.getSelectedIndex()+3, n2);
-			      }
-		      }
-			}
-		});
-		gameGroup.add(generateSolutions);
-
-		JCheckBoxMenuItem drawHamilton = new JCheckBoxMenuItem("Find Hamilton", true);
-		drawHamilton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(3, 0);				
-			}
-		});
-		gameGroup.add(drawHamilton);
-		
-		game.add(coverGame);
-		game.add(simulation);
-		game.add(generateSolutions);
-		game.add(drawHamilton);
 		
 		nabidka.add(soubor);
 		nabidka.add(efekty);
-		nabidka.add(game);
+		nabidka.add(mainMenu);
 		nabidka.add(Box.createHorizontalGlue());
 
 		return nabidka;
@@ -379,5 +275,14 @@ public class GUI {
 	        jMenuBar.add(kun);
 		}
 		return jMenuBar;
+	}
+
+	public void enabledMenu(boolean enable) {
+		this.soubor.setEnabled(enable);
+		this.efekty.setEnabled(enable);
+		this.mainMenu.setEnabled(enable);
+		this.kun.setEnabled(enable);
+		this.hranaZpet.setEnabled(enable);
+		this.zpet.setEnabled(enable);
 	}
 }
