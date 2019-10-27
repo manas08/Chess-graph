@@ -145,7 +145,7 @@ public class GUI {
 		chess3x3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.setSize(1);
+				frame.switchGame(3);
 			}
 		});
 		efekty.add(chess3x3);
@@ -156,7 +156,7 @@ public class GUI {
 		chess4x4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.setSize(2);
+				frame.switchGame(4);
 			}
 		});
 		efekty.add(chess4x4);
@@ -167,7 +167,7 @@ public class GUI {
 		chess5x5.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.setSize(3);
+				frame.switchGame(5);
 			}
 		});
 		efekty.add(chess5x5);
@@ -178,7 +178,7 @@ public class GUI {
 		chess6x6.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.setSize(4);
+				frame.switchGame(6);
 			}
 		});
 		efekty.add(chess6x6);
@@ -213,12 +213,14 @@ public class GUI {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-		        enabledMenu(false);
-				frame.endGame();
-				MainMenu main = new MainMenu(frame);
-				main.setVisible(true);
-				main.setAlwaysOnTop (true);
-				main.setFocusableWindowState(false);
+				if (mainMenu.isEnabled()) {
+			        enabledMenu(false);
+					frame.endGame();
+					MainMenu main = new MainMenu(frame);
+					main.setVisible(true);
+					main.setAlwaysOnTop (true);
+					main.setFocusableWindowState(false);
+				}
 			}
 		});
 		
@@ -261,18 +263,22 @@ public class GUI {
 	}
 
 	public JMenuBar changeBottomMenu(int game, JMenuBar jMenuBar, MainWindow frame) {
-		if (game == 0) {
+		if (game == 1) {
 			jMenuBar.remove(kun);
 			jMenuBar.remove(hranaZpet);
 	        jMenuBar.add(zpet);
-		} else if (game == 3) {
+		} else if (game == 2) {
+			jMenuBar.remove(zpet);
+			jMenuBar.add(kun);
+	        jMenuBar.remove(hranaZpet);
+		}else if (game == 3) {
+			jMenuBar.remove(zpet);
+			jMenuBar.remove(kun);
+	        jMenuBar.remove(hranaZpet);
+		}else if (game == 5) {
 			jMenuBar.remove(zpet);
 			jMenuBar.remove(kun);
 	        jMenuBar.add(hranaZpet);
-		}else {
-			jMenuBar.remove(zpet);
-			jMenuBar.remove(hranaZpet);
-	        jMenuBar.add(kun);
 		}
 		return jMenuBar;
 	}

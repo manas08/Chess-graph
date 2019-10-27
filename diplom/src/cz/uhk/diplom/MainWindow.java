@@ -37,8 +37,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	private int clickY = 0;
 	private int saveX = 0;
 	private int saveY = 0;
-	private int chesssize = 4;
-	private GraphicsObject o;
+	private int chesssize = 6;
 	private int tvar=0, counter = 0;
 	private Vertex vertex;
 	private Edge edge;
@@ -46,11 +45,12 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	private CoverGame coverGame;
 	private Simulation simulation;
 	private Hamilton hamilton;
+	private static MainMenu mainMenu;
 	private int test = 0;
 	private JMenuBar jMenuBar;
 	private boolean isCoverGame = false, isHamiltonGame = false;
 	private int idKun;
-	private Image icon;
+	private int mode;
 	
 	public MainWindow() {
 		setTitle("ChessGraph");
@@ -84,10 +84,14 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	public static void main(String[] args) {
 		MainWindow okno = new MainWindow();
 		okno.setVisible(true);
-		MainMenu mainMenu = new MainMenu(okno);
+		openMenu(okno);
+	}
+
+	public static void openMenu(MainWindow okno) {
+		mainMenu = new MainMenu(okno);
 		mainMenu.setVisible(true);
 		mainMenu.setAlwaysOnTop (true);
-		mainMenu.setFocusableWindowState(false);		
+		mainMenu.setFocusableWindowState(false);
 	}
 
 	@Override
@@ -222,7 +226,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 					vis++;
 				}
 			}
-			//System.out.println(vis + " " + (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges()) + " PPPPP");
+			//System.out.println(vis + " " + (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges()) + " WWWWWWW");
 			if (vis == (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges())) {
 		        JOptionPane.showMessageDialog(
 		        	    null, 
@@ -302,7 +306,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			counter = 0;
 			platno.repaint();
 			
-			if (points.size() == (chesssize+2)*(chesssize+2) && !isCoverGame) {
+			if (points.size() == (chesssize)*(chesssize) && !isCoverGame) {
 		        JOptionPane.showMessageDialog(
 		        	    null, 
 		        	    "Správnì dokonèená hamiltonovská cesta! :)", 
@@ -332,6 +336,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	public void mouseMoved(MouseEvent e) {
 
 		if (isHamiltonGame) {
+			//System.out.println(edges.size() + " " + hamilton.getNumberOfEdges() + " LLLLLLLLLLLLL");
 			if (edges.size() == hamilton.getNumberOfEdges()) {
 				for (Vertex vertex : points) {
 					if (vertex.getX1() < e.getX() && vertex.getX1()+20 > e.getX() && e.getY() > vertex.getY1() && e.getY() < vertex.getY1()+20) {
@@ -398,23 +403,9 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
         super.paint(g);
         g.setColor(Color.BLACK);
     }
-	
-	public void setSize(int i) {
-		this.chesssize=i;
-		obrazek = new Image();
-		platno.setObrazek(obrazek);
-		
-		vertices.clear();
-		edges.clear();
-		points.clear();
-		kone.clear();
 
-		settings.setBoard(kone, vertices, points, obrazek, this, chesssize);
-		settings.setAvailableVertices(vertices, 0, 1, 1);
-		platno.repaint(platno.getGraphics());
-	}
-
-	public void switchGame(int i, int size) {
+	public void switchGame(int size) {
+		this.chesssize=size;
         gui.enabledMenu(true);
 		obrazek = new Image();
 		platno.setObrazek(obrazek);
@@ -423,25 +414,28 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		points.clear();
 		kone.clear();
 		
-		switch (i) {
-		case 0:
+		//System.out.println(mode + " GGGGG " + size);
+		switch (mode) {
+		case 1:
 			isCoverGame = false;
 			isHamiltonGame = false;
-			setSize(size);
+			settings.setBoard(kone, vertices, points, obrazek, this, chesssize);
+			settings.setAvailableVertices(vertices, 0, 1, 1);
 			break;
-		case 1:
+		case 2:
 			isCoverGame = true;
 			isHamiltonGame = false;
 			coverGame.setBoard(kone, vertices, obrazek, this, size);
 			coverGame.setAvailableVertices(vertices, kone, 1, 1);
 			break;
-		case 2:
+		case 3:
 			isCoverGame = true;
 			isHamiltonGame = false;
+			simulation.getPath().clear();
 			simulation.setBoard(kone, vertices,edges, obrazek, this, size);
 			
 			while(true) {
-				if (simulation.getPath().size() != (size+2)*(size+2)) {
+				if (simulation.getPath().size() != (size)*(size)) {
 					if (simulation.searchHam(vertices, this)) {
 						this.vertex = simulation.moveHorse(this);
 						this.edge = simulation.makeRoad();
@@ -457,18 +451,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 						//obrazek.pridej(vertex);
 					}
 					//mainRepaint();
-				}else {	//if(simulation.getPath().get(0) == simulation.getPath().get(simulation.getPath().size()-1) && simulation.getPath().size() == (size+2)*(size+2)+1)
-						//System.out.println();
-						//System.out.println("---------------------------------------");
-						//System.out.println();
-						//System.out.println(pocet + " pocet " + size);
-					/*	
-					if (simulation.getPolicko() < (size+2)*(size+2)) {
-							this.vertex = simulation.nextPath();
-							obrazek.odeber(edges.get(edges.size()-1));
-							edges.remove(edges.get(edges.size()-1));
-							obrazek.pridej(vertex);
-						}*/
+				}else {
 						break;
 				}
 				
@@ -485,7 +468,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			}
 			platno.repaint();
 			break;
-		case 3:
+		case 5:
 			isHamiltonGame = true;
 			isCoverGame = false;
 			hamilton = new Hamilton(obrazek, edges, points, this);
@@ -495,7 +478,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			break;
 		}
 
-		jMenuBar = gui.changeBottomMenu(i, jMenuBar, this);
+		jMenuBar = gui.changeBottomMenu(mode, jMenuBar, this);
 
         getContentPane().revalidate();
         getContentPane().repaint();
@@ -555,7 +538,14 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 					vertex.setColor(new Color(0,0,0));
 				}
 				vertices.clear();
-				edges.clear();
+				for (Edge edge : edges) {
+					if ((edge.getV1ID() == edges.get(edges.size()-1).getV1ID() && edge.getV2ID() == edges.get(edges.size()-1).getV2ID()) 
+							|| (edge.getV1ID() == edges.get(edges.size()-1).getV2ID() && edge.getV2ID() == edges.get(edges.size()-1).getV1ID())) {
+						edge.setVisited(false);
+					}
+				}
+				obrazek.odeber(edges.get(edges.size()-1));
+				edges.remove(edges.get(edges.size()-1));
 				//System.out.println("!!!!!!!!!!!!!!!!!!!!!");
 			}else if (vertices.size() > 2) {
 				/*
@@ -596,5 +586,9 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		points.clear();
 		kone.clear();
 		platno.repaint();
+	}
+	
+	public void setMode(int mode) {
+		this.mode = mode;
 	}
 }

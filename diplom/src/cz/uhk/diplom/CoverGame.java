@@ -64,15 +64,15 @@ public class CoverGame {
 		this.mode = mode;
 
 		switch (mode) {
-		case 2:
+		case 4:
 			drawBoard4x4();
 			vertex = new Vertex(795,328, img2, 3);
 			break;
-		case 3:
+		case 5:
 			drawBoard5x5();
 			vertex = new Vertex(745,278, img2, 3);
 			break;
-		case 4:
+		case 6:
 			drawBoard6x6();
 			vertex = new Vertex(695,228, img2, 3);
 			break;
@@ -277,7 +277,7 @@ public class CoverGame {
 		
 		for (Vertex v : kone) {
 			switch (mode) {
-			case 2:
+			case 4:
 				if (v.getId()-9 >= 0) {
 					vertex = vertices.get(v.getId()-9);
 					if (vertex != null && vertex.getRow()<v.getRow() && collumn>vertex.getCollumn()) {
@@ -327,7 +327,7 @@ public class CoverGame {
 					}
 				}
 				break;
-			case 3:
+			case 5:
 				if (v.getId()-11 >= 0) {
 					vertex = vertices.get(v.getId()-11);
 					if (vertex != null && vertex.getRow()==v.getRow()-2) {
@@ -377,7 +377,7 @@ public class CoverGame {
 					}
 				}
 				break;
-			case 4:
+			case 6:
 				if (v.getId()-13 >= 0) {
 					vertex = vertices.get(v.getId()-13);
 					if (vertex != null && vertex.getRow()==v.getRow()-2) {
@@ -463,13 +463,13 @@ public class CoverGame {
 		this.obrazek=obrazek;
 
 		switch (mode) {
-		case 2:
+		case 4:
 			vertex = new Vertex(795,328, img2, 3);
 			break;
-		case 3:
+		case 5:
 			vertex = new Vertex(745,278, img2, 3);
 			break;
-		case 4:
+		case 6:
 			vertex = new Vertex(695,228, img2, 3);
 			break;
 		default:

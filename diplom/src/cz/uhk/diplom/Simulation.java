@@ -72,15 +72,15 @@ public class Simulation {
 		this.mode = mode;
 
 		switch (mode) {
-		case 2:
+		case 4:
 			drawBoard4x4();
 			kun = new Vertex(795,328, img2, 3);
 			break;
-		case 3:
+		case 5:
 			drawBoard5x5();
 			kun = new Vertex(745,278, img2, 3);
 			break;
-		case 4:
+		case 6:
 			drawBoard6x6();
 			kun = new Vertex(695,228, img2, 3);
 			break;
@@ -296,7 +296,7 @@ public class Simulation {
 		Vertex vertex = null;
 		
 		switch (mode) {
-		case 2:
+		case 4:
 			if (v.getId()-9 >= 0) {
 				vertex = vertices.get(v.getId()-9);
 				if (vertex != null && vertex.getRow()<v.getRow() && v.getCollumn()>vertex.getCollumn()) {
@@ -370,7 +370,7 @@ public class Simulation {
 				}
 			}
 			break;
-		case 3:
+		case 5:
 			if (v.getId()-11 >= 0) {
 				vertex = vertices.get(v.getId()-11);
 				if (vertex != null && vertex.getRow()==v.getRow()-2) {
@@ -444,7 +444,7 @@ public class Simulation {
 				}
 			}
 			break;
-		case 4:
+		case 6:
 			if (v.getId()-13 >= 0) {
 				vertex = vertices.get(v.getId()-13);
 				if (vertex != null && vertex.getRow()==v.getRow()-2) {
@@ -624,7 +624,7 @@ public class Simulation {
 				
 				policko++;
 				kun.setId(policko);
-				if ((policko % (mode+2)) == 0) {
+				if ((policko % (mode)) == 0) {
 					kun.setCollumn(1);
 					kun.setRow(kun.getRow()+1);
 				}else {

@@ -204,60 +204,28 @@ public class MainMenu extends JFrame implements ActionListener {
 			    String n2 = (String)JOptionPane.showInputDialog(null, "Typ cesty??", 
 			            "Typ cesty", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
 			
-			    System.out.println(n2 + " +++++");
+			    //System.out.println(n2 + " +++++");
 			    if (n2 != null) {
 			    	KnightsTour kt = new KnightsTour(c.getSelectedIndex()+3, c1.getSelectedIndex()+3, n2);
+			    	MainWindow.openMenu(mainWindow);
 			    }
 			  }
 		}else if (e.getSource() == b5) {
 			mode = 5;
-			mainWindow.switchGame(3, 0);
+			mainWindow.setMode(mode);
+			mainWindow.switchGame(0);
 			this.dispose();
 		}else if (e.getSource() == b6) {
-			switch (mode) {
-			case 1:
-				mainWindow.switchGame(0, 2);
-				break;
-			case 2:
-				mainWindow.switchGame(1, 2);
-				break;
-			case 3:
-				mainWindow.switchGame(2, 2);
-				break;
-			default:
-				break;
-			}
+			mainWindow.switchGame(4);
 			this.dispose();
 		}else if (e.getSource() == b7) {
-			switch (mode) {
-			case 1:
-				mainWindow.switchGame(0, 3);
-				break;
-			case 2:
-				mainWindow.switchGame(1, 3);
-				break;
-			case 3:
-				mainWindow.switchGame(2, 3);
-				break;
-			default:
-				break;
-			}
+			mainWindow.switchGame(5);
 			this.dispose();
-		}else if (e.getSource() == b8) {switch (mode) {
-			case 1:
-				mainWindow.switchGame(0, 4);
-				break;
-			case 2:
-				mainWindow.switchGame(1, 4);
-				break;
-			case 3:
-				mainWindow.switchGame(2, 4);
-				break;
-			default:
-				break;
-			}
+		}else if (e.getSource() == b8) {
+			mainWindow.switchGame(6);
 			this.dispose();
 		}
+		mainWindow.setMode(mode);
 	}
 
 	public void setMainWindow(MainWindow mainWindow) {

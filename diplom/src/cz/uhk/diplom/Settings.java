@@ -64,19 +64,19 @@ public class Settings {
 		steps = new ArrayList<>();
 
 		switch (mode) {
-		case 1:
+		case 3:
 			drawBoard3x3();
 			vertex = new Vertex(845,378, img1, 3);
 			break;
-		case 2:
+		case 4:
 			drawBoard4x4();
 			vertex = new Vertex(795,328, img1, 3);
 			break;
-		case 3:
+		case 5:
 			drawBoard5x5();
 			vertex = new Vertex(745,278, img1, 3);
 			break;
-		case 4:
+		case 6:
 			drawBoard6x6();
 			vertex = new Vertex(695,228, img1, 3);
 			break;
@@ -361,7 +361,7 @@ public class Settings {
 		}
 		
 		switch (mode) {
-		case 1:
+		case 3:
 			if (i-7 >= 0) {
 				vertex = vertices.get(i-7);
 				if (vertex != null && vertex.getRow()<row) {
@@ -405,7 +405,7 @@ public class Settings {
 				}
 			}
 			break;
-		case 2:
+		case 4:
 			if (i-9 >= 0) {
 				vertex = vertices.get(i-9);
 				if (vertex != null && vertex.getRow()<row && collumn>vertex.getCollumn()) {
@@ -463,7 +463,7 @@ public class Settings {
 				}
 			}
 			break;
-		case 3:
+		case 5:
 			if (i-11 >= 0) {
 				vertex = vertices.get(i-11);
 				if (vertex != null && vertex.getRow()==row-2) {
@@ -521,7 +521,7 @@ public class Settings {
 				}
 			}
 			break;
-		case 4:
+		case 6:
 			if (i-13 >= 0) {
 				vertex = vertices.get(i-13);
 				if (vertex != null && vertex.getRow()==row-2) {
