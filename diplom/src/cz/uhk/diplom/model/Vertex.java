@@ -2,13 +2,13 @@ package cz.uhk.diplom.model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Vertex implements GraphicsObject {
-	private int x1, y1, x2, y2; // X2 a Y2 zde znaci velikost pixelu 
+	private int x1, y1, x2, y2;
 	private BufferedImage img;
 	private int mode;
 	private boolean enable = true;
@@ -19,7 +19,6 @@ public class Vertex implements GraphicsObject {
 	private List<Vertex> visited;
 	private boolean navstiveno = false;
 	private Color color;
-	private MouseAdapter ma;
 
 	public Vertex(int x1, int y1, int x2, int y2, int mode) {
 		this.x1 = x1;
@@ -30,10 +29,10 @@ public class Vertex implements GraphicsObject {
 		this.visited = new ArrayList<Vertex>();
 		switch (mode) {
 		case 1:
-			color =new Color(255,0,0);
+			color = new Color(255, 0, 0);
 			break;
 		case 4:
-			color = new Color(0,0,0);
+			color = new Color(0, 0, 0);
 			break;
 		default:
 			break;
@@ -57,30 +56,30 @@ public class Vertex implements GraphicsObject {
 		this.visited = new ArrayList<Vertex>();
 		switch (mode) {
 		case 1:
-			color =new Color(255,0,0);
+			color = new Color(255, 0, 0);
 			break;
 		case 4:
-			color = new Color(0,0,0);
+			color = new Color(0, 0, 0);
 			break;
 		default:
 			break;
 		}
 	}
-	
-	
+
 	@Override
 	public void nakresli(Graphics2D g) {
-		if(mode == 1) {
+	    RenderingHints rhints = g.getRenderingHints();
+	    boolean antialiasOn = rhints.containsValue(RenderingHints.VALUE_ANTIALIAS_ON);
+	    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		if (mode == 1) {
 			g.setColor(color);
 			g.fillOval(x1, y1, x2, y2);
 		}
-		if(mode == 2)
+		if (mode == 2)
 			g.drawImage(img, x1, y1, null);
-			//g.setColor(new Color(40,40,40));
-			//g.fillRect(700,200,20,20);
-		if(mode == 3)
-			g.drawImage(img, x1-22, y1-28, null);
-		if(mode == 4) {
+		if (mode == 3)
+			g.drawImage(img, x1 - 22, y1 - 28, null);
+		if (mode == 4) {
 			g.setColor(color);
 			g.fillOval(x1, y1, x2, y2);
 		}
@@ -115,12 +114,12 @@ public class Vertex implements GraphicsObject {
 	public void setY1(int y1) {
 		this.y1 = y1;
 	}
-	
+
 	@Override
 	public int getX2() {
 		return x2;
 	}
-	
+
 	@Override
 	public int getY2() {
 		return y2;
@@ -189,7 +188,7 @@ public class Vertex implements GraphicsObject {
 	public void setNavstiveno(boolean navstiveno) {
 		this.navstiveno = navstiveno;
 	}
-	
+
 	public Color getColor() {
 		return color;
 	}

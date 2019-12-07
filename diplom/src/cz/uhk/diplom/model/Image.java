@@ -1,5 +1,6 @@
 package cz.uhk.diplom.model;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class Image implements Serializable {
 		for (GraphicsObject o : grafickeObjekty) {
 			o.nakresli(g);
 		}
+		//g.fillRect(20, 200, 200, 200);
+		//g.setColor(Color.WHITE);
+		//g.drawString("Nejaky text, je jedno jaky", 40, 250);
 	}
 	
 	public void smazCelyObrazek() {

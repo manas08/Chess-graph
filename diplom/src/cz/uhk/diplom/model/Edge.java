@@ -3,6 +3,7 @@ package cz.uhk.diplom.model;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 
 public class Edge implements GraphicsObject {
@@ -23,20 +24,21 @@ public class Edge implements GraphicsObject {
 
 	@Override
 	public void nakresli(Graphics2D g) {
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		if (mode == 1) {
-			g.setColor(new Color(255,0,0));
-		    g.setStroke(new BasicStroke(3));
-			g.drawLine(x1, y1, x2, y2);	
-		}else if(mode == 3) {
-			g.setColor(new Color(238,238,238));
-		    Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-	        g.setStroke(dashed);
-			g.drawLine(x1, y1, x2, y2);	
+			g.setColor(new Color(255, 0, 0));
+			g.setStroke(new BasicStroke(3));
+			g.drawLine(x1, y1, x2, y2);
+		} else if (mode == 3) {
+			g.setColor(new Color(238, 238, 238));
+			Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9 }, 0);
+			g.setStroke(dashed);
+			g.drawLine(x1, y1, x2, y2);
 		} else {
-			g.setColor(new Color(238,238,238));
-		    g.setStroke(new BasicStroke(3));
-			g.drawLine(x1, y1, x2, y2);	
-		}	
+			g.setColor(new Color(238, 238, 238));
+			g.setStroke(new BasicStroke(3));
+			g.drawLine(x1, y1, x2, y2);
+		}
 	}
 
 	@Override
@@ -68,17 +70,17 @@ public class Edge implements GraphicsObject {
 	public void setY1(int y1) {
 		this.y1 = y1;
 	}
-	
+
 	@Override
 	public int getX2() {
 		return x2;
 	}
-	
+
 	@Override
 	public int getY2() {
 		return y2;
 	}
-	
+
 	public int getV1ID() {
 		return v1ID;
 	}
