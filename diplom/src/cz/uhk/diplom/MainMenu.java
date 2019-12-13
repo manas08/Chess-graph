@@ -7,6 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import cz.uhk.diplom.prochazka.KnightsTour;
@@ -53,32 +57,32 @@ public class MainMenu extends JFrame implements ActionListener {
 		b1 = new JButton("Default game");
 		b1.setPreferredSize(new Dimension(100, 30));
 		b1.addActionListener(this);
-		b1.setBounds(75, 150, 120, 30);
+		b1.setBounds(75, 150, 130, 30);
 
 		b2 = new JButton("Cover game");
 		b2.setPreferredSize(new Dimension(100, 30));
 		b2.addActionListener(this);
-		b2.setBounds(75, 190, 120, 30);
+		b2.setBounds(75, 190, 130, 30);
 
 		b3 = new JButton("Simulation");
 		b3.setPreferredSize(new Dimension(100, 30));
 		b3.addActionListener(this);
-		b3.setBounds(75, 230, 120, 30);
+		b3.setBounds(75, 230, 130, 30);
 
 		b4 = new JButton("Generate");
 		b4.setPreferredSize(new Dimension(100, 30));
 		b4.addActionListener(this);
-		b4.setBounds(75, 270, 120, 30);
+		b4.setBounds(75, 270, 130, 30);
 
 		b5 = new JButton("Hamilton");
 		b5.setPreferredSize(new Dimension(100, 30));
 		b5.addActionListener(this);
-		b5.setBounds(75, 310, 120, 30);
+		b5.setBounds(75, 310, 130, 30);
 
-		b10 = new JButton("Test");
+		b10 = new JButton("Neural network");
 		b10.setPreferredSize(new Dimension(100, 30));
 		b10.addActionListener(this);
-		b10.setBounds(75, 350, 120, 30);
+		b10.setBounds(75, 350, 130, 30);
 
 		l1.setPreferredSize(new Dimension(450, 50));
 		l1.setBounds(25, 55, 450, 50);
@@ -132,6 +136,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		buttons.add(b7);
 		buttons.add(b8);
 		buttons.add(b9);
+		buttons.add(b10);
 
 		for (JButton jButton : buttons) {
 			jButton.setOpaque(true);
@@ -168,6 +173,7 @@ public class MainMenu extends JFrame implements ActionListener {
 			b3.setVisible(false);
 			b4.setVisible(false);
 			b5.setVisible(false);
+			b10.setVisible(false);
 
 			b6.setVisible(true);
 			b7.setVisible(true);
@@ -180,6 +186,7 @@ public class MainMenu extends JFrame implements ActionListener {
 			b3.setVisible(false);
 			b4.setVisible(false);
 			b5.setVisible(false);
+			b10.setVisible(false);
 
 			b6.setVisible(true);
 			b7.setVisible(true);
@@ -192,6 +199,7 @@ public class MainMenu extends JFrame implements ActionListener {
 			b3.setVisible(false);
 			b4.setVisible(false);
 			b5.setVisible(false);
+			b10.setVisible(false);
 
 			//b6.setVisible(true);
 			b7.setVisible(true);
@@ -244,11 +252,53 @@ public class MainMenu extends JFrame implements ActionListener {
 			mainWindow.switchGame(6);
 		}else if (e.getSource() == b10) {
 			this.dispose();
+			mode = 6;
+
+			while (true) {
+				JPanel myPanel = new JPanel();
+				myPanel.add(new JLabel("Výška šachovnice: "));
+				JTextField t1 = new JTextField(4);
+				t1.setRequestFocusEnabled(true);
+				myPanel.add(t1);
+				myPanel.add(Box.createHorizontalStrut(25));
+				myPanel.add(new JLabel("Šíøka šachovnice: "));
+				JTextField t2 = new JTextField(4);
+				myPanel.add(t2);
+
+				int result = JOptionPane.showConfirmDialog(null, myPanel, "Velikost šachovnice",
+						JOptionPane.OK_CANCEL_OPTION);
+
+				mainWindow.switchGame(0);
+				if (result != 2 && result != -1) {
+					if (t1.getText() != null && t2.getText() != null) {
+						try {
+				            int jml1 = Integer.parseInt(t1.getText());
+				            int jml2 = Integer.parseInt(t2.getText());
+
+							// System.out.println(n2 + " +++++");
+							if (jml1 != 0 && jml2 != 0) {
+								if (jml1 >= jml2) {
+									NeuralNetworkTour form = new NeuralNetworkTour();
+									form.cmdGoClick(mainWindow, jml1, jml2);
+									break;
+								}else {
+									NeuralNetworkTour form = new NeuralNetworkTour();
+									form.cmdGoClick(mainWindow, jml2, jml1);
+									break;
+								}
+							}
+						} catch (Exception e2) {
+						    JOptionPane.showMessageDialog(this, "Špatnì zadaná velikost šachovnice.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}else {
+					break;
+				}
+			}
 			//NeuralNetwork network = new NeuralNetwork();
 			//network.Main();
-			
-			NeuralNetworkTour form = new NeuralNetworkTour();
-			form.cmdGoClick(mainWindow, 14, 3);
+
+
 			
 			//KnightTest2 knightTest2 = new KnightTest2();
 			//knightTest2.Main();

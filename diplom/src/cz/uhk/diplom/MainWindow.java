@@ -699,10 +699,16 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 
 	*/
 	
-	public void drawTestPoints(int j, int u) {
-		Vertex point = new Vertex(j, u, 30, 30, 1);
-		points.add(point);
-		obrazek.pridej(point);
+	public void drawTestPoints(int j, int u, int size) {
+		if (size >= 10) {
+			Vertex point = new Vertex(j, u, 10, 10, 1);
+			points.add(point);
+			obrazek.pridej(point);
+		}else {
+			Vertex point = new Vertex(j, u, 30, 30, 1);
+			points.add(point);
+			obrazek.pridej(point);
+		}
 	}
 	
 	public void drawTest(int pointX, int pointY, int point2X, int point2Y, int size) {
@@ -711,22 +717,37 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		for (Vertex v : vertices) {
 			if ((v.getRow()-1)*size + (v.getCollumn()-1) == pointX*size + pointY) {
 				//System.out.println((v.getRow()-1)*size + " " + (v.getCollumn()-1) + " " + pointX*size + " " + pointY);
-				pomX1 = v.getX1() + 50;
-				pomY1 = v.getY1() + 50;
+				if (size >= 10) {
+					pomX1 = v.getX1() + 16;
+					pomY1 = v.getY1() + 16;
+				}else {
+					pomX1 = v.getX1() + 50;
+					pomY1 = v.getY1() + 50;
+				}
 				continue;
 			}
 			if ((v.getRow()-1)*size + (v.getCollumn()-1) == point2X*size + point2Y) {
 				//System.out.println((v.getRow()-1)*size + " " + (v.getCollumn()-1) + " " + point2X*size + " " + point2Y);
-				pomX2 = v.getX1() + 50;
-				pomY2 = v.getY1() + 50;
+				if (size >= 10) {
+					pomX2 = v.getX1() + 16;
+					pomY2 = v.getY1() + 16;
+				}else {
+					pomX2 = v.getX1() + 50;
+					pomY2 = v.getY1() + 50;
+				}
 				continue;
 			}
 		}
 		//System.out.println("++++++++++++++++++++++++++++++");
 		//System.out.println(pomX1 + " " +pomY1 + " " + pomX2 + " " +pomY2);
 		this.edge = new Edge(pomX1, pomY1, pomX2, pomY2, 1);
-		drawTestPoints(pomX1-15, pomY1-15);
-		drawTestPoints(pomX2-15, pomY2-15);
+		if (size >= 10) {
+			drawTestPoints(pomX1-5, pomY1-5, size);
+			drawTestPoints(pomX2-5, pomY2-5, size);
+		}else {
+			drawTestPoints(pomX1-15, pomY1-15, size);
+			drawTestPoints(pomX2-15, pomY2-15, size);
+		}
 		edges.add(edge);
 		obrazek.pridej(edge);
 		platno.repaint();

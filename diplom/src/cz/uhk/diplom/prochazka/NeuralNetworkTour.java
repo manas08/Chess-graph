@@ -41,6 +41,8 @@ public class NeuralNetworkTour {
 
 	BufferedImage img3 = null;
 	BufferedImage img4 = null;
+	BufferedImage img5 = null;
+	BufferedImage img6 = null;
 	
 	MainWindow main;
 	
@@ -48,6 +50,9 @@ public class NeuralNetworkTour {
 		try {
 			img3 = ImageIO.read(getClass().getResourceAsStream("/textures/brick.jpg"));
 			img4 = ImageIO.read(getClass().getResourceAsStream("/textures/brick2.jpg"));
+			img5 = ImageIO.read(getClass().getResourceAsStream("/textures/smallbricks.jpg"));
+			img6 = ImageIO.read(getClass().getResourceAsStream("/textures/smallbricks2.jpg"));
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -218,8 +223,8 @@ public class NeuralNetworkTour {
 			lstStats.Items.Item[3].SubItems.Strings[0] = new String(totalTrials);
 			lstStats.Items.EndUpdate();
 			*/
-			
-		}while (totalTrials < targetTrials);
+			//totalTrials < targetTrials
+		}while (numHamiltonian < 1);
 		
 		stopped = true;
 	}
@@ -447,7 +452,6 @@ public class NeuralNetworkTour {
 			//canvas->Pen->Color = clBlue;
 		}
 	
-		String pointStr;
 		List<Integer> points = new ArrayList<>();
 		drawBoard();
 
@@ -543,18 +547,33 @@ public class NeuralNetworkTour {
 		
 		number++;
 		
-		for (int i = 0; i < tempCSize; i++) {
-			for (int j = 0; j < tempDSize; j++) {
-				for (Integer[] integer : path) {
-					if (integer[0] == i && integer[1] == j) {
-						System.out.print(integer[2] + " ");
+		if (tempCSize == tempDSize) {
+			for (int i = 0; i < tempCSize; i++) {
+				for (int j = 0; j < tempDSize; j++) {
+					for (Integer[] integer : path) {
+						if (integer[0] == i && integer[1] == j) {
+							System.out.print(integer[2] + " ");
+						}
 					}
 				}
+				System.out.println();
 			}
 			System.out.println();
+			System.out.println();
+		}else {
+			for (int i = 0; i < tempDSize; i++) {
+				for (int j = 0; j < tempCSize; j++) {
+					for (Integer[] integer : path) {
+						if (integer[1] == i && integer[0] == j) {
+							System.out.print(integer[2] + " ");
+						}
+					}
+				}
+				System.out.println();
+			}
+			System.out.println();
+			System.out.println();
 		}
-		System.out.println();
-		System.out.println();
 		
 		System.out.println(number + " pocet");
 	
@@ -564,8 +583,14 @@ public class NeuralNetworkTour {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = screenSize.getWidth();
 		double height = screenSize.getHeight();
-		double pom1 = ((width / 2) - tempCSize*50) / 100.0;
-		double pom2 = ((height / 2) - ((tempDSize*50)+50)) / 100.0;
+		double pom1 = 0, pom2 = 0;
+		if (tempCSize >= 10) {
+			pom1 = ((width / 2) - tempCSize*16.5) / 33.0;
+			pom2 = ((height / 2) - ((tempDSize*16.5)+50.0)) / 33.0;
+		}else {
+			pom1 = ((width / 2) - tempCSize*50) / 100.0;
+			pom2 = ((height / 2) - ((tempDSize*50)+50)) / 100.0;
+		}
 		
 		Image obrazek = this.main.getObrazek();
 		List<Vertex> vertices = this.main.getVertices();
@@ -583,7 +608,11 @@ public class NeuralNetworkTour {
 
 			for (double j = pom1; j < pom1 + tempCSize; j++) {
 				if (obr) {
-					vertex = new Vertex((int) (j * 100), (int) (i * 100), img3, 2);
+					if (tempCSize >= 10) {
+						vertex = new Vertex((int) (j * 33), (int) (i * 33), img5, 2);
+					}else {
+						vertex = new Vertex((int) (j * 100), (int) (i * 100), img3, 2);
+					}
 					if (tempCSize == tempDSize) {
 						vertex.setCollumn(collumn);
 						vertex.setRow(row);
@@ -597,7 +626,11 @@ public class NeuralNetworkTour {
 					obrazek.pridej(vertex);
 					obr = false;
 				} else {
-					vertex = new Vertex((int) (j * 100), (int) (i * 100), img4, 2);
+					if (tempCSize >= 10) {
+						vertex = new Vertex((int) (j * 33), (int) (i * 33), img6, 2);
+					}else {
+						vertex = new Vertex((int) (j * 100), (int) (i * 100), img4, 2);
+					}
 					if (tempCSize == tempDSize) {
 						vertex.setCollumn(collumn);
 						vertex.setRow(row);

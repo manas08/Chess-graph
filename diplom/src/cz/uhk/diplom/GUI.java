@@ -277,6 +277,10 @@ public class GUI {
 			jMenuBar.remove(zpet);
 			jMenuBar.remove(kun);
 			jMenuBar.add(hranaZpet);
+		} else if (game == 6) {
+			jMenuBar.remove(zpet);
+			jMenuBar.remove(kun);
+			jMenuBar.remove(hranaZpet);
 		}
 		return jMenuBar;
 	}
