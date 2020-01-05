@@ -170,7 +170,7 @@ public class GUI {
 		sachovnice.add(chess5x5);
 		effectsGroup.add(chess5x5);
 
-		JCheckBoxMenuItem chess6x6 = new JCheckBoxMenuItem("   6x6   ", true);
+		JCheckBoxMenuItem chess6x6 = new JCheckBoxMenuItem("   6x6   ");
 		chess6x6.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -292,5 +292,13 @@ public class GUI {
 		this.kun.setEnabled(enable);
 		this.hranaZpet.setEnabled(enable);
 		this.zpet.setEnabled(enable);
+	}
+	
+	public void clearButtonSelection() {
+		effectsGroup.clearSelection();
+	}
+	
+	public void enableChessSize(boolean b) {
+		sachovnice.setEnabled(b);
 	}
 }

@@ -209,20 +209,6 @@ public class NeuralNetworkTour {
 				*/
 			}
     
-			//System.out.println(numHamiltonian + "------------------");
-			/*
-			lstStats.Items.BeginUpdate();
-			lstStats.Items.Item[0].SubItems.Strings[0] = new String(numHamiltonian);
-			lstStats.Items.Item[0].SubItems.Strings[1] = new String(numHamiltonian * 100 / totalTrials);
-			lstStats.Items.Item[0].SubItems.Strings[2] = new String(numHamiltonian > 0 ? numHamiltonianEpochs / numHamiltonian : 0);
-			lstStats.Items.Item[1].SubItems.Strings[0] = new String(numNonHamiltonian);
-			lstStats.Items.Item[1].SubItems.Strings[1] = new String(numNonHamiltonian * 100 / totalTrials);
-			lstStats.Items.Item[1].SubItems.Strings[2] = new String(numNonHamiltonian > 0 ? numNonHamiltonianEpochs / numNonHamiltonian : 0);
-			lstStats.Items.Item[2].SubItems.Strings[0] = new String(numDiverge);
-			lstStats.Items.Item[2].SubItems.Strings[1] = new String(numDiverge * 100 / totalTrials);
-			lstStats.Items.Item[3].SubItems.Strings[0] = new String(totalTrials);
-			lstStats.Items.EndUpdate();
-			*/
 			//totalTrials < targetTrials
 		}while (numHamiltonian < 1);
 		
@@ -366,6 +352,7 @@ public class NeuralNetworkTour {
 			}
 		}
     
+		//smìry
 		for (int i = 0; i < NSIZE; i++)
 		{
 		  if (i + 1 < CSIZE * (i / CSIZE+1) && i + 1 - (2 * CSIZE) >= 0)
@@ -421,36 +408,7 @@ public class NeuralNetworkTour {
 	
 	public void DrawNeurons(){
 	
-		int p;
-	
-		//canvas->FillRect(::TRect(XSIZE, YSIZE, (CSIZE+1)*XSIZE, (DSIZE+1)*YSIZE));
-	
-		for(int n=0; n<CSIZE; n++){
-			for(int m=0; m<DSIZE; m++){
-				if(n%2 == 0){
-				  //if(m%2 == 0)
-					//BitBlt(canvas->Handle, XSIZE*n, YSIZE*m, ImageA->Width, ImageA->Height, ImageA->Canvas->Handle, 0, 0, SRCCOPY);
-				  //else
-					//BitBlt(canvas->Handle, XSIZE*n, YSIZE*m, ImageB->Width, ImageB->Height, ImageB->Canvas->Handle, 0, 0, SRCCOPY);
-				}else{
-				  //if(m%2 == 0)
-					//BitBlt(canvas->Handle, XSIZE*n, YSIZE*m, ImageB->Width, ImageB->Height, ImageB->Canvas->Handle, 0, 0, SRCCOPY);
-				  //else
-					//BitBlt(canvas->Handle, XSIZE*n, YSIZE*m, ImageA->Width, ImageA->Height, ImageA->Canvas->Handle, 0, 0, SRCCOPY);
-				}
-			}
-		}
-	
-	
-	    p = 1;
-	
-	    if(hamiltonian){
-			//canvas->Pen->Width = PENWIDTH;
-			//canvas->Pen->Color = clRed;
-	    }else{
-	        //canvas->Pen->Width = 1;
-			//canvas->Pen->Color = clBlue;
-		}
+		int p = 1;
 	
 		List<Integer> points = new ArrayList<>();
 		drawBoard();
@@ -476,15 +434,6 @@ public class NeuralNetworkTour {
 					main.drawTest(x1/80, y1/80, x2/80, y2/80, tempCSize);
 					
 					//System.out.println(x1/80 + " " + y1/80 + " " + x2/80 + " " + y2/80 );
-					
-					/*
-					canvas->MoveTo(A[m][0]-XSIZE, A[m][1]-YSIZE);
-					canvas->LineTo(A[n][0]-XSIZE, A[n][1]-YSIZE);
-					canvas->Ellipse(A[m][0]-CIRCLESIZE-XSIZE, A[m][1]-CIRCLESIZE-YSIZE, A[m][0]+CIRCLESIZE-XSIZE, A[m][1]+CIRCLESIZE-YSIZE);
-					canvas->Ellipse(A[n][0]-CIRCLESIZE-XSIZE, A[n][1]-CIRCLESIZE-YSIZE, A[n][0]+CIRCLESIZE-XSIZE, A[n][1]+CIRCLESIZE-YSIZE);
-					*/
-	
-					//pointStr += (String((A[m][0] - 40) / 80) + ", " + String((A[m][1] - 40) / 80) + "\r\n");
 				}
 			}
 		    p++;

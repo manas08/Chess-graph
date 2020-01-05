@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import cz.uhk.diplom.prochazka.KnightTest2;
 import cz.uhk.diplom.prochazka.KnightsTour;
 import cz.uhk.diplom.prochazka.NeuralNetworkTour;
 
@@ -49,7 +50,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
 		setLayout(new BorderLayout());
 		setContentPane(new JLabel(
-				new ImageIcon("E:\\Programy\\Eclipse\\ChessGraph\\Chess-graph\\diplom\\res\\textures\\chessmenu.png")));
+				new ImageIcon("res\\textures\\chessmenu.png")));
 
 		setLayout(null);
 		l1 = new JLabel("Hlavní nabídka");
@@ -277,15 +278,23 @@ public class MainMenu extends JFrame implements ActionListener {
 
 							// System.out.println(n2 + " +++++");
 							if (jml1 != 0 && jml2 != 0) {
-								if (jml1 >= jml2) {
+								if (jml1 > jml2) {
 									NeuralNetworkTour form = new NeuralNetworkTour();
 									form.cmdGoClick(mainWindow, jml1, jml2);
 									break;
-								}else {
+								}else if (jml1 == jml2 && jml1%2==0 && jml2%2==0) {
+									NeuralNetworkTour form = new NeuralNetworkTour();
+									form.cmdGoClick(mainWindow, jml1, jml2);
+									break;
+								}else if (jml1 < jml2){
 									NeuralNetworkTour form = new NeuralNetworkTour();
 									form.cmdGoClick(mainWindow, jml2, jml1);
 									break;
+								}else {
+								    JOptionPane.showMessageDialog(this, "Ètvercové šachovnice musí mít sudé velikosti.", "Chyba", JOptionPane.ERROR_MESSAGE);
 								}
+							}else {
+							    JOptionPane.showMessageDialog(this, "Zadejte nenulová èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
 							}
 						} catch (Exception e2) {
 						    JOptionPane.showMessageDialog(this, "Špatnì zadaná velikost šachovnice.", "Chyba", JOptionPane.ERROR_MESSAGE);
@@ -297,7 +306,6 @@ public class MainMenu extends JFrame implements ActionListener {
 			}
 			//NeuralNetwork network = new NeuralNetwork();
 			//network.Main();
-
 
 			
 			//KnightTest2 knightTest2 = new KnightTest2();

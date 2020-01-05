@@ -5,11 +5,6 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-/**
- * Resicka jezdcovy prochazky backtrackingem
- * 
- * @author Pavel Micka
- */
 public class KnightsTour {
 
 	/**

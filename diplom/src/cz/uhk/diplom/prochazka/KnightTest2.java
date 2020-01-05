@@ -63,16 +63,20 @@ public class KnightTest2 {
 			int u;
 			int v;
 			int t;
-	//C++ TO JAVA CONVERTER TODO TASK: The memory management function 'memset' has no equivalent in Java:
-			//memset(deg, 0, (Integer.SIZE / Byte.SIZE));
+
+			// pro každé pole
 			for (i = 0; i < n; i++)
 			{
 				for (j = 0; j < n; j++)
 				{
+					// pro každý smìr
 					for (t = 0; t < 8; t++)
 					{
+						// DX a DY obsahují pohyby jezdce po ose X a Y
 						u = i + DX[t];
 						v = j + DY[t];
+						// když se pøi pohybu nedostanou mimo šachovnici
+						// -> zvýší se ohodnocení
 						if ((u >= 0) && (u < n) && (v >= 0) && (v < n))
 						{
 							deg[i][j]++;
@@ -173,9 +177,9 @@ public class KnightTest2 {
 		public static void Main()
 		{
 			System.out.print("N = ");
-			n = 20;
+			n = 10;
 			System.out.print("Route or Circle: ");
-			response = "r";
+			response = "c";
 
 	//C++ TO JAVA CONVERTER TODO TASK: The memory management function 'memset' has no equivalent in Java:
 			//memset(label, 0, (Integer.SIZE / Byte.SIZE));

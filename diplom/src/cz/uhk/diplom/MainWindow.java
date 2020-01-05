@@ -464,6 +464,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	public void switchGame(int size) {
 		this.chesssize=size;
         gui.enabledMenu(true);
+        gui.clearButtonSelection();
 		obrazek = new Image();
 		platno.setObrazek(obrazek);
 		vertices.clear();
@@ -474,6 +475,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		kal = 0;
 		switch (mode) {
 		case 1:
+			gui.enableChessSize(true);
 			help.setVisible(true);
 			help.setText(1);
 			isCoverGame = false;
@@ -482,6 +484,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			settings.setAvailableVertices(vertices, 0, 1, 1);
 			break;
 		case 2:
+			gui.enableChessSize(true);
 			help.setVisible(true);
 			help.limitHorses(size);
 			help.setText(2);
@@ -491,6 +494,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			coverGame.setAvailableVertices(vertices, kone, 1, 1);
 			break;
 		case 3:
+			gui.enableChessSize(false);
 			isCoverGame = true;
 			isHamiltonGame = false;
 			simulation.getPath().clear();
@@ -539,6 +543,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			platno.repaint();
 			break;
 		case 5:
+			gui.enableChessSize(false);
 			help.setVisible(true);
 			help.setText(0);
 			isHamiltonGame = true;
@@ -547,6 +552,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			platno.repaint();
 			break;
 		default:
+			gui.enableChessSize(false);
 			break;
 		}
 
