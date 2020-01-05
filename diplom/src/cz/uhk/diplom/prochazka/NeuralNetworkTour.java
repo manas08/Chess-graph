@@ -46,6 +46,8 @@ public class NeuralNetworkTour {
 	
 	MainWindow main;
 	
+	private long start;
+	
 	public NeuralNetworkTour() {
 		try {
 			img3 = ImageIO.read(getClass().getResourceAsStream("/textures/brick.jpg"));
@@ -81,6 +83,8 @@ public class NeuralNetworkTour {
 		D = new int[NSIZE][NSIZE];
 		A = new int[NSIZE][NSIZE];
 		links = new ArrayList<>();
+
+		start = System.currentTimeMillis();
 		do
 		{
     
@@ -118,11 +122,11 @@ public class NeuralNetworkTour {
 						{
 							if (D_[k] != 0)
 							{
-								sum_row += V_[k]; //(V[i][k]*D[i][k]);
+								sum_row += V_[k];
 							}
-							if (D[k][j] == 1) //??????????
+							if (D[k][j] == 1)
 							{
-								sum_col += V[k][j]; //(V[k][j]*D[k][j]);
+								sum_col += V[k][j];
 							}
 						}
 						dU = -(sum_row - 2) - (sum_col - 2);
@@ -191,6 +195,9 @@ public class NeuralNetworkTour {
 			}
 			else if (CheckHamiltonian())
 			{
+				System.out.println();
+				System.out.println(System.currentTimeMillis() - start + " " + (System.currentTimeMillis() - start)/1000F);
+				System.out.println();
 				numHamiltonian++;
 				hamiltonian = true;
 				numHamiltonianEpochs += t;
@@ -201,12 +208,6 @@ public class NeuralNetworkTour {
 				hamiltonian = false;
 				numNonHamiltonian++;
 				numNonHamiltonianEpochs += t;
-				/*
-				if (chkShowAll.Checked)
-				{
-					DrawNeurons();
-				}
-				*/
 			}
     
 			//totalTrials < targetTrials
@@ -415,11 +416,7 @@ public class NeuralNetworkTour {
 
 		for(int m=0; m<NSIZE; m++) {
 			for(int n=p; n<NSIZE; n++) {
-				if(V[m][n] == 1) {
-					//System.out.println(A[m][0] + " " + A[m][1] );
-					//System.out.println(A[n][0]  + " " + A[n][1]);
-					//System.out.println();
-					
+				if(V[m][n] == 1) {			
 					
 					int x1 = A[m][0]-120;
 					int y1 = A[m][1]-120;
