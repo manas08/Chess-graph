@@ -175,7 +175,7 @@ public class KnightTest2 {
 		public static void Main()
 		{
 			start = System.currentTimeMillis();
-			n = 26;
+			n = 20;
 			response = "c";
 			init();
 

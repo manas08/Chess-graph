@@ -43,6 +43,8 @@ public class NeuralNetworkTour {
 	BufferedImage img4 = null;
 	BufferedImage img5 = null;
 	BufferedImage img6 = null;
+	BufferedImage img7 = null;
+	BufferedImage img8 = null;
 	
 	MainWindow main;
 	
@@ -54,6 +56,8 @@ public class NeuralNetworkTour {
 			img4 = ImageIO.read(getClass().getResourceAsStream("/textures/brick2.jpg"));
 			img5 = ImageIO.read(getClass().getResourceAsStream("/textures/smallbricks.jpg"));
 			img6 = ImageIO.read(getClass().getResourceAsStream("/textures/smallbricks2.jpg"));
+			img7 = ImageIO.read(getClass().getResourceAsStream("/textures/verysmallbricks.jpg"));
+			img8 = ImageIO.read(getClass().getResourceAsStream("/textures/verysmallbricks2.jpg"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -556,7 +560,9 @@ public class NeuralNetworkTour {
 				if (obr) {
 					if (tempCSize >= 10) {
 						vertex = new Vertex((int) (j * 33), (int) (i * 33), img5, 2);
-					}else {
+					}else if(tempCSize > 28) {
+						vertex = new Vertex((int) (j * 15), (int) (i * 15), img7, 2);
+					}else{
 						vertex = new Vertex((int) (j * 100), (int) (i * 100), img3, 2);
 					}
 					if (tempCSize == tempDSize) {
@@ -574,7 +580,9 @@ public class NeuralNetworkTour {
 				} else {
 					if (tempCSize >= 10) {
 						vertex = new Vertex((int) (j * 33), (int) (i * 33), img6, 2);
-					}else {
+					}else if (tempCSize > 28) {
+						vertex = new Vertex((int) (j * 15), (int) (i * 15), img8, 2);
+					}else{
 						vertex = new Vertex((int) (j * 100), (int) (i * 100), img4, 2);
 					}
 					if (tempCSize == tempDSize) {

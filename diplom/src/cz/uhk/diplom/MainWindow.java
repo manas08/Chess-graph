@@ -710,6 +710,10 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			Vertex point = new Vertex(j, u, 10, 10, 1);
 			points.add(point);
 			obrazek.pridej(point);
+		}else if( size > 28) {
+			Vertex point = new Vertex(j, u, 5, 5, 1);
+			points.add(point);
+			obrazek.pridej(point);
 		}else {
 			Vertex point = new Vertex(j, u, 30, 30, 1);
 			points.add(point);
@@ -750,6 +754,9 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		if (size >= 10) {
 			drawTestPoints(pomX1-5, pomY1-5, size);
 			drawTestPoints(pomX2-5, pomY2-5, size);
+		}else if(size > 28) {
+			drawTestPoints(pomX1-3, pomY1-3, size);
+			drawTestPoints(pomX2-3, pomY2-3, size);
 		}else {
 			drawTestPoints(pomX1-15, pomY1-15, size);
 			drawTestPoints(pomX2-15, pomY2-15, size);
