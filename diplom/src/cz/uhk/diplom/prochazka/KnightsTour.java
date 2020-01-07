@@ -24,8 +24,8 @@ public class KnightsTour {
 	 */
 	private int solutionsCount;
 	/**
-	 * Pole pro reseni 0 -> pocatecni pozice kone 1 -> prvni tah 2 -> druhy tah . .
-	 * . n -> n-ty tah
+	 * Pole pro reseni 0 -> pocatecni pozice kone 1 -> prvni tah 2 -> druhy tah
+	 * . . . n -> n-ty tah
 	 */
 	private int[][] solutionBoard;
 
@@ -41,12 +41,12 @@ public class KnightsTour {
 	 * @param n2
 	 *            typ hledane cesty
 	 */
-	
+
 	/**
-	 *  Pouze pro testovani algoritmu
+	 * Pro testování
 	 */
-	private long start; 
-	
+	// private long start;
+
 	public KnightsTour(int xSize, int ySize, String n2) {
 		this.xSize = xSize;
 		this.ySize = ySize;
@@ -61,7 +61,7 @@ public class KnightsTour {
 
 		solutionBoard = new int[ySize][xSize];
 
-		start = System.currentTimeMillis();
+		// start = System.currentTimeMillis();
 		for (int i = 0; i < ySize; i++) {
 			for (int j = 0; j < xSize; j++) {
 				solutionBoard[i][j] = NOT_VISITED;
@@ -138,15 +138,16 @@ public class KnightsTour {
 		if (solutionsCount == 20) {
 			return;
 		}
-		
+
 		solutionBoard[y][x] = turnNr;
 		if (turnNr == (xSize * ySize) - 1) {
+			// System.out.println(System.currentTimeMillis() - start + " " +
+			// (System.currentTimeMillis() - start)/1000F);
 			if (uzav) {
 				for (Coords c : getFields(x, y)) {
 					if (solutionBoard[c.getY()][c.getX()] == 0) {
-						System.out.println();
-						System.out.println(System.currentTimeMillis() - start + " " + (System.currentTimeMillis() - start)/1000F);
-						System.out.println();
+						// System.out.println();
+						// System.out.println();
 						podm = true;
 					}
 				}
@@ -158,7 +159,8 @@ public class KnightsTour {
 			for (Coords c : getFields(x, y)) {
 				if (solutionBoard[c.getY()][c.getX()] == NOT_VISITED) {
 					takeTurn(c.getX(), c.getY(), turnNr + 1);
-					solutionBoard[c.getY()][c.getX()] = NOT_VISITED; // reset policka
+					solutionBoard[c.getY()][c.getX()] = NOT_VISITED; // reset
+																		// policka
 				}
 			}
 		}
