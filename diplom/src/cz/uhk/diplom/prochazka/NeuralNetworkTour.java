@@ -15,6 +15,16 @@ import cz.uhk.diplom.model.Vertex;
 import cz.uhk.diplom.tangible.RandomNumbers;
 import cz.uhk.diplom.utils.Link;
 
+/**
+ * 
+ * @author manas08
+ *
+ * Algoritm based on Hopfield's neural network
+ * for searching Knight's tours in chessboard
+ *
+ */
+
+
 public class NeuralNetworkTour {
 
 	int CSIZE;

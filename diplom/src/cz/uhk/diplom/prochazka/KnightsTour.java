@@ -6,6 +6,18 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class KnightsTour {
+	
+
+	/**
+	 * 
+	 * @author manas08
+	 *
+	 * Backtracking algoritm
+	 * for searching Knight's tours in chessboard
+	 *
+	 */
+	
+	
 
 	/**
 	 * Priznak nenavstivenosti policka

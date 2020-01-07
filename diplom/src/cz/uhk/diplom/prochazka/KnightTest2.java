@@ -1,6 +1,17 @@
 package cz.uhk.diplom.prochazka;
 
 public class KnightTest2 {
+	
+	
+	/**
+	 * 
+	 * @author manas08
+	 *
+	 * Warnsdorff algoritm 
+	 * for searching Knight's tours in chessboard
+	 *
+	 */
+	
 
 	public static int n;
 	public static String response;
