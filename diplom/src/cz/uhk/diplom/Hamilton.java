@@ -230,6 +230,12 @@ public class Hamilton {
 		this.obrazek = obrazek;
 		edges.clear();
 		points.clear();
+		
+		//doèasnì
+		if (level == 2) {
+			level++;
+		}
+		
 		switch (level) {
 		case 0:
 			drawLevel0();

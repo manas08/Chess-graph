@@ -29,7 +29,7 @@ import cz.uhk.diplom.prochazka.KnightsTour;
 import cz.uhk.diplom.prochazka.NeuralNetworkTour;
 
 public class MainMenu extends JFrame implements ActionListener {
-	JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
+	JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
 	JLabel l1;
 	JPanel panel1;
 	MainWindow mainWindow;
@@ -53,37 +53,44 @@ public class MainMenu extends JFrame implements ActionListener {
 				new ImageIcon("res\\textures\\chessmenu.png")));
 
 		setLayout(null);
-		l1 = new JLabel("Hlavní nabídka");
+		l1 = new JLabel("Jezdcova procházka");
 
-		b1 = new JButton("Default game");
+		b0 = new JButton("Popis problému");
+		b0.setPreferredSize(new Dimension(100, 30));
+		b0.addActionListener(this);
+		b0.setBounds(75, 150, 150, 30);
+		
+		b1 = new JButton("Najdi procházku");
 		b1.setPreferredSize(new Dimension(100, 30));
 		b1.addActionListener(this);
-		b1.setBounds(75, 150, 130, 30);
+		b1.setBounds(75, 190, 150, 30);
 
-		b2 = new JButton("Cover game");
-		b2.setPreferredSize(new Dimension(100, 30));
-		b2.addActionListener(this);
-		b2.setBounds(75, 190, 130, 30);
-
-		b3 = new JButton("Simulation");
+		b3 = new JButton("Simulace");
 		b3.setPreferredSize(new Dimension(100, 30));
 		b3.addActionListener(this);
-		b3.setBounds(75, 230, 130, 30);
+		b3.setBounds(75, 230, 150, 30);
+
+		b2 = new JButton("Krycí hra");
+		b2.setPreferredSize(new Dimension(100, 30));
+		b2.addActionListener(this);
+		b2.setBounds(75, 270, 150, 30);
 
 		b4 = new JButton("Generate");
 		b4.setPreferredSize(new Dimension(100, 30));
 		b4.addActionListener(this);
-		b4.setBounds(75, 270, 130, 30);
+		b4.setBounds(75, 310, 150, 30);
 
-		b5 = new JButton("Hamilton");
+		b5 = new JButton("Hra Hamilton");
 		b5.setPreferredSize(new Dimension(100, 30));
 		b5.addActionListener(this);
-		b5.setBounds(75, 310, 130, 30);
+		//b5.setBounds(75, 350, 150, 30);
+		// pro studenty
+		b5.setBounds(75, 310, 150, 30);
 
 		b10 = new JButton("Neural network");
 		b10.setPreferredSize(new Dimension(100, 30));
 		b10.addActionListener(this);
-		b10.setBounds(75, 350, 130, 30);
+		b10.setBounds(75, 390, 150, 30);
 
 		l1.setPreferredSize(new Dimension(450, 50));
 		l1.setBounds(25, 55, 450, 50);
@@ -91,12 +98,13 @@ public class MainMenu extends JFrame implements ActionListener {
 		l1.setForeground(new Color(49, 49, 49));
 
 		add(l1);
+		add(b0);
 		add(b1);
 		add(b2);
 		add(b3);
-		add(b4);
+		//add(b4);
 		add(b5);
-		add(b10);
+		//add(b10);
 
 
 		b6 = new JButton("3x3");
@@ -128,6 +136,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		add(b8);
 		add(b9);
 
+		buttons.add(b0);
 		buttons.add(b1);
 		buttons.add(b2);
 		buttons.add(b3);
@@ -167,8 +176,14 @@ public class MainMenu extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == b1) {
+		if (e.getSource() == b0) {
+			this.dispose();
+			mode = 0;
+			mainWindow.setMode(mode);
+			mainWindow.switchGame(0);
+		}else if (e.getSource() == b1) {
 			mode = 1;
+			b0.setVisible(false);
 			b1.setVisible(false);
 			b2.setVisible(false);
 			b3.setVisible(false);
@@ -176,12 +191,13 @@ public class MainMenu extends JFrame implements ActionListener {
 			b5.setVisible(false);
 			b10.setVisible(false);
 
-			b6.setVisible(true);
+			//b6.setVisible(true);
 			b7.setVisible(true);
 			b8.setVisible(true);
 			b9.setVisible(true);
 		} else if (e.getSource() == b2) {
 			mode = 2;
+			b0.setVisible(false);
 			b1.setVisible(false);
 			b2.setVisible(false);
 			b3.setVisible(false);
@@ -189,12 +205,13 @@ public class MainMenu extends JFrame implements ActionListener {
 			b5.setVisible(false);
 			b10.setVisible(false);
 
-			b6.setVisible(true);
+			//b6.setVisible(true);
 			b7.setVisible(true);
 			b8.setVisible(true);
 			b9.setVisible(true);
 		} else if (e.getSource() == b3) {
 			mode = 3;
+			b0.setVisible(false);
 			b1.setVisible(false);
 			b2.setVisible(false);
 			b3.setVisible(false);

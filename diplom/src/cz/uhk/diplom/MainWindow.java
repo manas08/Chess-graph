@@ -21,7 +21,9 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import cz.uhk.diplom.model.Vertex;
 import cz.uhk.diplom.utils.Filer;
-import cz.uhk.diplom.utils.MyTextArea;
+import cz.uhk.diplom.utils.HelpNote;
+import cz.uhk.diplom.utils.TheoryPictures;
+import cz.uhk.diplom.utils.TheoryTable;
 import cz.uhk.diplom.model.Edge;
 import cz.uhk.diplom.model.Image;
 
@@ -47,8 +49,11 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	private CoverGame coverGame;
 	private Simulation simulation;
 	private Hamilton hamilton;
+	private Theory theory;
 	private static MainMenu mainMenu;
-	private static MyTextArea help;
+	private static HelpNote help;
+	private static TheoryTable table;
+	private static TheoryPictures pictures;
 	private int test = 0;
 	private JMenuBar jMenuBar;
 	private boolean isCoverGame = false, isHamiltonGame = false;
@@ -75,14 +80,23 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		platno.addMouseMotionListener(this);
 		getContentPane().setBackground(Color.GRAY); 
         gui.enabledMenu(false);
-
-        help = new MyTextArea(350, 350);
-        help.setVisible(false);
-		platno.add(help);
 		
 		settings = new Settings();
 		coverGame = new CoverGame();
 		simulation = new Simulation();
+		theory = new Theory();
+
+        help = new HelpNote(350, 350);
+        help.setVisible(false);
+		platno.add(help);
+
+        table = new TheoryTable(497, 430, theory);
+        table.setVisible(false);
+		platno.add(table);
+
+        pictures = new TheoryPictures(497, 430, theory, 0);
+        pictures.setVisible(false);
+		platno.add(pictures);
 	}
 
 	public static void main(String[] args) {
@@ -472,8 +486,29 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		points.clear();
 		kone.clear();
 		help.setVisible(false);
+		table.setVisible(false);
+		pictures.setVisible(false);
 		kal = 0;
 		switch (mode) {
+		case 0:
+			table.setVisible(true);
+			pictures.setVisible(true);
+			theory.drawTheory(obrazek, this);
+			/*
+			int anim = 0;
+			while(anim < 25) {
+				obrazek = new Image();
+				platno.setObrazek(obrazek);
+				theory.animate(obrazek, this);
+				jMenuBar = gui.changeBottomMenu(mode, jMenuBar, this);
+
+		        getContentPane().revalidate();
+		        getContentPane().repaint();
+				platno.repaint(platno.getGraphics());
+				anim++;
+			}
+			*/
+			break;
 		case 1:
 			gui.enableChessSize(true);
 			help.setVisible(true);
@@ -773,7 +808,17 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		platno.repaint(platno.getGraphics());
 	}
 
-	public void hideHelp() {
+	public void hideFrames() {
 		help.setVisible(false);
+		table.setVisible(false);
+		pictures.setVisible(false);
+	}
+
+	public void changeTheoryPicture(int mode) {
+		platno.remove(pictures);
+		pictures = new TheoryPictures(497, 430, theory, mode);
+        pictures.setVisible(true);
+		platno.add(pictures);
+		platno.repaint();
 	}
 }

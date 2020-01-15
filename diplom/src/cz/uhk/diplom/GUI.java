@@ -211,7 +211,7 @@ public class GUI {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (mainMenu.isEnabled()) {
-					frame.hideHelp();
+					frame.hideFrames();
 					enabledMenu(false);
 					frame.endGame();
 					MainMenu main = new MainMenu(frame);
@@ -261,7 +261,11 @@ public class GUI {
 	}
 
 	public JMenuBar changeBottomMenu(int game, JMenuBar jMenuBar, MainWindow frame) {
-		if (game == 1) {
+		if (game == 0) {
+			jMenuBar.remove(kun);
+			jMenuBar.remove(hranaZpet);
+			jMenuBar.remove(zpet);
+		}else if (game == 1) {
 			jMenuBar.remove(kun);
 			jMenuBar.remove(hranaZpet);
 			jMenuBar.add(zpet);
