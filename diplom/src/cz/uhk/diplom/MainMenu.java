@@ -271,7 +271,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		}else if (e.getSource() == b10) {
 			this.dispose();
 			mode = 6;
-			/*
+			
 			while (true) {
 				JPanel myPanel = new JPanel();
 				myPanel.add(new JLabel("Výška šachovnice: "));
@@ -320,14 +320,15 @@ public class MainMenu extends JFrame implements ActionListener {
 				}else {
 					break;
 				}
-			}*/
+			}
+			
 			//NeuralNetwork network = new NeuralNetwork();
 			//network.Main();
 
-			//KnightsTour kt = new KnightsTour(6, 6, "uzavøené cesty");
+			//KnightsTour kt = new KnightsTour(9, 9, "cesty");
 			
-			KnightTest2 knightTest2 = new KnightTest2();
-			knightTest2.Main();
+			//KnightTest2 knightTest2 = new KnightTest2();
+			//knightTest2.Main();
 			
 			//PythonTest pythonTest = new PythonTest(mainWindow);
 			//MainTest mainTest = new MainTest(mainWindow);
