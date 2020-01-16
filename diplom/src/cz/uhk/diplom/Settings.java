@@ -25,6 +25,7 @@ public class Settings {
 	private List<Vertex> points;
 	private List<Vertex> steps;
 	private int mode;
+	MainWindow main;
 
 	public Settings() {
 		try {
@@ -65,6 +66,7 @@ public class Settings {
 		this.points = points;
 		this.obrazek = obrazek;
 		this.mode = mode;
+		this.main = main;
 		steps = new ArrayList<>();
 
 		switch (mode) {
@@ -609,5 +611,9 @@ public class Settings {
 				v.setImg(img3G);
 			}
 		}
+	}
+	
+	public MainWindow getMain() {
+		return main;
 	}
 }

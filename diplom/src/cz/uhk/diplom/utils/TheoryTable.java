@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -19,28 +20,27 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import cz.uhk.diplom.MainWindow;
-import cz.uhk.diplom.Theory;
+import cz.uhk.diplom.Settings;
 
 public class TheoryTable extends JTextArea {
 
-    private BufferedImage img, img1, img2, img3;
+    private BufferedImage img, img1, img2;
     JTextArea jLabel, jt, jt1;
     int size, mode = 0, a, b;
 	JButton btnNext = new JButton(">");
 	JButton btnBack = new JButton("<");
-	Theory theory;
+	JButton btnAnimate = new JButton("Animace");
+	MainWindow main;
 
-    public TheoryTable(int a, int b, Theory theory) {
+    public TheoryTable(int a, int b) {
         super(a,b);
         this.a = a;
         this.b = b;
-        this.theory = theory;
 
         try{
     		img= ImageIO.read(getClass().getResourceAsStream("/textures/tabule.jpg"));
     		img1= ImageIO.read(getClass().getResourceAsStream("/textures/moves.jpg"));
-    		img2= ImageIO.read(getClass().getResourceAsStream("/textures/tour/tour1.png"));
-    		img3= ImageIO.read(getClass().getResourceAsStream("/textures/tour/tour2.png"));
+    		img2= ImageIO.read(getClass().getResourceAsStream("/textures/knightTour.png"));
         } catch(IOException e) {
             System.out.println(e.toString());
         }
@@ -81,7 +81,7 @@ public class TheoryTable extends JTextArea {
 		jt1 = new JTextArea() {
 			@Override
 	        public void paintComponent(Graphics g) {
-	            g.drawImage(img3, 0, 0, null);
+	            g.drawImage(img1, 0, 0, null);
 	            super.paintComponents(g);
 	        }
 		};
@@ -101,14 +101,15 @@ public class TheoryTable extends JTextArea {
 				if (mode < 2) {
 					mode++;
 					setText();
-					MainWindow main = theory.getMain();
 					main.changeTheoryPicture(mode);
 				}
 				if (mode == 2) {
 					btnNext.setEnabled(false);
+					btnAnimate.setVisible(true);
 				}else {
 					btnNext.setEnabled(true);
 					btnBack.setEnabled(true);
+					btnAnimate.setVisible(false);
 				}
 			}
 		});
@@ -125,7 +126,6 @@ public class TheoryTable extends JTextArea {
 				if (mode > 0) {
 					mode--;
 					setText();
-					MainWindow main = theory.getMain();
 					main.changeTheoryPicture(mode);
 				}
 				if (mode == 0) {
@@ -134,11 +134,28 @@ public class TheoryTable extends JTextArea {
 					btnNext.setEnabled(true);
 					btnBack.setEnabled(true);
 				}
+				btnAnimate.setVisible(false);
 			}
 		});
 		btnBack.setFocusPainted(false);
 		btnBack.setEnabled(false);
 		add(btnBack);
+
+		btnAnimate.setPreferredSize(new Dimension(75, 25));
+		btnAnimate.setBounds(400,332, 75, 25);
+		btnAnimate.setBackground(new Color(221,197,141));
+		btnAnimate.setMargin(new Insets(1,1,1,1));
+		btnAnimate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mode++;
+				main.changeTheoryPicture(mode);
+				mode--;
+			}
+		});
+		btnAnimate.setFocusPainted(false);
+		btnAnimate.setVisible(false);
+		add(btnAnimate);
 		
 		jLabel = new JTextArea();
 		jLabel.setOpaque(false);
@@ -150,7 +167,7 @@ public class TheoryTable extends JTextArea {
 
 		jLabel.setFont(new Font("courier", Font.ITALIC, 16));
 		jLabel.setBounds(70,100,250,200);
-		jLabel.setSize(250,200);
+		jLabel.setSize(400,200);
 		add(jLabel);
 		setText();
 		
@@ -171,20 +188,20 @@ public class TheoryTable extends JTextArea {
 	public void setText() {
 		switch (mode) {
 		case 0:
-			jLabel.setText("- Spojte body pomocí hran. \n \n - Navštivte kadı bod \n a vrate se do poèáteèního bodu.\n \n "
-					+ " - Bílé hrany oznaèují moné cesty. \n \n - Krok zpìt naleznete na dolní lištì.");
+			jLabel.setText(" Cíl: \n \n - Kùò se pohybuje po prázdné šachovnici \n "
+					+ "a jeho úkolem je, aby navštívil kadé pole šachovnice. \n \n - Kadé pole musí navštívit právì 1x.");
 
 	        jt.setBounds(700, 50, 220, 220);
 	        jt1.setBounds(900, 900, 220, 220);
 			break;
 		case 1:
-			jLabel.setText(" \n \n - Projeïte kadé pole šachovnice. \n \n - Kadé pole musíte navštívit právì 1x. \n \n - Krok zpìt naleznete na dolní lištì.");
+			jLabel.setText(" Pohyb: \n \n - Kùò se mùe pohybovat dle šachovıch pravidel. \n \n - Tedy do písmene L. \n \n - Nesmí vstoupit na ji navštivené pole.");
 
 	        jt1.setBounds(700, 50, 220, 220);
 	        jt.setBounds(900, 900, 220, 220);
 			break;
 		case 2:
-			jLabel.setText("Krycí hra");
+			jLabel.setText(" Øešení: \n \n - Øešení lze nalézt na rùznì velkıch šachovnicích. \n \n - Napøíklad na šachovnici 5x5 existuje 1 768 øešení. \n \n - Dokáete nalézt alespoò jedno?");
 			break;
 		default:
 			break;
@@ -193,6 +210,10 @@ public class TheoryTable extends JTextArea {
 
 	public void limitHorses(int size) {
 		this.size = size;
+	}
+
+	public void setMain(MainWindow mainWindow) {
+		this.main = mainWindow;
 	}
     
 }

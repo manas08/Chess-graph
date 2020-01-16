@@ -17,7 +17,7 @@ public class CoverGame {
 	BufferedImage img1 = null, img2 = null, img3 = null, img4 = null, kraj1 = null, kraj2 = null, kraj3 = null,
 			kraj4 = null, kraj5 = null, kraj6 = null, kraj7 = null, kraj8 = null, kraj9 = null, kraj10 = null,
 			kraj11 = null, kraj12 = null, kraj13 = null, kraj14 = null, kraj15 = null, kraj16 = null, img3G = null,
-			img4G = null;
+			img4G = null, imgBlack = null;
 
 	private Image obrazek;
 	private int mode;
@@ -35,6 +35,7 @@ public class CoverGame {
 			img4 = ImageIO.read(getClass().getResourceAsStream("/textures/brick2.jpg"));
 			img3G = ImageIO.read(getClass().getResourceAsStream("/textures/brickR.jpg"));
 			img4G = ImageIO.read(getClass().getResourceAsStream("/textures/brick2R.jpg"));
+			imgBlack = ImageIO.read(getClass().getResourceAsStream("/textures/brickblack.jpg"));
 			kraj1 = ImageIO.read(getClass().getResourceAsStream("/textures/kraj1.jpg"));
 			kraj2 = ImageIO.read(getClass().getResourceAsStream("/textures/kraj2.jpg"));
 			kraj3 = ImageIO.read(getClass().getResourceAsStream("/textures/kraj3.jpg"));
@@ -63,10 +64,6 @@ public class CoverGame {
 		this.mode = mode;
 
 		switch (mode) {
-		case 3:
-			drawBoard3x3();
-			vertex = new Vertex(845, 378, img2, 3);
-			break;
 		case 4:
 			drawBoard4x4();
 			vertex = new Vertex(795, 328, img2, 3);
@@ -76,79 +73,46 @@ public class CoverGame {
 			vertex = new Vertex(745, 278, img2, 3);
 			break;
 		case 6:
-			drawBoard6x6();
+			drawBoardLevel();
+			vertex = new Vertex(695, 228, img2, 3);
+			break;
+		case 7:
+			drawBoardLevel();
+			vertex = new Vertex(695, 228, img2, 3);
+			break;
+		case 8:
+			drawBoardLevel();
 			vertex = new Vertex(695, 228, img2, 3);
 			break;
 		default:
 			break;
 		}
-		vertex.setX1(this.vertices.get(0).getX1() + 35);
-		vertex.setY1(this.vertices.get(0).getY1() + 38);
-		this.vertex.setId(0);
-		this.vertex.setRow(1);
-		this.vertex.setCollumn(1);
+		
+		if (mode == 6) {
+			vertex.setX1(this.vertices.get(1).getX1() + 35);
+			vertex.setY1(this.vertices.get(1).getY1() + 38);
+			this.vertex.setId(1);
+			this.vertex.setRow(1);
+			this.vertex.setCollumn(2);
+		}else if (mode == 8) {
+			vertex.setX1(this.vertices.get(2).getX1() + 35);
+			vertex.setY1(this.vertices.get(2).getY1() + 38);
+			this.vertex.setId(2);
+			this.vertex.setRow(1);
+			this.vertex.setCollumn(3);
+		}else {
+			vertex.setX1(this.vertices.get(0).getX1() + 35);
+			vertex.setY1(this.vertices.get(0).getY1() + 38);
+			this.vertex.setId(0);
+			this.vertex.setRow(1);
+			this.vertex.setCollumn(1);
+		}
 		this.kone.add(vertex);
 		this.obrazek.pridej(vertex);
 
 		main.setKone(this.kone);
 		main.setObrazek(this.obrazek);
 		main.setVertices(this.vertices);
-	}
-
-	private void drawBoard3x3() {
-		// prvni vykresleni
-		vertex = new Vertex(20, 20, img1, 3);
-		// kone.add(vertex);
-		obrazek.pridej(vertex);
-		vertex = new Vertex(50, 50, img2, 3);
-		// kone.add(vertex);
-		obrazek.pridej(vertex);
-
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		double width = screenSize.getWidth();
-		double height = screenSize.getHeight();
-		double pom1 = ((width / 2) - 150) / 100.0;
-		double pom2 = ((height / 2) - 200) / 100.0;
-
-		boolean obr = false;
-		int row = 1;
-		for (double i = pom2; i < pom2 + 3; i++) {
-			int collumn = 1;
-
-			for (double j = pom1; j < pom1 + 3; j++) {
-				if (obr) {
-					vertex = new Vertex((int) (j * 100), (int) (i * 100), img4, 2);
-					vertex.setCollumn(collumn);
-					vertex.setRow(row);
-					vertex.setWhite(true);
-					collumn++;
-					vertices.add(vertex);
-					obrazek.pridej(vertex);
-					obr = false;
-				} else {
-					vertex = new Vertex((int) (j * 100), (int) (i * 100), img3, 2);
-					vertex.setCollumn(collumn);
-					vertex.setRow(row);
-					vertex.setWhite(false);
-					collumn++;
-					vertices.add(vertex);
-					obrazek.pridej(vertex);
-					obr = true;
-				}
-			}
-			row++;
-		}
-
-		vertex = new Vertex((int) (pom1 * 100 - 65), (int) (pom2 * 100 + 303), kraj9, 2);
-		obrazek.pridej(vertex);
-		vertex = new Vertex((int) (pom1 * 100 - 65), (int) (pom2 * 100 - 65), kraj10, 2);
-		obrazek.pridej(vertex);
-		vertex = new Vertex((int) (pom1 * 100 - 3), (int) (pom2 * 100 - 65), kraj11, 2);
-		obrazek.pridej(vertex);
-		vertex = new Vertex((int) (pom1 * 100 + 303), (int) (pom2 * 100 - 4), kraj12, 2);
-		obrazek.pridej(vertex);
-
-		vertices.get(0).setEnable(false);
 	}
 	
 	private void drawBoard4x4() {
@@ -258,7 +222,7 @@ public class CoverGame {
 		obrazek.pridej(vertex);
 	}
 
-	private void drawBoard6x6() {
+	private void drawBoardLevel() {
 		vertex = new Vertex(20, 20, img1, 3);
 		obrazek.pridej(vertex);
 		vertex = new Vertex(50, 50, img2, 3);
@@ -267,34 +231,29 @@ public class CoverGame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = screenSize.getWidth();
 		double height = screenSize.getHeight();
-		double pom1 = ((width / 2) - 300) / 100.0;
-		double pom2 = ((height / 2) - 350) / 100.0;
+		double pom1 = ((width / 2) - 250) / 100.0;
+		double pom2 = ((height / 2) - 300) / 100.0;
 
 		boolean obr = false;
 		int row = 1;
-		for (double i = pom2; i < pom2 + 6; i++) {
+		for (double i = pom2; i < pom2 + 5; i++) {
 			int collumn = 1;
-			if (obr) {
-				obr = false;
-			} else {
-				obr = true;
-			}
 
-			for (double j = pom1; j < pom1 + 6; j++) {
+			for (double j = pom1; j < pom1 + 5; j++) {
 				if (obr) {
-					vertex = new Vertex((int) (j * 100), (int) (i * 100), img3, 2);
+					vertex = new Vertex((int) (j * 100), (int) (i * 100), img4, 2);
 					vertex.setCollumn(collumn);
 					vertex.setRow(row);
-					vertex.setWhite(false);
+					vertex.setWhite(true);
 					collumn++;
 					vertices.add(vertex);
 					obrazek.pridej(vertex);
 					obr = false;
 				} else {
-					vertex = new Vertex((int) (j * 100), (int) (i * 100), img4, 2);
+					vertex = new Vertex((int) (j * 100), (int) (i * 100), img3, 2);
 					vertex.setCollumn(collumn);
 					vertex.setRow(row);
-					vertex.setWhite(true);
+					vertex.setWhite(false);
 					collumn++;
 					vertices.add(vertex);
 					obrazek.pridej(vertex);
@@ -303,14 +262,95 @@ public class CoverGame {
 			}
 			row++;
 		}
+		
+		switch (this.mode) {
+		case 6:
+			vertices.get(20).setEnable(false);
+			vertices.get(20).setImg(imgBlack);
+			vertices.get(19).setEnable(false);
+			vertices.get(19).setImg(imgBlack);
+			vertices.get(18).setEnable(false);
+			vertices.get(18).setImg(imgBlack);
+			vertices.get(17).setEnable(false);
+			vertices.get(17).setImg(imgBlack);
+			vertices.get(16).setEnable(false);
+			vertices.get(16).setImg(imgBlack);
+			vertices.get(14).setEnable(false);
+			vertices.get(14).setImg(imgBlack);
+			vertices.get(11).setEnable(false);
+			vertices.get(11).setImg(imgBlack);
+			vertices.get(7).setEnable(false);
+			vertices.get(7).setImg(imgBlack);
+			vertices.get(6).setEnable(false);
+			vertices.get(6).setImg(imgBlack);
+			vertices.get(4).setEnable(false);
+			vertices.get(4).setImg(imgBlack);
+			vertices.get(3).setEnable(false);
+			vertices.get(3).setImg(imgBlack);
+			vertices.get(2).setEnable(false);
+			vertices.get(2).setImg(imgBlack);
+			vertices.get(0).setEnable(false);
+			vertices.get(0).setImg(imgBlack);
+			break;
+		case 7:
+			vertices.get(22).setEnable(false);
+			vertices.get(22).setImg(imgBlack);
+			vertices.get(21).setEnable(false);
+			vertices.get(21).setImg(imgBlack);
+			vertices.get(20).setEnable(false);
+			vertices.get(20).setImg(imgBlack);
+			vertices.get(18).setEnable(false);
+			vertices.get(18).setImg(imgBlack);
+			vertices.get(16).setEnable(false);
+			vertices.get(16).setImg(imgBlack);
+			vertices.get(15).setEnable(false);
+			vertices.get(15).setImg(imgBlack);
+			break;
+		case 8:
+			vertices.get(24).setEnable(false);
+			vertices.get(24).setImg(imgBlack);
+			vertices.get(23).setEnable(false);
+			vertices.get(23).setImg(imgBlack);
+			vertices.get(22).setEnable(false);
+			vertices.get(22).setImg(imgBlack);
+			vertices.get(20).setEnable(false);
+			vertices.get(20).setImg(imgBlack);
+			vertices.get(19).setEnable(false);
+			vertices.get(19).setImg(imgBlack);
+			vertices.get(17).setEnable(false);
+			vertices.get(17).setImg(imgBlack);
+			vertices.get(15).setEnable(false);
+			vertices.get(15).setImg(imgBlack);
+			vertices.get(14).setEnable(false);
+			vertices.get(14).setImg(imgBlack);
+			vertices.get(10).setEnable(false);
+			vertices.get(10).setImg(imgBlack);
+			vertices.get(9).setEnable(false);
+			vertices.get(9).setImg(imgBlack);
+			vertices.get(8).setEnable(false);
+			vertices.get(8).setImg(imgBlack);
+			vertices.get(6).setEnable(false);
+			vertices.get(6).setImg(imgBlack);
+			vertices.get(4).setEnable(false);
+			vertices.get(4).setImg(imgBlack);
+			vertices.get(3).setEnable(false);
+			vertices.get(3).setImg(imgBlack);
+			vertices.get(1).setEnable(false);
+			vertices.get(1).setImg(imgBlack);
+			vertices.get(0).setEnable(false);
+			vertices.get(0).setImg(imgBlack);
+			break;
+		default:
+			break;
+		}
 
-		vertex = new Vertex((int) (pom1 * 100 - 65), (int) (pom2 * 100 + 603), kraj1, 2);
+		vertex = new Vertex((int) (pom1 * 100 - 65), (int) (pom2 * 100 + 503), kraj5, 2);
 		obrazek.pridej(vertex);
-		vertex = new Vertex((int) (pom1 * 100 - 65), (int) (pom2 * 100 - 65), kraj2, 2);
+		vertex = new Vertex((int) (pom1 * 100 - 65), (int) (pom2 * 100 - 64), kraj6, 2);
 		obrazek.pridej(vertex);
-		vertex = new Vertex((int) (pom1 * 100 - 3), (int) (pom2 * 100 - 65), kraj3, 2);
+		vertex = new Vertex((int) (pom1 * 100 - 5), (int) (pom2 * 100 - 64), kraj7, 2);
 		obrazek.pridej(vertex);
-		vertex = new Vertex((int) (pom1 * 100 + 603), (int) (pom2 * 100 - 3), kraj4, 2);
+		vertex = new Vertex((int) (pom1 * 100 + 503), (int) (pom2 * 100 - 3), kraj8, 2);
 		obrazek.pridej(vertex);
 	}
 
@@ -318,10 +358,12 @@ public class CoverGame {
 		this.kone = kone;
 
 		for (Vertex v : vertices) {
-			if (v.isWhite()) {
-				v.setImg(img4);
-			} else {
-				v.setImg(img3);
+			if (v.isEnable()) {
+				if (v.isWhite()) {
+					v.setImg(img4);
+				} else {
+					v.setImg(img3);
+				}
 			}
 		}
 
@@ -329,52 +371,7 @@ public class CoverGame {
 		Vertex vertex = null;
 
 		for (Vertex v : kone) {
-			switch (mode) {
-			case 3:
-				if (v.getId() - 7 >= 0) {
-					vertex = vertices.get(v.getId() - 7);
-					if (vertex != null && vertex.getRow() < row) {
-						vertex.setEnable(true);
-						steps.add(vertex);
-					}
-				}
-				if (v.getId() - 5 >= 0) {
-					vertex = vertices.get(v.getId() - 5);
-					if (vertex != null && vertex.getRow() < row) {
-						vertex.setEnable(true);
-						steps.add(vertex);
-					}
-				}
-				if (v.getId() - 1 >= 0) {
-					vertex = vertices.get(v.getId() - 1);
-					if (vertex != null && vertex.getRow() < row) {
-						vertex.setEnable(true);
-						steps.add(vertex);
-					}
-				}
-				if (v.getId() + 1 <= 8) {
-					vertex = vertices.get(v.getId() + 1);
-					if (vertex != null && vertex.getRow() > row) {
-						vertex.setEnable(true);
-						steps.add(vertex);
-					}
-				}
-				if (v.getId() + 5 <= 8) {
-					vertex = vertices.get(v.getId() + 5);
-					if (vertex != null && vertex.getRow() > row) {
-						vertex.setEnable(true);
-						steps.add(vertex);
-					}
-				}
-				if (v.getId() + 7 <= 8) {
-					vertex = vertices.get(v.getId() + 7);
-					if (vertex != null && vertex.getRow() > row) {
-						vertex.setEnable(true);
-						steps.add(vertex);
-					}
-				}
-				break;
-			case 4:
+			if (mode == 4) {
 				if (v.getId() - 9 >= 0) {
 					vertex = vertices.get(v.getId() - 9);
 					if (vertex != null && vertex.getRow() < v.getRow() && collumn > vertex.getCollumn()) {
@@ -423,8 +420,8 @@ public class CoverGame {
 						steps.add(vertex);
 					}
 				}
-				break;
-			case 5:
+			}else if (mode == 5) {
+
 				if (v.getId() - 11 >= 0) {
 					vertex = vertices.get(v.getId() - 11);
 					if (vertex != null && vertex.getRow() == v.getRow() - 2) {
@@ -473,68 +470,66 @@ public class CoverGame {
 						steps.add(vertex);
 					}
 				}
-				break;
-			case 6:
-				if (v.getId() - 13 >= 0) {
-					vertex = vertices.get(v.getId() - 13);
-					if (vertex != null && vertex.getRow() == v.getRow() - 2) {
-						steps.add(vertex);
-					}
-				}
+			}else {
+
 				if (v.getId() - 11 >= 0) {
 					vertex = vertices.get(v.getId() - 11);
 					if (vertex != null && vertex.getRow() == v.getRow() - 2) {
 						steps.add(vertex);
 					}
 				}
-				if (v.getId() - 8 >= 0) {
-					vertex = vertices.get(v.getId() - 8);
+				if (v.getId() - 9 >= 0) {
+					vertex = vertices.get(v.getId() - 9);
+					if (vertex != null && vertex.getRow() == v.getRow() - 2) {
+						steps.add(vertex);
+					}
+				}
+				if (v.getId() - 7 >= 0) {
+					vertex = vertices.get(v.getId() - 7);
 					if (vertex != null && vertex.getRow() == v.getRow() - 1) {
 						steps.add(vertex);
 					}
 				}
-				if (v.getId() - 4 >= 0) {
-					vertex = vertices.get(v.getId() - 4);
+				if (v.getId() - 3 >= 0) {
+					vertex = vertices.get(v.getId() - 3);
 					if (vertex != null && vertex.getRow() < v.getRow()) {
 						steps.add(vertex);
 					}
 				}
-				if (v.getId() + 4 <= 35) {
-					vertex = vertices.get(v.getId() + 4);
+				if (v.getId() + 3 <= 24) {
+					vertex = vertices.get(v.getId() + 3);
 					if (vertex != null && vertex.getRow() > v.getRow()) {
-						vertex.setEnable(true);
 						steps.add(vertex);
 					}
 				}
-				if (v.getId() + 8 <= 35) {
-					vertex = vertices.get(v.getId() + 8);
+				if (v.getId() + 7 <= 24) {
+					vertex = vertices.get(v.getId() + 7);
 					if (vertex != null && vertex.getRow() == v.getRow() + 1) {
 						steps.add(vertex);
 					}
 				}
-				if (v.getId() + 11 <= 35) {
+				if (v.getId() + 9 <= 24) {
+					vertex = vertices.get(v.getId() + 9);
+					if (vertex != null && vertex.getRow() == v.getRow() + 2) {
+						steps.add(vertex);
+					}
+				}
+				if (v.getId() + 11 <= 24) {
 					vertex = vertices.get(v.getId() + 11);
 					if (vertex != null && vertex.getRow() == v.getRow() + 2) {
 						steps.add(vertex);
 					}
 				}
-				if (v.getId() + 13 <= 35) {
-					vertex = vertices.get(v.getId() + 13);
-					if (vertex != null && vertex.getRow() == v.getRow() + 2) {
-						steps.add(vertex);
-					}
-				}
-				break;
-			default:
-				break;
 			}
 		}
 
 		for (Vertex v : steps) {
-			if (v.isWhite()) {
-				v.setImg(img4G);
-			} else {
-				v.setImg(img3G);
+			if (v.isEnable()) {
+				if (v.isWhite()) {
+					v.setImg(img4G);
+				} else {
+					v.setImg(img3G);
+				}
 			}
 		}
 		
@@ -551,7 +546,7 @@ public class CoverGame {
 		}
 	}
 
-	public void pridatKone(MainWindow main, Image obrazek, List<Vertex> kone) {
+	public void pridatKone(MainWindow main, Image obrazek, List<Vertex> kone, List<Vertex> vertices) {
 		this.kone = kone;
 		this.obrazek = obrazek;
 
@@ -564,24 +559,38 @@ public class CoverGame {
 					break;
 				}
 			}
-			if (!loop) {
+			if (!loop && vertices.get(p).isEnable()) {
 				break;
 			}
 			p++;
 		}
 
-		int x = p%mode + 1;
-		int y = (p/mode) + 1;
-
+		int x = 0,y = 0;
 		switch (mode) {
 		case 4:
+			x = p%4 + 1;
+			y = (p/4) + 1;
 			vertex = new Vertex(795 + (100*(x-1)), 328 + (100*(y-1)), img2, 3);
 			break;
 		case 5:
+			x = p%5 + 1;
+			y = (p/5) + 1;
 			vertex = new Vertex(745 + (100*(x-1)), 278 + (100*(y-1)), img2, 3);
 			break;
 		case 6:
-			vertex = new Vertex(695 + (100*(x-1)), 228 + (100*(y-1)), img2, 3);
+			x = p%5 + 1;
+			y = (p/5) + 1;
+			vertex = new Vertex(745 + (100*(x-1)), 278 + (100*(y-1)), img2, 3);
+			break;
+		case 7:
+			x = p%5 + 1;
+			y = (p/5) + 1;
+			vertex = new Vertex(745 + (100*(x-1)), 278 + (100*(y-1)), img2, 3);
+			break;
+		case 8:
+			x = p%5 + 1;
+			y = (p/5) + 1;
+			vertex = new Vertex(745 + (100*(x-1)), 278 + (100*(y-1)), img2, 3);
 			break;
 		default:
 			break;
@@ -595,5 +604,22 @@ public class CoverGame {
 
 		main.setKone(this.kone);
 		main.setObrazek(this.obrazek);
+	}
+
+	public int getAvaibleHorses() {
+		switch (mode) {
+		case 4:
+			return 4;
+		case 5:
+			return 5;
+		case 6:
+			return 3;
+		case 7:
+			return 4;
+		case 8:
+			return 4;
+		default:
+			return 0;
+		}
 	}
 }

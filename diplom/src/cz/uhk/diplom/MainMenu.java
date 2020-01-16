@@ -3,13 +3,9 @@ package cz.uhk.diplom;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import cz.uhk.diplom.prochazka.KnightTest2;
 import cz.uhk.diplom.prochazka.KnightsTour;
 import cz.uhk.diplom.prochazka.NeuralNetworkTour;
 
 public class MainMenu extends JFrame implements ActionListener {
-	JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
+	JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, bZpet;
 	JLabel l1;
 	JPanel panel1;
 	MainWindow mainWindow;
@@ -54,6 +49,11 @@ public class MainMenu extends JFrame implements ActionListener {
 
 		setLayout(null);
 		l1 = new JLabel("Jezdcova procházka");
+
+		bZpet = new JButton("Zpìt");
+		bZpet.setPreferredSize(new Dimension(100, 25));
+		bZpet.addActionListener(this);
+		bZpet.setBounds(15, 400, 50, 25);
 
 		b0 = new JButton("Popis problému");
 		b0.setPreferredSize(new Dimension(100, 30));
@@ -98,6 +98,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		l1.setForeground(new Color(49, 49, 49));
 
 		add(l1);
+		add(bZpet);
 		add(b0);
 		add(b1);
 		add(b2);
@@ -127,15 +128,38 @@ public class MainMenu extends JFrame implements ActionListener {
 		b9.addActionListener(this);
 		b9.setBounds(75, 270, 120, 30);
 
+		b11 = new JButton("Level 1");
+		b11.setPreferredSize(new Dimension(100, 30));
+		b11.addActionListener(this);
+		b11.setBounds(75, 230, 120, 30);
+
+		b12 = new JButton("Level 2");
+		b12.setPreferredSize(new Dimension(100, 30));
+		b12.addActionListener(this);
+		b12.setBounds(75, 270, 120, 30);
+
+		b13 = new JButton("Level 3");
+		b13.setPreferredSize(new Dimension(100, 30));
+		b13.addActionListener(this);
+		b13.setBounds(75, 310, 120, 30);
+
+		bZpet.setVisible(false);
 		b6.setVisible(false);
 		b7.setVisible(false);
 		b8.setVisible(false);
 		b9.setVisible(false);
+		b11.setVisible(false);
+		b12.setVisible(false);
+		b13.setVisible(false);
 		add(b6);
 		add(b7);
 		add(b8);
 		add(b9);
+		add(b11);
+		add(b12);
+		add(b13);
 
+		buttons.add(bZpet);
 		buttons.add(b0);
 		buttons.add(b1);
 		buttons.add(b2);
@@ -147,6 +171,9 @@ public class MainMenu extends JFrame implements ActionListener {
 		buttons.add(b8);
 		buttons.add(b9);
 		buttons.add(b10);
+		buttons.add(b11);
+		buttons.add(b12);
+		buttons.add(b13);
 
 		for (JButton jButton : buttons) {
 			jButton.setOpaque(true);
@@ -176,13 +203,17 @@ public class MainMenu extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == b0) {
+		if (e.getSource() == bZpet) {
+			this.dispose();
+			mainWindow.openMenu(mainWindow);
+		}else if (e.getSource() == b0) {
 			this.dispose();
 			mode = 0;
 			mainWindow.setMode(mode);
 			mainWindow.switchGame(0);
 		}else if (e.getSource() == b1) {
 			mode = 1;
+			bZpet.setVisible(true);
 			b0.setVisible(false);
 			b1.setVisible(false);
 			b2.setVisible(false);
@@ -197,6 +228,7 @@ public class MainMenu extends JFrame implements ActionListener {
 			b9.setVisible(true);
 		} else if (e.getSource() == b2) {
 			mode = 2;
+			bZpet.setVisible(true);
 			b0.setVisible(false);
 			b1.setVisible(false);
 			b2.setVisible(false);
@@ -207,10 +239,15 @@ public class MainMenu extends JFrame implements ActionListener {
 
 			//b6.setVisible(true);
 			b7.setVisible(true);
+			b7.setBounds(75, 150, 120, 30);
 			b8.setVisible(true);
-			b9.setVisible(true);
+			b8.setBounds(75, 190, 120, 30);
+			b11.setVisible(true);
+			b12.setVisible(true);
+			b13.setVisible(true);
 		} else if (e.getSource() == b3) {
 			mode = 3;
+			bZpet.setVisible(true);
 			b0.setVisible(false);
 			b1.setVisible(false);
 			b2.setVisible(false);
@@ -244,8 +281,6 @@ public class MainMenu extends JFrame implements ActionListener {
 				String[] options2 = { "otevøené cesty", "uzavøené cesty" };
 				String n2 = (String) JOptionPane.showInputDialog(null, "Typ cesty??", "Typ cesty",
 						JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
-
-				// System.out.println(n2 + " +++++");
 				if (n2 != null) {
 					KnightsTour kt = new KnightsTour(c.getSelectedIndex() + 3, c1.getSelectedIndex() + 3, n2);
 					MainWindow.openMenu(mainWindow);
@@ -332,6 +367,15 @@ public class MainMenu extends JFrame implements ActionListener {
 			
 			//PythonTest pythonTest = new PythonTest(mainWindow);
 			//MainTest mainTest = new MainTest(mainWindow);
+		}else if (e.getSource() == b11) {
+			this.dispose();
+			mainWindow.switchGame(6);
+		}else if (e.getSource() == b12) {
+			this.dispose();
+			mainWindow.switchGame(7);
+		}else if (e.getSource() == b13) {
+			this.dispose();
+			mainWindow.switchGame(8);
 		}
 		mainWindow.setMode(mode);
 	}

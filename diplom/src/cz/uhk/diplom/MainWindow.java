@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -19,6 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.Timer;
+
 import cz.uhk.diplom.model.Vertex;
 import cz.uhk.diplom.utils.Filer;
 import cz.uhk.diplom.utils.HelpNote;
@@ -49,7 +54,6 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	private CoverGame coverGame;
 	private Simulation simulation;
 	private Hamilton hamilton;
-	private Theory theory;
 	private static MainMenu mainMenu;
 	private static HelpNote help;
 	private static TheoryTable table;
@@ -84,17 +88,16 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		settings = new Settings();
 		coverGame = new CoverGame();
 		simulation = new Simulation();
-		theory = new Theory();
 
         help = new HelpNote(350, 350);
         help.setVisible(false);
 		platno.add(help);
 
-        table = new TheoryTable(497, 430, theory);
+        table = new TheoryTable(497, 430);
         table.setVisible(false);
 		platno.add(table);
 
-        pictures = new TheoryPictures(497, 430, theory, 0);
+        pictures = new TheoryPictures(497, 430, 0);
         pictures.setVisible(false);
 		platno.add(pictures);
 	}
@@ -485,29 +488,17 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		edges.clear();
 		points.clear();
 		kone.clear();
+		gui.enableChessSize(false);
+			table.setVisible(false);
+			pictures.setVisible(false);
+		
 		help.setVisible(false);
-		table.setVisible(false);
-		pictures.setVisible(false);
 		kal = 0;
 		switch (mode) {
 		case 0:
+			table.setMain(this);
 			table.setVisible(true);
 			pictures.setVisible(true);
-			theory.drawTheory(obrazek, this);
-			/*
-			int anim = 0;
-			while(anim < 25) {
-				obrazek = new Image();
-				platno.setObrazek(obrazek);
-				theory.animate(obrazek, this);
-				jMenuBar = gui.changeBottomMenu(mode, jMenuBar, this);
-
-		        getContentPane().revalidate();
-		        getContentPane().repaint();
-				platno.repaint(platno.getGraphics());
-				anim++;
-			}
-			*/
 			break;
 		case 1:
 			gui.enableChessSize(true);
@@ -529,7 +520,6 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			coverGame.setAvailableVertices(vertices, kone, 1, 1);
 			break;
 		case 3:
-			gui.enableChessSize(false);
 			isCoverGame = true;
 			isHamiltonGame = false;
 			simulation.getPath().clear();
@@ -578,7 +568,6 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			platno.repaint();
 			break;
 		case 5:
-			gui.enableChessSize(false);
 			help.setVisible(true);
 			help.setText(0);
 			isHamiltonGame = true;
@@ -587,7 +576,6 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			platno.repaint();
 			break;
 		default:
-			gui.enableChessSize(false);
 			break;
 		}
 
@@ -599,8 +587,8 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	}
 	
 	public void pridatKone() {
-		if (chesssize > kone.size()) {
-			coverGame.pridatKone(this, obrazek, kone);
+		if (coverGame.getAvaibleHorses() > kone.size()) {
+			coverGame.pridatKone(this, obrazek, kone, vertices);
 			coverGame.setAvailableVertices(vertices, kone, kone.get(kone.size()-1).getRow(), kone.get(kone.size()-1).getCollumn());
 			platno.repaint();
 		}else {
@@ -712,34 +700,6 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		this.kal = 1;
 	}
 
-	/*
-	public void setTest() {
-        gui.enabledMenu(true);
-		obrazek = new Image();
-		platno.setObrazek(obrazek);
-		vertices.clear();
-		edges.clear();
-		points.clear();
-		kone.clear();
-		kal = 0;
-        getContentPane().revalidate();
-        getContentPane().repaint();
-		platno.repaint(platno.getGraphics());
-	}
-	public void drawTest(KnightPoint point, KnightPoint point2) {
-		this.edge = new Edge(point.getX()*100 + 15, point.getY()*100 + 15, point2.getX()*100 + 15, point2.getY()*100 + 15, 1);
-		drawTestPoints(point.getX(), point.getY());
-		drawTestPoints(point2.getX(), point2.getY());
-		edges.add(edge);
-		obrazek.pridej(edge);
-	}
-	
-	public void repaintTest() {
-		platno.repaint();
-	}
-
-	*/
-	
 	public void drawTestPoints(int j, int u, int size) {
 		if (size >= 10) {
 			Vertex point = new Vertex(j, u, 10, 10, 1);
@@ -822,10 +782,35 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	}
 
 	public void changeTheoryPicture(int mode) {
-		platno.remove(pictures);
-		pictures = new TheoryPictures(497, 430, theory, mode);
-        pictures.setVisible(true);
-		platno.add(pictures);
-		platno.repaint();
+		if (mode == 3) {
+			int anim = 0;
+			while(anim < 25) {
+				platno.remove(pictures);
+				pictures = new TheoryPictures(497, 430, anim);
+		        pictures.setVisible(true);
+				platno.add(pictures);
+				
+				platno.repaint(platno.getGraphics());
+				try {
+					TimeUnit.MILLISECONDS.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				anim++;
+			}
+		}else {
+			platno.remove(pictures);
+			if (mode == 0) {
+				pictures = new TheoryPictures(497, 430, 26);
+			}else if (mode == 1) {
+				pictures = new TheoryPictures(497, 430, 25);
+			}else {
+				pictures = new TheoryPictures(497, 430, 0);
+			}
+	        pictures.setVisible(true);
+			platno.add(pictures);
+			platno.repaint();
+		}
 	}
 }
