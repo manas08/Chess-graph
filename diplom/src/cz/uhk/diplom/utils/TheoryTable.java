@@ -162,7 +162,7 @@ public class TheoryTable extends JTextArea {
 		jLabel.setBorder(null);
 		jLabel.setEditable(false);
 		jLabel.setEnabled(false);
-		jLabel.setBackground(new Color(1,1,1, (float) 0.01));
+		jLabel.setBackground(new Color(1,1,1, (float) 0.0001));
 		jLabel.setDisabledTextColor(Color.WHITE);
 
 		jLabel.setFont(new Font("courier", Font.ITALIC, 16));

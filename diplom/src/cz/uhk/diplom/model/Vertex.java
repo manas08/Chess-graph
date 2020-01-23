@@ -83,6 +83,15 @@ public class Vertex implements GraphicsObject {
 			g.setColor(color);
 			g.fillOval(x1, y1, x2, y2);
 		}
+		if (mode == 5) {
+			g.drawImage(img, x1-20, y1-20, null);
+		}
+		if (mode == 6) {
+			g.drawImage(img, x1-10, y1-10, null);
+		}
+		if (mode == 7) {
+			g.drawImage(img, x1-30, y1-30, null);
+		}
 	}
 
 	@Override

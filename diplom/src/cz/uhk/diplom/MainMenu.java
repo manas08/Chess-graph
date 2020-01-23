@@ -2,6 +2,7 @@ package cz.uhk.diplom;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -194,6 +195,8 @@ public class MainMenu extends JFrame implements ActionListener {
 					jButton.setBackground(new Color(49, 47, 44));
 				}
 			});
+
+			jButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
 
 		// Just for refresh :) Not optional!

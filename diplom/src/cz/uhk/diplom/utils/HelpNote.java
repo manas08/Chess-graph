@@ -1,21 +1,33 @@
 package cz.uhk.diplom.utils;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import cz.uhk.diplom.MainWindow;
 
 public class HelpNote extends JTextArea {
 
     private BufferedImage img;
-    JTextField jLabel;
-    int size;
+    JTextField jLabel, jLabel1, jLabel2;
+    JTextArea text1, text2, text3;
+    JButton btnNext = new JButton(">");
+    JButton btnBack = new JButton("<");
+    int size, mode = 0;
+	MainWindow main;
+	boolean podm = false;
 
     public HelpNote(int a, int b) {
         super(a,b);
@@ -26,14 +38,105 @@ public class HelpNote extends JTextArea {
 		//setBorder(BorderFactory.createSoftBevelBorder(0, Color.WHITE, Color.BLACK));
 		setEditable(false);
 		jLabel = new JTextField();
-		setText(0);
+		jLabel.setText("Jezdcova procházka");
 		jLabel.setOpaque(false);
 		jLabel.setBorder(null);
 		jLabel.setEditable(false);
 		jLabel.setEnabled(false);
-		jLabel.setBackground(new Color(1,1,1, (float) 0.01));
+		jLabel.setBackground(new Color(1,1,1, (float) 0.0001));
 		jLabel.setDisabledTextColor(Color.BLACK);
+
+		jLabel.setFont(new Font("serif", Font.BOLD, 19));
+		jLabel.setSize(250,25);
+		jLabel.setBounds(90,80,250,25);
 		add(jLabel);
+
+		jLabel1 = new JTextField();
+		jLabel1.setText("Krycí hra");
+		jLabel1.setOpaque(false);
+		jLabel1.setBorder(null);
+		jLabel1.setEditable(false);
+		jLabel1.setEnabled(false);
+		jLabel1.setBackground(new Color(1,1,1, (float) 0.0001));
+		jLabel1.setDisabledTextColor(Color.BLACK);
+
+		jLabel1.setFont(new Font("serif", Font.BOLD, 19));
+		jLabel1.setSize(200,25);
+		jLabel1.setBounds(130,80,200,25);
+		add(jLabel1);
+
+		jLabel2 = new JTextField();
+		jLabel2.setText("Hledání Hamiltonovské krunice");
+		jLabel2.setOpaque(false);
+		jLabel2.setBorder(null);
+		jLabel2.setEditable(false);
+		jLabel2.setEnabled(false);
+		jLabel2.setBackground(new Color(1,1,1, (float) 0.0001));
+		jLabel2.setDisabledTextColor(Color.BLACK);
+
+		jLabel2.setFont(new Font("serif", Font.BOLD, 18));
+		jLabel2.setSize(300,25);
+		jLabel2.setBounds(45,80,300,25);
+		add(jLabel2);
+
+		text1 = new JTextArea();
+		text1.setBounds(80, 110, 300, 200);
+		text1.setSize(300, 200);
+		text1.setOpaque(false);
+		text1.setBorder(null);
+		text1.setEditable(false);
+		text1.setEnabled(false);
+		text1.setBackground(new Color(1,1,1, (float) 0.0001));
+		text1.setDisabledTextColor(Color.BLACK);
+		add(text1);
+		
+		btnNext.setPreferredSize(new Dimension(30, 25));
+		btnNext.setBounds(180,320, 30, 25);
+		btnNext.setBackground(new Color(228,228,228));
+		btnNext.setMargin(new Insets(1,1,1,1));
+		btnNext.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mode < 4) {
+					mode++;
+					setText(mode);
+				}
+				if (mode == 4) {
+					btnBack.setEnabled(true);
+					btnNext.setEnabled(false);
+				}else {
+					btnNext.setEnabled(true);
+					btnBack.setEnabled(false);
+				}
+			}
+		});
+		btnNext.setFocusPainted(false);
+		btnNext.setEnabled(false);
+		add(btnNext);
+
+		btnBack.setPreferredSize(new Dimension(30, 25));
+		btnBack.setBounds(140,320, 30, 25);
+		btnBack.setBackground(new Color(228,228,228));
+		btnBack.setMargin(new Insets(1,1,1,1));
+		btnBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mode > 3) {
+					mode--;
+					setText(mode);
+				}
+				if (mode == 3) {
+					btnBack.setEnabled(false);
+					btnNext.setEnabled(true);
+				}else {
+					btnNext.setEnabled(false);
+					btnBack.setEnabled(true);
+				}
+			}
+		});
+		btnBack.setFocusPainted(false);
+		add(btnBack);
+		
 		setDisabledTextColor(Color.BLACK);
 		setEnabled(false);
 		setBorder(BorderFactory.createCompoundBorder(
@@ -54,30 +157,42 @@ public class HelpNote extends JTextArea {
     }
 
 	public void setText(int s) {
+		this.mode=s;
 		switch (s) {
-		case 0:
-			jLabel.setText("Hledání Hamiltonovské krunice");
-			jLabel.setFont(new Font("serif", Font.BOLD, 17));
-			jLabel.setBounds(50,80,250,25);
-			jLabel.setSize(250,25);
-			setText("( \"kreslení jedním tahem\" ) \n \n - Spojte body pomocí hran. \n \n - Navštivte kadı bod \n a vrate se do poèáteèního bodu.\n \n "
-					+ " - Bílé hrany oznaèují moné cesty. \n \n - Krok zpìt naleznete na dolní lištì.");
-			break;
 		case 1:
-			jLabel.setText("Jezdcova procházka");
-			jLabel.setFont(new Font("serif", Font.BOLD, 19));
-			jLabel.setBounds(90,80,200,25);
-			jLabel.setSize(200,25);
-			setText(" \n \n - Projeïte kadé pole šachovnice. \n \n - Kadé pole musíte navštívit právì 1x. \n \n - Krok zpìt naleznete na dolní lištì.");
+			jLabel.setVisible(true);
+			jLabel1.setVisible(false);
+			jLabel2.setVisible(false);
+			btnBack.setVisible(false);
+			btnNext.setVisible(false);
+			text1.setText(" \n \n - Projeïte kadé pole šachovnice. \n \n - Kadé pole musíte navštívit právì 1x. \n \n - Krok zpìt naleznete na dolní lištì.");
 			break;
-
 		case 2:
-			jLabel.setText("Krycí hra");
-			jLabel.setFont(new Font("serif", Font.BOLD, 19));
-			jLabel.setBounds(120,80,150,25);
-			jLabel.setSize(150,25);
-			setText(" \n - Umístìte konì na šachovnici, \n tak aby kadé pole bylo kryto. \n \n - Kryté pole oznaèeno èervenì. \n \n - Máte omezenı poèet koní. ( " + size + " ) \n \n"
+			jLabel.setVisible(false);
+			jLabel1.setVisible(true);
+			jLabel2.setVisible(false);
+			btnBack.setVisible(false);
+			btnNext.setVisible(false);
+			text1.setText(" \n - Umístìte konì na šachovnici, \n tak aby kadé pole bylo kryto. \n \n - Kryté pole oznaèeno èervenì. \n \n - Máte omezenı poèet koní. ( " + size + " ) \n \n"
 					+ " - Pøidání konì naleznete na dolní lištì.");
+			break;
+		case 3:
+			if (!podm) {
+				jLabel.setVisible(false);
+				jLabel1.setVisible(false);
+				jLabel2.setVisible(true);
+				btnBack.setVisible(false);
+				btnNext.setVisible(false);
+			}
+			text1.setText("( \"kreslení jedním tahem\" ) \n \n - Spojte body pomocí hran. \n \n - Navštivte kadı bod \n a vrate se do poèáteèního bodu.\n \n "
+					+ " - Krok zpìt naleznete na dolní lištì.");
+			break;
+		case 4:
+			btnBack.setVisible(true);
+			btnNext.setVisible(true);
+			podm = true;
+			text1.setText("- Bílé hrany oznaèují moné cesty. \n \n - Plné èáry jsou povinné. \n \n "
+					+ " - Èárkované jsou nepovinné. ");
 			break;
 		default:
 			break;
@@ -86,6 +201,10 @@ public class HelpNote extends JTextArea {
 
 	public void limitHorses(int size) {
 		this.size = size;
+	}
+
+	public void setMain(MainWindow mainWindow) {
+		this.main = mainWindow;
 	}
     
 }

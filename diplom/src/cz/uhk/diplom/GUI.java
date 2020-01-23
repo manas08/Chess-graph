@@ -1,6 +1,7 @@
 package cz.uhk.diplom;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -30,8 +31,9 @@ public class GUI {
 	JMenuItem hranaZpet = new JMenuItem("    Krok zpìt    ");
 	JMenuBar nabidka = new JMenuBar();
 	JMenu soubor = new JMenu("  Soubor  ");
-	JMenu sachovnice = new JMenu("  Velikost šachovnice  ");
+	JMenu sachovnice = new JMenu("  Zmìnit šachovnici  ");
 	JMenu mainMenu = new JMenu("  Hlavní menu  ");
+	JCheckBoxMenuItem chessLevel1, chessLevel2, chessLevel3, chess6x6;
 
 	public JMenuBar createGUI(MainWindow frame, int width, int height) {
 		setButtonsFunctions(frame);
@@ -50,35 +52,6 @@ public class GUI {
 
 		// Soubor
 		soubor.setFont(new Font("times new roman", Font.PLAIN, 16));
-
-		// Open
-		JMenuItem openFile = new JMenuItem("Otevøít obrázek");
-		try {
-			openFile.setIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/textures/open.png"))));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		openFile.setHorizontalTextPosition(JMenuItem.RIGHT);
-		openFile.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.load();
-			}
-		});
-
-		// Save
-		JMenuItem saveFile = new JMenuItem("Uložit jako...");
-		try {
-			saveFile.setIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/textures/save.png"))));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		saveFile.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.save();
-			}
-		});
 
 		// About
 		JMenuItem aboutApp = new JMenuItem("O programu");
@@ -110,45 +83,15 @@ public class GUI {
 			}
 		});
 
-		// Settings
-		JMenu settings = new JMenu("Nastaveni...");
-		try {
-			settings.setIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/textures/settings.png"))));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		JCheckBox lock = new JCheckBox(" Uzamèení stran ", false);
-		lock.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (frame.isResizable()) {
-					frame.setResizable(false);
-				} else
-					frame.setResizable(true);
-			}
-		});
-		settings.add(lock);
-
-		soubor.add(openFile);
-		soubor.add(saveFile);
-		soubor.addSeparator();
-		soubor.add(settings);
 		soubor.add(aboutApp);
+		soubor.addSeparator();
 		soubor.add(exitApp);
+		soubor.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		// Sachovnice
 		sachovnice.setFont(new Font("times new roman", Font.PLAIN, 16));
+		sachovnice.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		effectsGroup = new ButtonGroup();
-
-		JCheckBoxMenuItem chess3x3 = new JCheckBoxMenuItem("   3x3   ");
-		chess3x3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.switchGame(3);
-			}
-		});
-		sachovnice.add(chess3x3);
-		effectsGroup.add(chess3x3);
 
 		JCheckBoxMenuItem chess4x4 = new JCheckBoxMenuItem("   4x4   ");
 		chess4x4.addActionListener(new ActionListener() {
@@ -170,7 +113,7 @@ public class GUI {
 		sachovnice.add(chess5x5);
 		effectsGroup.add(chess5x5);
 
-		JCheckBoxMenuItem chess6x6 = new JCheckBoxMenuItem("   6x6   ");
+		chess6x6 = new JCheckBoxMenuItem("   6x6   ");
 		chess6x6.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -180,8 +123,41 @@ public class GUI {
 		sachovnice.add(chess6x6);
 		effectsGroup.add(chess6x6);
 
+		chessLevel1 = new JCheckBoxMenuItem("   Level 1   ");
+		chessLevel1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.switchGame(6);
+			}
+		});
+		chessLevel1.setVisible(false);
+		sachovnice.add(chessLevel1);
+		effectsGroup.add(chessLevel1);
+
+		chessLevel2 = new JCheckBoxMenuItem("   Level 2   ");
+		chessLevel2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.switchGame(7);
+			}
+		});
+		chessLevel2.setVisible(false);
+		sachovnice.add(chessLevel2);
+		effectsGroup.add(chessLevel2);
+
+		chessLevel3 = new JCheckBoxMenuItem("   Level 3   ");
+		chessLevel3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.switchGame(8);
+			}
+		});
+		sachovnice.add(chessLevel3);
+		effectsGroup.add(chessLevel3);
+
 		// Hlavni nabidka
 		mainMenu.setFont(new Font("times new roman", Font.PLAIN, 16));
+		mainMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		mainMenu.addMouseListener(new MouseListener() {
 
 			@Override
@@ -233,6 +209,7 @@ public class GUI {
 	private void setButtonsFunctions(MainWindow frame) {
 
 		hranaZpet.setFont(new Font("times new roman", Font.PLAIN, 16));
+		hranaZpet.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		hranaZpet.addActionListener(new ActionListener() {
 			@Override
@@ -242,6 +219,7 @@ public class GUI {
 		});
 
 		zpet.setFont(new Font("times new roman", Font.PLAIN, 16));
+		zpet.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		zpet.addActionListener(new ActionListener() {
 			@Override
@@ -251,6 +229,7 @@ public class GUI {
 		});
 
 		kun.setFont(new Font("times new roman", Font.PLAIN, 16));
+		kun.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		kun.addActionListener(new ActionListener() {
 			@Override
@@ -269,10 +248,18 @@ public class GUI {
 			jMenuBar.remove(kun);
 			jMenuBar.remove(hranaZpet);
 			jMenuBar.add(zpet);
+			chessLevel1.setVisible(false);
+			chessLevel2.setVisible(false);
+			chessLevel3.setVisible(false);
+			chess6x6.setVisible(true);
 		} else if (game == 2) {
 			jMenuBar.remove(zpet);
 			jMenuBar.add(kun);
 			jMenuBar.remove(hranaZpet);
+			chessLevel1.setVisible(true);
+			chessLevel2.setVisible(true);
+			chessLevel3.setVisible(true);
+			chess6x6.setVisible(false);
 		} else if (game == 3) {
 			jMenuBar.remove(zpet);
 			jMenuBar.remove(kun);
