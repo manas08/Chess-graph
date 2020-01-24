@@ -1,6 +1,7 @@
 package cz.uhk.diplom.model;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -19,6 +20,7 @@ public class Vertex implements GraphicsObject {
 	private List<Vertex> visited;
 	private boolean navstiveno = false;
 	private Color color;
+	private String text;
 
 	public Vertex(int x1, int y1, int x2, int y2, int mode) {
 		this.x1 = x1;
@@ -65,6 +67,14 @@ public class Vertex implements GraphicsObject {
 			break;
 		}
 	}
+	
+	public Vertex(int x1, int y1, String text, int mode) {
+		this.x1 = x1;
+		this.y1 = y1;
+		this.text = text;
+		this.mode = mode;
+		color = new Color(255,255,255);
+	}
 
 	@Override
 	public void nakresli(Graphics2D g) {
@@ -91,6 +101,11 @@ public class Vertex implements GraphicsObject {
 		}
 		if (mode == 7) {
 			g.drawImage(img, x1-30, y1-30, null);
+		}
+		if (mode == 10) {
+			g.setColor(color);
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 18)); 
+			g.drawString(text, x1, y1);
 		}
 	}
 
