@@ -10,17 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import cz.uhk.diplom.MainWindow;
-import cz.uhk.diplom.Settings;
 
 public class TheoryTable extends JTextArea {
 
@@ -148,9 +145,13 @@ public class TheoryTable extends JTextArea {
 		btnAnimate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				btnAnimate.setEnabled(false);
+				btnBack.setEnabled(false);
 				mode++;
 				main.changeTheoryPicture(mode);
 				mode--;
+				btnBack.setEnabled(true);
+				btnAnimate.setEnabled(true);
 			}
 		});
 		btnAnimate.setFocusPainted(false);

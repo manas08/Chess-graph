@@ -197,10 +197,12 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 						saveX = vertex.getX1();
 						saveY = vertex.getY1();
 
-						hamilton.changeImg(vertex, 2);
 						this.vertex.setColor(new Color(255,0,0));
 						if (vertices.size() == 0) {
+							hamilton.changeImg(vertex, 0);
 							vertices.add(this.vertex);
+						}else {
+							hamilton.changeImg(vertex, 2);
 						}
 						
 						edge = new Edge(vertex.getX1()+10, vertex.getY1()+10, vertex.getX1()+10, vertex.getY1()+10, 1);
@@ -254,7 +256,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 					counter = 0;
 					for (Vertex vertex : points) {
 						//System.out.println(vertex.getX1() + " " + vertex.getY1());
-						if (vertex.getX1()-10 <= clickX && vertex.getX1()+30 >= clickX && vertex.getY1()-10 <= clickY && vertex.getY1()+30 >= clickY) {
+						if (vertex.getX1()-10 <= clickX && vertex.getX1()+30 >= clickX && vertex.getY1()-10 <= clickY && vertex.getY1()+30 >= clickY && !vertex.isNavstiveno()) {
 							for (Edge edge : edges) {
 								if (((edge.getV1ID() == vertex.getId() && edge.getV2ID() == this.vertex.getId()) || (edge.getV2ID() == vertex.getId() && edge.getV1ID() == this.vertex.getId())) &&
 										(!edge.isVisited())) {
@@ -263,6 +265,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 									this.edge.setY2(vertex.getY1()+10);
 									this.edge.setV2ID(vertex.getId());
 									edge.setVisited(true);
+									vertex.setNavstiveno(true);
 									hamilton.changeImg(vertex, 1);
 									vertex.setColor(new Color(0,255,0));
 								}
@@ -282,24 +285,39 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 					platno.repaint();
 				}
 
-				int vis=0;
-				for (int i = 0; i < edges.size(); i++) {
-					if (edges.get(i).isVisited() && edges.get(i).getMode() == 2) {
-						vis++;
+				if (vertices.get(0).getId() == vertices.get(vertices.size()-1).getId()) {
+					int vis=0;
+					for (int i = 0; i < edges.size(); i++) {
+						if (edges.get(i).isVisited() && edges.get(i).getMode() == 2) {
+							vis++;
+						}
 					}
-				}
-				//System.out.println(vis + " " + (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges()) + " WWWWWWW");
-				if (vis == (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges())) {
-			        JOptionPane.showMessageDialog(
-			        	    null, 
-			        	    "Správnì dokonèená hamiltonovská cesta! \n\n"
-			        	    + "Postupujete do dalšího levelu.", 
-			        	    "Hotovo",
-			        	    JOptionPane.INFORMATION_MESSAGE, 
-			        	    null); 
-					obrazek = new Image();
-					platno.setObrazek(obrazek);
-			        hamilton.nextLevel(obrazek);
+					//System.out.println(vis + " " + (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges()) + " WWWWWWW " + " " +vertices.size() +" " + vertices.get(0).getId() + " " + vertices.get(vertices.size()-1).getId());
+					if (vis == (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges()) && vertices.get(0).getId() == vertices.get(vertices.size()-1).getId()) {
+				        JOptionPane.showMessageDialog(
+				        	    null, 
+				        	    "Správnì dokonèená hamiltonovská kružnice! \n\n"
+				        	    + "Postupujete do dalšího levelu.", 
+				        	    "Hotovo",
+				        	    JOptionPane.INFORMATION_MESSAGE, 
+				        	    null); 
+						obrazek = new Image();
+						platno.setObrazek(obrazek);
+						vertices.clear();
+						edges.clear();
+						points.clear();
+						kone.clear();
+				        hamilton.nextLevel(obrazek);
+					}else {
+						JOptionPane.showMessageDialog(
+				        	    null, 
+				        	    "Nesprávnì dokonèená hamiltonovská kružnice! \n\n"
+				        	    + "Nebyly navštíveny všechny vrcholy nebo povinné hrany.", 
+				        	    "Nesprávnì",
+				        	    JOptionPane.INFORMATION_MESSAGE, 
+				        	    null); 
+						hranaZpet();
+					}
 				}
 			}else {
 				if (tvar != 0) {	
@@ -677,6 +695,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 				for (Vertex vertex : points) {
 					hamilton.changeImg(vertex, 0);
 					vertex.setColor(new Color(0,0,0));
+					vertex.setNavstiveno(false);
 				}
 				vertices.clear();
 				for (Edge edge : edges) {
@@ -694,7 +713,8 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 				}
 				*/
 				for (Edge edge : edges) {
-					if ((edge.getV1ID() == vertices.get(vertices.size()-1).getId() || edge.getV2ID() == vertices.get(vertices.size()-1).getId()) && !edge.isVisited() && edge.getMode() == 2) {
+					if (((edge.getV1ID() == vertices.get(vertices.size()-1).getId() || edge.getV2ID() == vertices.get(vertices.size()-1).getId()) && !edge.isVisited()) || vertices.get(0).getId() == vertices.get(vertices.size()-1).getId()) {
+						vertices.get(vertices.size()-1).setNavstiveno(false);
 						hamilton.changeImg(vertices.get(vertices.size()-1), 0);
 						vertices.get(vertices.size()-1).setColor(new Color(0,0,0));
 						break;
@@ -855,5 +875,9 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 
 	public void changeHelp(int help) {
 		this.help.setText(help);
+	}
+	
+	public void setMenuEnable(boolean b) {
+		this.gui.enabledMenu(b);
 	}
 }
