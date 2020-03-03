@@ -20,7 +20,7 @@ public class TheoryPictures extends JTextArea {
 	img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25,
 	moves, knightTour;
     JTextArea jLabel, jt, jt1;
-    int size, mode = 0, a, b, podm = 1;
+    int size, mode = 26, a, b, podm = 1;
 	JButton btnNext = new JButton(">");
 	JButton btnBack = new JButton("<");
 	double width, height;

@@ -91,7 +91,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
         table.setVisible(false);
 		platno.add(table);
 
-        pictures = new TheoryPictures(497, 430, 0);
+        pictures = new TheoryPictures(497, 430, 26);
         pictures.setVisible(false);
 		platno.add(pictures);
 	}

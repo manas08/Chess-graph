@@ -25,7 +25,7 @@ public class HelpNote extends JTextArea {
     JTextArea text1, text2, text3;
     JButton btnNext = new JButton(">");
     JButton btnBack = new JButton("<");
-    int size, mode = 0;
+    int size, mode = 0, limit;
 	MainWindow main;
 	boolean podm = false;
 
@@ -173,7 +173,7 @@ public class HelpNote extends JTextArea {
 			jLabel2.setVisible(false);
 			btnBack.setVisible(false);
 			btnNext.setVisible(false);
-			text1.setText(" \n - Umístìte konì na šachovnici, \n tak aby každé pole bylo kryto. \n \n - Kryté pole oznaèeno èervenì. \n \n - Máte omezený poèet koní. ( " + size + " ) \n \n"
+			text1.setText(" \n - Umístìte konì na šachovnici, \n tak aby každé pole bylo kryto. \n \n - Kryté pole oznaèeno èervenì. \n \n - Máte omezený poèet koní. ( " + limit + " ) \n \n"
 					+ " - Pøidání konì naleznete na dolní lištì.");
 			break;
 		case 3:
@@ -200,7 +200,20 @@ public class HelpNote extends JTextArea {
 	}
 
 	public void limitHorses(int size) {
-		this.size = size;
+		this.limit = size;
+		switch (size) {
+		case 6:
+			this.limit = 3;
+			break;
+		case 7:
+			this.limit = 4;
+			break;
+		case 8:
+			this.limit = 4;
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void setMain(MainWindow mainWindow) {

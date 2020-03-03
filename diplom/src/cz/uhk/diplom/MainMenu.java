@@ -84,14 +84,14 @@ public class MainMenu extends JFrame implements ActionListener {
 		b5 = new JButton("Hra Hamilton");
 		b5.setPreferredSize(new Dimension(100, 30));
 		b5.addActionListener(this);
-		//b5.setBounds(75, 350, 150, 30);
+		//b5.setBounds(75, 330, 150, 30);
 		// pro studenty
 		b5.setBounds(75, 310, 150, 30);
 
 		b10 = new JButton("Neural network");
 		b10.setPreferredSize(new Dimension(100, 30));
 		b10.addActionListener(this);
-		b10.setBounds(75, 390, 150, 30);
+		b10.setBounds(75, 370, 150, 30);
 
 		l1.setPreferredSize(new Dimension(450, 50));
 		l1.setBounds(25, 55, 450, 50);
