@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 import cz.uhk.diplom.model.Image;
 import cz.uhk.diplom.model.Vertex;
@@ -20,8 +21,10 @@ public class CoverGame {
 			img4G = null, imgBlack = null;
 
 	private Image obrazek;
-	private int mode;
+	private int mode, count;
+	private boolean check = true;
 	Vertex vertex;
+	MainWindow main;
 
 	private List<Vertex> vertices = new ArrayList<>();
 	private List<Vertex> kone = new ArrayList<>();
@@ -62,6 +65,7 @@ public class CoverGame {
 		this.vertices = vertices;
 		this.obrazek = obrazek;
 		this.mode = mode;
+		this.main = main;
 
 		switch (mode) {
 		case 4:
@@ -356,6 +360,7 @@ public class CoverGame {
 
 	public void setAvailableVertices(List<Vertex> vertices, List<Vertex> kone, int row, int collumn) {
 		this.kone = kone;
+		this.vertices = vertices;
 
 		for (Vertex v : vertices) {
 			if (v.isEnable()) {
@@ -374,49 +379,49 @@ public class CoverGame {
 			if (mode == 4) {
 				if (v.getId() - 9 >= 0) {
 					vertex = vertices.get(v.getId() - 9);
-					if (vertex != null && vertex.getRow() < v.getRow() && collumn > vertex.getCollumn()) {
+					if (vertex != null && vertex.getRow() < v.getRow() && v.getCollumn() > vertex.getCollumn() && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() - 7 >= 0) {
 					vertex = vertices.get(v.getId() - 7);
-					if (vertex != null && vertex.getRow() == v.getRow() - 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() - 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() - 6 >= 0) {
 					vertex = vertices.get(v.getId() - 6);
-					if (vertex != null && vertex.getRow() == v.getRow() - 1) {
+					if (vertex != null && vertex.getRow() == v.getRow() - 1 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() - 2 >= 0) {
 					vertex = vertices.get(v.getId() - 2);
-					if (vertex != null && vertex.getRow() < v.getRow()) {
+					if (vertex != null && vertex.getRow() < v.getRow() && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 2 <= 15) {
 					vertex = vertices.get(v.getId() + 2);
-					if (vertex != null && vertex.getRow() > v.getRow()) {
+					if (vertex != null && vertex.getRow() > v.getRow() && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 6 <= 15) {
 					vertex = vertices.get(v.getId() + 6);
-					if (vertex != null && vertex.getRow() == v.getRow() + 1) {
+					if (vertex != null && vertex.getRow() == v.getRow() + 1 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 7 <= 15) {
 					vertex = vertices.get(v.getId() + 7);
-					if (vertex != null && vertex.getRow() == v.getRow() + 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() + 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 9 <= 15) {
 					vertex = vertices.get(v.getId() + 9);
-					if (vertex != null && vertex.getRow() > v.getRow() && v.getCollumn() < vertex.getCollumn()) {
+					if (vertex != null && vertex.getRow() > v.getRow() && v.getCollumn() < vertex.getCollumn() && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
@@ -424,49 +429,49 @@ public class CoverGame {
 
 				if (v.getId() - 11 >= 0) {
 					vertex = vertices.get(v.getId() - 11);
-					if (vertex != null && vertex.getRow() == v.getRow() - 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() - 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() - 9 >= 0) {
 					vertex = vertices.get(v.getId() - 9);
-					if (vertex != null && vertex.getRow() == v.getRow() - 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() - 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() - 7 >= 0) {
 					vertex = vertices.get(v.getId() - 7);
-					if (vertex != null && vertex.getRow() == v.getRow() - 1) {
+					if (vertex != null && vertex.getRow() == v.getRow() - 1 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() - 3 >= 0) {
 					vertex = vertices.get(v.getId() - 3);
-					if (vertex != null && vertex.getRow() < v.getRow()) {
+					if (vertex != null && vertex.getRow() < v.getRow() && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 3 <= 24) {
 					vertex = vertices.get(v.getId() + 3);
-					if (vertex != null && vertex.getRow() > v.getRow()) {
+					if (vertex != null && vertex.getRow() > v.getRow() && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 7 <= 24) {
 					vertex = vertices.get(v.getId() + 7);
-					if (vertex != null && vertex.getRow() == v.getRow() + 1) {
+					if (vertex != null && vertex.getRow() == v.getRow() + 1 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 9 <= 24) {
 					vertex = vertices.get(v.getId() + 9);
-					if (vertex != null && vertex.getRow() == v.getRow() + 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() + 2 && !steps.contains(vertex) ) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 11 <= 24) {
 					vertex = vertices.get(v.getId() + 11);
-					if (vertex != null && vertex.getRow() == v.getRow() + 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() + 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
@@ -474,57 +479,65 @@ public class CoverGame {
 
 				if (v.getId() - 11 >= 0) {
 					vertex = vertices.get(v.getId() - 11);
-					if (vertex != null && vertex.getRow() == v.getRow() - 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() - 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() - 9 >= 0) {
 					vertex = vertices.get(v.getId() - 9);
-					if (vertex != null && vertex.getRow() == v.getRow() - 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() - 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() - 7 >= 0) {
 					vertex = vertices.get(v.getId() - 7);
-					if (vertex != null && vertex.getRow() == v.getRow() - 1) {
+					if (vertex != null && vertex.getRow() == v.getRow() - 1 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() - 3 >= 0) {
 					vertex = vertices.get(v.getId() - 3);
-					if (vertex != null && vertex.getRow() < v.getRow()) {
+					if (vertex != null && vertex.getRow() < v.getRow() && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 3 <= 24) {
 					vertex = vertices.get(v.getId() + 3);
-					if (vertex != null && vertex.getRow() > v.getRow()) {
+					if (vertex != null && vertex.getRow() > v.getRow() && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 7 <= 24) {
 					vertex = vertices.get(v.getId() + 7);
-					if (vertex != null && vertex.getRow() == v.getRow() + 1) {
+					if (vertex != null && vertex.getRow() == v.getRow() + 1 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 9 <= 24) {
 					vertex = vertices.get(v.getId() + 9);
-					if (vertex != null && vertex.getRow() == v.getRow() + 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() + 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 				if (v.getId() + 11 <= 24) {
 					vertex = vertices.get(v.getId() + 11);
-					if (vertex != null && vertex.getRow() == v.getRow() + 2) {
+					if (vertex != null && vertex.getRow() == v.getRow() + 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
 			}
 		}
 
+		count = 0;
 		for (Vertex v : steps) {
 			if (v.isEnable()) {
+				count++;
+				for (Vertex vertex2 : kone) {
+					if (vertex2.getRow() == v.getRow() && vertex2.getCollumn() == v.getCollumn()) {
+						count--;
+						break;
+					}
+				}
 				if (v.isWhite()) {
 					v.setImg(img4G);
 				} else {
@@ -536,6 +549,9 @@ public class CoverGame {
 		for (Vertex v2 : kone) {
 			for (Vertex v : vertices) {
 				if (v.getRow() == v2.getRow() && v.getCollumn() == v2.getCollumn()) {
+					if (v.getImg() != img4G || v.getImg() != img3G) {
+						count++;	
+					}
 					if (v.isWhite()) {
 						v.setImg(img4G);
 					} else {
@@ -543,6 +559,11 @@ public class CoverGame {
 					}
 				}
 			}
+		}
+		
+		System.out.println("-------------------");
+		if (check) {
+			checkEndGame();
 		}
 	}
 
@@ -598,7 +619,7 @@ public class CoverGame {
 		
 		this.vertex.setRow(y);
 		this.vertex.setCollumn(x);
-		this.vertex.setId(p);
+		this.vertex.setId(p);		
 		this.kone.add(vertex);
 		this.obrazek.pridej(vertex);
 
@@ -621,5 +642,199 @@ public class CoverGame {
 		default:
 			return 0;
 		}
+	}
+	
+	public void checkEndGame() {
+		System.out.println(count + "--+++++++------" + mode);
+		switch (mode) {
+		case 4:
+			if (count == 16) {
+			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			return;
+		case 5:
+			if (count == 25) {
+			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			return;
+		case 6:
+			if (count == 12) {
+			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			return;
+		case 7:
+			if (count == 19) {
+			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			return;
+		case 8:
+			if (count == 9) {
+			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			return;
+		default:
+			return;
+		}
+	}
+
+	public void showSolution() {
+		for (Vertex vertex : kone) {
+			obrazek.odeber(vertex);
+		}
+		kone.clear();
+		switch (mode) {
+		case 4:
+			vertex = new Vertex(895, 428, img2, 3);
+			this.vertex.setRow(2);
+			this.vertex.setCollumn(2);
+			this.vertex.setId(5);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);		
+
+			vertex = new Vertex(995, 428, img2, 3);
+			this.vertex.setRow(2);
+			this.vertex.setCollumn(3);
+			this.vertex.setId(6);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+			
+			vertex = new Vertex(895, 528, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(2);
+			this.vertex.setId(9);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+
+			vertex = new Vertex(995, 528, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(3);
+			this.vertex.setId(10);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+			break;
+		case 5:
+			vertex = new Vertex(745, 478, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(1);
+			this.vertex.setId(10);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);		
+
+			vertex = new Vertex(845, 478, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(2);
+			this.vertex.setId(11);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+			
+			vertex = new Vertex(945, 478, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(3);
+			this.vertex.setId(12);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);
+			
+			vertex = new Vertex(1045, 478, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(4);
+			this.vertex.setId(13);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+
+			vertex = new Vertex(1145, 478, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(5);
+			this.vertex.setId(14);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+			break;
+		case 6:
+			vertex = new Vertex(845, 278, img2, 3);
+			this.vertex.setRow(1);
+			this.vertex.setCollumn(2);
+			this.vertex.setId(1);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);		
+
+			vertex = new Vertex(945, 478, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(3);
+			this.vertex.setId(12);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+
+			vertex = new Vertex(1045, 478, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(4);
+			this.vertex.setId(13);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);
+			break;
+		case 7:
+			vertex = new Vertex(745, 278, img2, 3);
+			this.vertex.setRow(1);
+			this.vertex.setCollumn(1);
+			this.vertex.setId(0);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);		
+
+			vertex = new Vertex(945, 478, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(3);
+			this.vertex.setId(12);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+			
+			vertex = new Vertex(1045, 478, img2, 3);
+			this.vertex.setRow(3);
+			this.vertex.setCollumn(4);
+			this.vertex.setId(13);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);
+			
+			vertex = new Vertex(945, 578, img2, 3);
+			this.vertex.setRow(4);
+			this.vertex.setCollumn(3);
+			this.vertex.setId(17);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+			break;
+		case 8:
+			vertex = new Vertex(945, 278, img2, 3);
+			this.vertex.setRow(1);
+			this.vertex.setCollumn(3);
+			this.vertex.setId(2);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);		
+
+			vertex = new Vertex(945, 478, img2, 3);
+			this.vertex.setRow(2);
+			this.vertex.setCollumn(1);
+			this.vertex.setId(5);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);	
+
+			vertex = new Vertex(1045, 478, img2, 3);
+			this.vertex.setRow(4);
+			this.vertex.setCollumn(4);
+			this.vertex.setId(18);
+			this.kone.add(vertex);
+			this.obrazek.pridej(vertex);
+			break;
+		default:
+			break;
+		}
+
+		main.setKone(this.kone);
+		main.setObrazek(this.obrazek);
+		check = false;
+		for (Vertex vertex : kone) {
+			setAvailableVertices(vertices, kone, vertex.getRow(), vertex.getCollumn());
+		}
+		for (Vertex vertex : vertices) {
+			vertex.setEnable(false);
+		}
+		check = true;
+		return;
 	}
 }

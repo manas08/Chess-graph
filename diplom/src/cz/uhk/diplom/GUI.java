@@ -30,6 +30,7 @@ public class GUI {
 	JMenuItem zpet = new JMenuItem("    Krok zpìt    ");
 	JMenuItem hranaZpet = new JMenuItem("    Krok zpìt    ");
 	JMenuBar nabidka = new JMenuBar();
+	JMenuBar jMenuBar;
 	JMenu soubor = new JMenu("  Soubor  ");
 	JMenu sachovnice = new JMenu("  Zmìnit šachovnici  ");
 	JMenu mainMenu = new JMenu("  Hlavní menu  ");
@@ -243,6 +244,7 @@ public class GUI {
 	}
 
 	public JMenuBar changeBottomMenu(int game, JMenuBar jMenuBar, MainWindow frame) {
+		this.jMenuBar = jMenuBar;
 		if (game == 0) {
 			jMenuBar.remove(kun);
 			jMenuBar.remove(hranaZpet);

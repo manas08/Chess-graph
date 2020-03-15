@@ -25,6 +25,7 @@ public class HelpNote extends JTextArea {
     JTextArea text1, text2, text3;
     JButton btnNext = new JButton(">");
     JButton btnBack = new JButton("<");
+    JButton btnShow = new JButton("Ukaž øešení");
     int size, mode = 0, limit;
 	MainWindow main;
 	boolean podm = false;
@@ -137,6 +138,21 @@ public class HelpNote extends JTextArea {
 		btnBack.setFocusPainted(false);
 		add(btnBack);
 		
+
+		btnShow.setPreferredSize(new Dimension(100, 25));
+		btnShow.setBounds(140,320, 100, 25);
+		btnShow.setBackground(new Color(228,228,228));
+		btnShow.setMargin(new Insets(1,1,1,1));
+		btnShow.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				main.showSolution();
+				btnShow.setEnabled(false);
+			}
+		});
+		btnShow.setFocusPainted(false);
+		add(btnShow);
+		
 		setDisabledTextColor(Color.BLACK);
 		setEnabled(false);
 		setBorder(BorderFactory.createCompoundBorder(
@@ -165,6 +181,7 @@ public class HelpNote extends JTextArea {
 			jLabel2.setVisible(false);
 			btnBack.setVisible(false);
 			btnNext.setVisible(false);
+			btnShow.setVisible(false);
 			text1.setText(" \n \n - Projeïte každé pole šachovnice. \n \n - Každé pole musíte navštívit právì 1x. \n \n - Krok zpìt naleznete na dolní lištì.");
 			break;
 		case 2:
@@ -173,6 +190,7 @@ public class HelpNote extends JTextArea {
 			jLabel2.setVisible(false);
 			btnBack.setVisible(false);
 			btnNext.setVisible(false);
+			btnShow.setVisible(true);
 			text1.setText(" \n - Umístìte konì na šachovnici, \n tak aby každé pole bylo kryto. \n \n - Kryté pole oznaèeno èervenì. \n \n - Máte omezený poèet koní. ( " + limit + " ) \n \n"
 					+ " - Pøidání konì naleznete na dolní lištì.");
 			break;
@@ -183,13 +201,15 @@ public class HelpNote extends JTextArea {
 				jLabel2.setVisible(true);
 				btnBack.setVisible(false);
 				btnNext.setVisible(false);
+				btnShow.setVisible(false);
 			}
-			text1.setText("( \"kreslení jedním tahem\" ) \n \n - Spojte body pomocí hran. \n \n - Navštivte každý bod \n a vrate se do poèáteèního bodu.\n \n "
+			text1.setText(" \n - Spojte body pomocí hran. \n \n - Navštivte každý bod \n a vrate se do poèáteèního bodu.\n \n "
 					+ " - Krok zpìt naleznete na dolní lištì.");
 			break;
 		case 4:
 			btnBack.setVisible(true);
 			btnNext.setVisible(true);
+			btnShow.setVisible(false);
 			podm = true;
 			text1.setText("- Bílé hrany oznaèují možné cesty. \n \n - Plné èáry jsou povinné. \n \n "
 					+ " - Èárkované jsou nepovinné. ");

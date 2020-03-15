@@ -562,6 +562,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			break;
 		case 2:
 			gui.enableChessSize(true);
+			help.setMain(this);
 			help.setVisible(true);
 			help.limitHorses(size);
 			help.setText(2);
@@ -879,5 +880,10 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	
 	public void setMenuEnable(boolean b) {
 		this.gui.enabledMenu(b);
+	}
+
+	public void showSolution() {
+		coverGame.showSolution();
+		platno.repaint();
 	}
 }
