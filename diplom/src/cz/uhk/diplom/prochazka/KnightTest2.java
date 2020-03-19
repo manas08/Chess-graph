@@ -1,5 +1,11 @@
 package cz.uhk.diplom.prochazka;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+import javax.swing.JOptionPane;
+
 public class KnightTest2 {
 	
 	
@@ -12,8 +18,10 @@ public class KnightTest2 {
 	 *
 	 */
 	
-
+	public static PrintStream originalStdout;
 	public static int n;
+	public static int numberOfBoards;
+	public static String n2;
 	public static String response;
 	public static int[][] label = new int[1000][1000];
 	public static int[][] deg = new int[1000][1000];
@@ -39,20 +47,25 @@ public class KnightTest2 {
 	}
 
 	public static void output() {
-		System.out.print("Solution:");
-		System.out.print("\n");
+		numberofsolution++;
+		System.out.println();
+		System.out.println(numberofsolution + ". øešení (Warnsdorff)");
 		output_label();
 
 		/*
 		 * if (numberofsolution == 0) { moje = (System.currentTimeMillis() -
 		 * start)/1000F; }
 		 */
-		numberofsolution++;
-		if (numberofsolution == 20) {
+		if (numberofsolution == numberOfBoards) {
 			// System.out.println();
 			// System.out.println(moje + " " + (System.currentTimeMillis() -
 			// start)/1000F);
 			// System.out.println();
+
+			System.setOut(originalStdout);
+			JOptionPane.showMessageDialog(null, "Právì bylo vygenerováno " + numberofsolution + " cest jezdcovy procházky "
+					+ "\n na šachovnici " + n + "x" + n + ", jedná se o "
+					+ n2 + ".\nLze je nalézt v souboru warnsdorff.txt ve složce s aplikací.", "Hotovo", JOptionPane.INFORMATION_MESSAGE, null);
 			System.exit(0);
 		}
 	}
@@ -163,11 +176,28 @@ public class KnightTest2 {
 		label[i][j] = 0;
 	}
 
-	public static void Main() {
+	public void Main(int n, String n2, int numberOfBoards) {
 		// start = System.currentTimeMillis();
-		n = 8;
+		this.n = n;
+		this.n2 = n2;
+		this.numberOfBoards = numberOfBoards;
+
+		originalStdout = System.out;
+		PrintStream out = null;
+		try {
+			out = new PrintStream(new FileOutputStream("warnsdorff.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.setOut(out);
+		
 		// r = open, c = closed
-		response = "c";
+		if (n2 == "uzavøené cesty") {
+			response = "c";
+		}else {
+			response = "r";
+		}
 		init();
 
 		if ((response.charAt(0) == 'r') || (response.charAt(0) == 'R')) {

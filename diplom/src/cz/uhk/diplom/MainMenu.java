@@ -7,6 +7,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import cz.uhk.diplom.prochazka.KnightTest2;
 import cz.uhk.diplom.prochazka.KnightsTour;
 import cz.uhk.diplom.prochazka.NeuralNetworkTour;
 
@@ -84,14 +88,14 @@ public class MainMenu extends JFrame implements ActionListener {
 		b5 = new JButton("Hra Hamilton");
 		b5.setPreferredSize(new Dimension(100, 30));
 		b5.addActionListener(this);
-		//b5.setBounds(75, 330, 150, 30);
+		b5.setBounds(75, 350, 150, 30);
 		// pro studenty
-		b5.setBounds(75, 310, 150, 30);
+		//b5.setBounds(75, 310, 150, 30);
 
 		b10 = new JButton("Neural network");
 		b10.setPreferredSize(new Dimension(100, 30));
 		b10.addActionListener(this);
-		b10.setBounds(75, 370, 150, 30);
+		b10.setBounds(75, 390, 150, 30);
 
 		l1.setPreferredSize(new Dimension(450, 50));
 		l1.setBounds(25, 55, 450, 50);
@@ -104,9 +108,9 @@ public class MainMenu extends JFrame implements ActionListener {
 		add(b1);
 		add(b2);
 		add(b3);
-		//add(b4);
+		add(b4);
 		add(b5);
-		//add(b10);
+		add(b10);
 
 
 		b6 = new JButton("3x3");
@@ -266,28 +270,89 @@ public class MainMenu extends JFrame implements ActionListener {
 		} else if (e.getSource() == b4) {
 			mode = 4;
 			this.dispose();
+			boolean warnsdorff = false;
+
+			String[] options3 = { "Backtracking", "Warnsdorffùv algoritmus" };
+			String n3 = (String) JOptionPane.showInputDialog(null, "Který algoritmus??", "Zvolte algoritmus.",
+					JOptionPane.QUESTION_MESSAGE, null, options3, options3[0]);
+			if (n3 == "Warnsdorffùv algoritmus") {
+				warnsdorff = true;
+			}else if (n3 == "Backtracking") {
+				warnsdorff = false;
+			}else {
+				mainWindow.openMenu(mainWindow);
+				mainWindow.setMode(mode);
+				return;
+			}
+
 			String[] options = { "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
 			String[] options1 = { "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
+			String[] options4 = { "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+					"21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
 			JPanel myPanel = new JPanel();
-			myPanel.add(new JLabel("Výška šachovnice: "));
-			JComboBox<String> c = new JComboBox<>(options);
-			JComboBox<String> c1 = new JComboBox<>(options1);
-			myPanel.add(c);
-			myPanel.add(Box.createHorizontalStrut(25));
-			myPanel.add(new JLabel("Šíøka šachovnice: "));
-			myPanel.add(c1);
+			JComboBox<String> c = null;
+			JComboBox<String> c1 = null;
+			if (warnsdorff) {
+				myPanel.add(new JLabel("Šachovnice NxN ... N = "));
+				c = new JComboBox<>(options4);
+				myPanel.add(c);
+			}else {
+				myPanel.add(new JLabel("Výška šachovnice: "));
+				c = new JComboBox<>(options);
+				c1 = new JComboBox<>(options1);
+				myPanel.add(c);
+				myPanel.add(Box.createHorizontalStrut(25));
+				myPanel.add(new JLabel("Šíøka šachovnice: "));
+				myPanel.add(c1);
+			}
 
 			int result = JOptionPane.showConfirmDialog(null, myPanel, "Velikost šachovnice",
 					JOptionPane.OK_CANCEL_OPTION);
-
 			if (result != 2 && result != -1) {
 				String[] options2 = { "otevøené cesty", "uzavøené cesty" };
 				String n2 = (String) JOptionPane.showInputDialog(null, "Typ cesty??", "Typ cesty",
 						JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
 				if (n2 != null) {
-					KnightsTour kt = new KnightsTour(c.getSelectedIndex() + 3, c1.getSelectedIndex() + 3, n2);
+					if (warnsdorff) {
+						boolean podm = true;
+						while (podm) {
+							myPanel = new JPanel();
+							myPanel.add(new JLabel("Poèet: "));
+							JTextField t1 = new JTextField(4);
+							t1.setRequestFocusEnabled(true);
+							myPanel.add(t1);
+							result = JOptionPane.showConfirmDialog(null, myPanel, "Kolik šachovnic hledat",
+									JOptionPane.OK_CANCEL_OPTION);
+	
+							if (result != 2 && result != -1) {
+								if (t1.getText() != null) {
+									try {
+							            int jml1 = Integer.parseInt(t1.getText());
+	
+										if (jml1 > 0) {
+											KnightTest2 knightTest2 = new KnightTest2();
+											knightTest2.Main(c.getSelectedIndex() + 3, n2, jml1);
+											break;
+										}else {
+										    JOptionPane.showMessageDialog(this, "Zadejte kladná nenulová èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
+										}
+									} catch (Exception e2) {
+									    JOptionPane.showMessageDialog(this, "Špatnì zadaný poèet šachovnic.", "Chyba", JOptionPane.ERROR_MESSAGE);
+									}
+								}
+							}else {
+								break;
+							}
+						}
+					}else {
+						KnightsTour kt = new KnightsTour(c.getSelectedIndex() + 3, c1.getSelectedIndex() + 3, n2);
+					}
 					MainWindow.openMenu(mainWindow);
+				}else {
+					mainWindow.openMenu(mainWindow);
 				}
+			}else if(result == 2){
+				mainWindow.openMenu(mainWindow);
 			}
 		} else if (e.getSource() == b5) {
 			this.dispose();
@@ -309,8 +374,46 @@ public class MainMenu extends JFrame implements ActionListener {
 		}else if (e.getSource() == b10) {
 			this.dispose();
 			mode = 6;
-			
+			NeuralNetworkTour form = new NeuralNetworkTour();
+
+			boolean poc = true;
 			while (true) {
+				boolean podm = true;
+				while (poc) {
+					JPanel myPanel = new JPanel();
+					myPanel.add(new JLabel("Poèet: "));
+					JTextField t1 = new JTextField(4);
+					t1.setRequestFocusEnabled(true);
+					myPanel.add(t1);
+
+					int result = JOptionPane.showConfirmDialog(null, myPanel, "Kolik šachovnic hledat",
+							JOptionPane.OK_CANCEL_OPTION);
+
+					if (result != 2 && result != -1) {
+						if (t1.getText() != null) {
+							try {
+					            int jml1 = Integer.parseInt(t1.getText());
+
+								if (jml1 > 0) {
+									form.setNumberOfBoards(jml1);
+									poc = false;
+									break;
+								}else {
+								    JOptionPane.showMessageDialog(this, "Zadejte kladná nenulová èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								}
+							} catch (Exception e2) {
+							    JOptionPane.showMessageDialog(this, "Špatnì zadaný poèet šachovnic.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}else {
+						podm = false;
+						break;
+					}
+				}
+				if (!podm) {
+					mainWindow.openMenu(mainWindow);
+					break;
+				}
 				JPanel myPanel = new JPanel();
 				myPanel.add(new JLabel("Výška šachovnice: "));
 				JTextField t1 = new JTextField(4);
@@ -324,7 +427,6 @@ public class MainMenu extends JFrame implements ActionListener {
 				int result = JOptionPane.showConfirmDialog(null, myPanel, "Velikost šachovnice",
 						JOptionPane.OK_CANCEL_OPTION);
 
-				mainWindow.switchGame(0);
 				if (result != 2 && result != -1) {
 					if (t1.getText() != null && t2.getText() != null) {
 						try {
@@ -334,16 +436,17 @@ public class MainMenu extends JFrame implements ActionListener {
 							// System.out.println(n2 + " +++++");
 							if (jml1 != 0 && jml2 != 0) {
 								if (jml1 > jml2) {
-									NeuralNetworkTour form = new NeuralNetworkTour();
 									form.cmdGoClick(mainWindow, jml1, jml2);
 									break;
 								}else if (jml1 == jml2 && jml1%2==0 && jml2%2==0) {
-									NeuralNetworkTour form = new NeuralNetworkTour();
 									form.cmdGoClick(mainWindow, jml1, jml2);
+								    JOptionPane.showMessageDialog(this, "Vaše øešení (" + form.getNumberOfBoards() + ") byla nalezeny. \n "
+								    		+ "Najdete je v souboru solutions.txt ve složce s programem", "Úspìch", JOptionPane.INFORMATION_MESSAGE);
 									break;
 								}else if (jml1 < jml2){
-									NeuralNetworkTour form = new NeuralNetworkTour();
 									form.cmdGoClick(mainWindow, jml2, jml1);
+								    JOptionPane.showMessageDialog(this, "Vaše øešení (" + form.getNumberOfBoards() + ") byla nalezeny. \n "
+								    		+ "Najdete je v souboru solutions.txt ve složce s programem", "Úspìch", JOptionPane.INFORMATION_MESSAGE);
 									break;
 								}else {
 								    JOptionPane.showMessageDialog(this, "Ètvercové šachovnice musí mít sudé velikosti.", "Chyba", JOptionPane.ERROR_MESSAGE);
@@ -356,9 +459,12 @@ public class MainMenu extends JFrame implements ActionListener {
 						}
 					}
 				}else {
+					mainWindow.openMenu(mainWindow);
 					break;
 				}
 			}
+			
+			mainWindow.setMenuEnable(true);
 			
 			//NeuralNetwork network = new NeuralNetwork();
 			//network.Main();

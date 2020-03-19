@@ -294,20 +294,35 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 					}
 					//System.out.println(vis + " " + (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges()) + " WWWWWWW " + " " +vertices.size() +" " + vertices.get(0).getId() + " " + vertices.get(vertices.size()-1).getId());
 					if (vis == (hamilton.getNumberOfEdges()-hamilton.getNumberOfDashedEdges()) && vertices.get(0).getId() == vertices.get(vertices.size()-1).getId()) {
-				        JOptionPane.showMessageDialog(
-				        	    null, 
-				        	    "Správnì dokonèená hamiltonovská kružnice! \n\n"
-				        	    + "Postupujete do dalšího levelu.", 
-				        	    "Hotovo",
-				        	    JOptionPane.INFORMATION_MESSAGE, 
-				        	    null); 
-						obrazek = new Image();
-						platno.setObrazek(obrazek);
-						vertices.clear();
-						edges.clear();
-						points.clear();
-						kone.clear();
-				        hamilton.nextLevel(obrazek);
+				        if (hamilton.getLevel() == 8) {
+							JOptionPane.showMessageDialog(
+					        	    null, 
+					        	    "Vítìzství! \n"
+					        	    + "Všechny levely správnì dokonèeny.\n", 
+					        	    "Konec hry",
+					        	    JOptionPane.INFORMATION_MESSAGE, 
+					        	    null); 
+							endGame();
+							help.setVisible(false);
+							setMenuEnable(false);
+							openMenu(this);
+						}else {
+							JOptionPane.showMessageDialog(
+					        	    null, 
+					        	    "Správnì dokonèená hamiltonovská kružnice! \n\n"
+					        	    + "Postupujete do dalšího levelu.", 
+					        	    "Hotovo",
+					        	    JOptionPane.INFORMATION_MESSAGE, 
+					        	    null); 
+							obrazek = new Image();
+							platno.setObrazek(obrazek);
+							vertices.clear();
+							edges.clear();
+							points.clear();
+							kone.clear();
+						    hamilton.nextLevel(obrazek);
+						}
+						
 					}else {
 						JOptionPane.showMessageDialog(
 				        	    null, 

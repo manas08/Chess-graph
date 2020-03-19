@@ -1,5 +1,8 @@
 package cz.uhk.diplom.prochazka;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +75,16 @@ public class KnightsTour {
 		solutionsCount = 0;
 
 		solutionBoard = new int[ySize][xSize];
+		
+		PrintStream originalStdout = System.out;
+		PrintStream out = null;
+		try {
+			out = new PrintStream(new FileOutputStream("backtracking.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.setOut(out);
 
 		// start = System.currentTimeMillis();
 		for (int i = 0; i < ySize; i++) {
@@ -85,8 +98,10 @@ public class KnightsTour {
 		if (uzav) {
 			solutionsCount = solutionsCount / 2;
 		}
+		
+		System.setOut(originalStdout);
 		JOptionPane.showMessageDialog(null, "Celkový poèet cest na šachovnici " + xSize + "x" + ySize + ", které jsou "
-				+ n2 + " je: " + solutionsCount, "Výsledek", JOptionPane.INFORMATION_MESSAGE, null);
+				+ n2 + " je: " + solutionsCount + "\nVšechna lze nalézt v souboru backtracking.txt ve složce s aplikací.", "Výsledek", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 
 	/**
@@ -147,9 +162,6 @@ public class KnightsTour {
 	 *            cislo tahu
 	 */
 	private void takeTurn(int x, int y, int turnNr) {
-		if (solutionsCount == 20) {
-			return;
-		}
 
 		solutionBoard[y][x] = turnNr;
 		if (turnNr == (xSize * ySize) - 1) {
@@ -187,7 +199,7 @@ public class KnightsTour {
 			solutionsCount++;
 			podm = false;
 
-			System.out.println("Reseni #" + solutionsCount);
+			System.out.println(solutionsCount + ". øešení (Backtracking)");
 			for (int i = 0; i < solutionBoard.length; i++) {
 				for (int j = 0; j < solutionBoard[i].length; j++) {
 					System.out.print(solutionBoard[i][j] + " ");

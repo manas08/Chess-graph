@@ -3,7 +3,10 @@ package cz.uhk.diplom.prochazka;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,7 @@ public class NeuralNetworkTour {
 	int totalTrials = 0;
 	int XSIZE = 80;
 	int YSIZE = 80;
+	int numberOfBoards;
 
 	int[][] U;
 	int[][] V;
@@ -87,7 +91,16 @@ public class NeuralNetworkTour {
 		A = new int[NSIZE][NSIZE];
 		links = new ArrayList<>();
 
-		// start = System.currentTimeMillis();
+		PrintStream originalStdout = System.out;
+		PrintStream out = null;
+		try {
+			out = new PrintStream(new FileOutputStream("solutions.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.setOut(out);
+		
 		do {
 
 			Initialize();
@@ -182,8 +195,9 @@ public class NeuralNetworkTour {
 			}
 
 			// totalTrials < targetTrials
-		} while (numHamiltonian < 3);
+		} while (numHamiltonian < numberOfBoards);
 
+		System.setOut(originalStdout);
 		stopped = true;
 	}
 
@@ -411,7 +425,9 @@ public class NeuralNetworkTour {
 		}
 
 		number++;
+		
 
+		System.out.println(number + ". øešení (Neural network)");
 		if (CSIZE == DSIZE) {
 			for (int i = 0; i < CSIZE; i++) {
 				for (int j = 0; j < DSIZE; j++) {
@@ -440,7 +456,6 @@ public class NeuralNetworkTour {
 			System.out.println();
 		}
 
-		System.out.println(number + " pocet");
 
 	}
 
@@ -592,5 +607,13 @@ public class NeuralNetworkTour {
 			w++;
 		}
 		return true;
+	}
+
+	public void setNumberOfBoards(int jml1) {
+		this.numberOfBoards = jml1;
+	}
+
+	public String getNumberOfBoards() {
+		return String.valueOf(numberOfBoards);
 	}
 }

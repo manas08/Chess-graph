@@ -728,5 +728,9 @@ public class Hamilton {
 			}
 		}
 	}
+	
+	public int getLevel() {
+		return level;
+	}
 
 }
