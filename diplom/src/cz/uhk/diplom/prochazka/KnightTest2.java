@@ -37,16 +37,19 @@ public class KnightTest2 {
 
 	public static void output_label() {
 		for (int j = 0; j < n; j++) {
-			System.out.print(label[0][j]);
+			System.out.print(label[0][j]-1);
 			for (int i = 1; i < n; i++) {
 				System.out.print(" ");
-				System.out.print(label[i][j]);
+				System.out.print(label[i][j]-1);
 			}
 			System.out.print("\n");
 		}
 	}
 
 	public static void output() {
+		if (numberofsolution == numberOfBoards) {
+			return;
+		}
 		numberofsolution++;
 		System.out.println();
 		System.out.println(numberofsolution + ". øešení (Warnsdorff)");
@@ -66,7 +69,6 @@ public class KnightTest2 {
 			JOptionPane.showMessageDialog(null, "Právì bylo vygenerováno " + numberofsolution + " cest jezdcovy procházky "
 					+ "\n na šachovnici " + n + "x" + n + ", jedná se o "
 					+ n2 + ".\nLze je nalézt v souboru warnsdorff.txt ve složce s aplikací.", "Hotovo", JOptionPane.INFORMATION_MESSAGE, null);
-			System.exit(0);
 		}
 	}
 
@@ -96,6 +98,10 @@ public class KnightTest2 {
 	}
 
 	public static void BackTracking(int number, int i, int j) {
+		if (numberofsolution == numberOfBoards) {
+			return;
+		}
+		
 		int u;
 		int v;
 		int t;
@@ -160,10 +166,6 @@ public class KnightTest2 {
 					u = i + DX[t];
 					v = j + DY[t];
 					if ((u == 2) && (v == 2)) {
-						// System.out.println();
-						// System.out.println(System.currentTimeMillis() - start
-						// + " " + (System.currentTimeMillis() - start)/1000F);
-						// System.out.println();
 						output();
 					}
 				}
@@ -191,7 +193,11 @@ public class KnightTest2 {
 			e.printStackTrace();
 		}
 		System.setOut(out);
-		
+		System.out.println("Tento soubor obsahuje " + numberOfBoards + " vygenerovaných øešení Warnsdorffovým algoritmem.");
+		System.out.println("Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice " + n + "x" + n + ".");
+		System.out.println("Každé èíslo reprezentuje krok jezdcovy procházky.");
+		System.out.println("Èíslo 0 je políèko, kde jezdec zaèíná");
+		System.out.println("Èíslo 1 je políèko, kam se jezdec pøesunul z kroku 0 atd...");
 		// r = open, c = closed
 		if (n2 == "uzavøené cesty") {
 			response = "c";

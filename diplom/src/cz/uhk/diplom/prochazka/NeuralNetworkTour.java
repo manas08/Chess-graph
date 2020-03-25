@@ -100,6 +100,14 @@ public class NeuralNetworkTour {
 			e.printStackTrace();
 		}
 		System.setOut(out);
+
+
+		System.out.println("Tento soubor obsahuje " + numberOfBoards + " vygenerovaných øešení Hopfieldovou neuronovou sítí.");
+		System.out.println("Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice " + x + "x" + y + ".");
+		System.out.println("Každé èíslo reprezentuje krok jezdcovy procházky.");
+		System.out.println("Èíslo 0 je políèko, kde jezdec zaèíná");
+		System.out.println("Èíslo 1 je políèko, kam se jezdec pøesunul z kroku 0 atd...");
+		System.out.println();
 		
 		do {
 

@@ -83,7 +83,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		coverGame = new CoverGame();
 		simulation = new Simulation();
 
-        help = new HelpNote(350, 350);
+        help = new HelpNote(350, 380);
         help.setVisible(false);
 		platno.add(help);
 
@@ -389,6 +389,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 				}
 
 				//System.out.println(vertex.getX1() + " " + vertex.getY1() + " " + vertex.isEnable());
+				
 				if (counter == vertices.size()) {
 					this.vertex.setX1(saveX);
 					this.vertex.setY1(saveY);
@@ -402,14 +403,6 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 				counter = 0;
 				platno.repaint();
 				
-				if (points.size() == (chesssize)*(chesssize) && !isCoverGame) {
-			        JOptionPane.showMessageDialog(
-			        	    null, 
-			        	    "Správnì dokonèená hamiltonovská cesta! :)", 
-			        	    "Hotovo",
-			        	    JOptionPane.INFORMATION_MESSAGE, 
-			        	    null); 
-				}
 			}
 		}
 	}
@@ -632,6 +625,9 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 			    JOptionPane.showMessageDialog(this, "Nenalezeny žádné hamiltonovské cesty", "Nic nenalezeno", JOptionPane.ERROR_MESSAGE);
 			}
 
+			help.setMain(this);
+			help.setVisible(true);
+			help.setText(5);
 			platno.repaint();
 			break;
 		case 5:
@@ -901,4 +897,9 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		coverGame.showSolution();
 		platno.repaint();
 	}
+	
+	public int getChesssize() {
+		return chesssize;
+	}
+	
 }

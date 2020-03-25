@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -26,6 +27,7 @@ public class HelpNote extends JTextArea {
     JButton btnNext = new JButton(">");
     JButton btnBack = new JButton("<");
     JButton btnShow = new JButton("Ukaž øešení");
+    JButton btnTry = new JButton("Zkusím to sám");
     int size, mode = 0, limit;
 	MainWindow main;
 	boolean podm = false;
@@ -140,18 +142,50 @@ public class HelpNote extends JTextArea {
 		
 
 		btnShow.setPreferredSize(new Dimension(100, 25));
-		btnShow.setBounds(140,320, 100, 25);
+		btnShow.setBounds(140,310, 100, 25);
 		btnShow.setBackground(new Color(228,228,228));
 		btnShow.setMargin(new Insets(1,1,1,1));
 		btnShow.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				main.showSolution();
-				btnShow.setEnabled(false);
+				switch (mode) {
+				case 1:
+					if (main.getChesssize() == 4) {
+					    JOptionPane.showMessageDialog(main, "Šachovnice 4x4 nemá øešení jezdcovy procházky. :)", "Chyták!", JOptionPane.INFORMATION_MESSAGE);
+						break;
+					}
+					main.clear();
+					main.setMode(3);
+					main.switchGame(main.getChesssize());
+					break;
+				case 2:
+					main.showSolution();
+					btnShow.setEnabled(false);
+					break;
+
+				default:
+					break;
+				}
 			}
 		});
 		btnShow.setFocusPainted(false);
 		add(btnShow);
+
+		btnTry.setPreferredSize(new Dimension(100, 25));
+		btnTry.setBounds(140,310, 100, 25);
+		btnTry.setBackground(new Color(228,228,228));
+		btnTry.setMargin(new Insets(1,1,1,1));
+		btnTry.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mode == 5) {
+					main.setMode(1);
+					main.switchGame(main.getChesssize());
+				}
+			}
+		});
+		btnTry.setFocusPainted(false);
+		add(btnTry);
 		
 		setDisabledTextColor(Color.BLACK);
 		setEnabled(false);
@@ -181,7 +215,8 @@ public class HelpNote extends JTextArea {
 			jLabel2.setVisible(false);
 			btnBack.setVisible(false);
 			btnNext.setVisible(false);
-			btnShow.setVisible(false);
+			btnShow.setVisible(true);
+			btnTry.setVisible(false);
 			text1.setText(" \n \n - Projeïte každé pole šachovnice. \n \n - Každé pole musíte navštívit právì 1x. \n \n - Krok zpìt naleznete na dolní lištì.");
 			break;
 		case 2:
@@ -191,6 +226,7 @@ public class HelpNote extends JTextArea {
 			btnBack.setVisible(false);
 			btnNext.setVisible(false);
 			btnShow.setVisible(true);
+			btnTry.setVisible(false);
 			text1.setText(" \n - Umístìte konì na šachovnici, \n tak aby každé pole bylo kryto. \n \n - Kryté pole oznaèeno èervenì. \n \n - Máte omezený poèet koní. ( " + limit + " ) \n \n"
 					+ " - Pøidání konì naleznete na dolní lištì.");
 			break;
@@ -202,6 +238,7 @@ public class HelpNote extends JTextArea {
 				btnBack.setVisible(false);
 				btnNext.setVisible(false);
 				btnShow.setVisible(false);
+				btnTry.setVisible(false);
 			}
 			text1.setText(" \n - Spojte body pomocí hran. \n \n - Navštivte každý bod \n a vrate se do poèáteèního bodu.\n \n "
 					+ " - Krok zpìt naleznete na dolní lištì.");
@@ -210,9 +247,20 @@ public class HelpNote extends JTextArea {
 			btnBack.setVisible(true);
 			btnNext.setVisible(true);
 			btnShow.setVisible(false);
+			btnTry.setVisible(false);
 			podm = true;
 			text1.setText("- Bílé hrany oznaèují možné cesty. \n \n - Plné èáry jsou povinné. \n \n "
 					+ " - Èárkované jsou nepovinné. ");
+			break;
+		case 5:
+			jLabel.setVisible(true);
+			jLabel1.setVisible(false);
+			jLabel2.setVisible(false);
+			btnBack.setVisible(false);
+			btnNext.setVisible(false);
+			btnShow.setVisible(false);
+			btnTry.setVisible(true);
+			text1.setText(" \n \n - Vygenerované øešení. \n \n - Èervené èáry znaèí jezdcovu cestu. \n \n - Jedná se o otevøené øešení úlohy.");
 			break;
 		default:
 			break;

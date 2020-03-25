@@ -86,6 +86,14 @@ public class KnightsTour {
 		}
 		System.setOut(out);
 
+
+		System.out.println("Tento soubor obsahuje všechna možná øešení vygenerovaná algoritmem Backtracking.");
+		System.out.println("Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice " + xSize + "x" + ySize + ".");
+		System.out.println("Každé èíslo reprezentuje krok jezdcovy procházky.");
+		System.out.println("Èíslo 0 je políèko, kde jezdec zaèíná");
+		System.out.println("Èíslo 1 je políèko, kam se jezdec pøesunul z kroku 0 atd...");
+		System.out.println();
+		
 		// start = System.currentTimeMillis();
 		for (int i = 0; i < ySize; i++) {
 			for (int j = 0; j < xSize; j++) {

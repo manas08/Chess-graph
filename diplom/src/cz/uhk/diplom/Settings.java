@@ -11,6 +11,7 @@ import cz.uhk.diplom.model.Image;
 import cz.uhk.diplom.model.Vertex;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class Settings {
 
@@ -590,6 +591,30 @@ public class Settings {
 					v.setImg(img3G);
 				}
 			}
+		}
+
+		checkEndGame();
+	}
+	
+	public void checkEndGame() {
+		switch (mode) {
+		case 4:
+			if (points.size() == 16) {
+			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			return;
+		case 5:
+			if (points.size() == 25) {
+			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			return;
+		case 6:
+			if (points.size() == 36) {
+			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			return;
+		default:
+			return;
 		}
 	}
 	

@@ -26,7 +26,8 @@ public class TheoryTable extends JTextArea {
     int size, mode = 0, a, b;
 	JButton btnNext = new JButton(">");
 	JButton btnBack = new JButton("<");
-	JButton btnAnimate = new JButton("Animace");
+	JButton btnAnimate = new JButton("Spustit ukázku");
+	JButton btnTry = new JButton("Chci to zkusit");
 	MainWindow main;
 
     public TheoryTable(int a, int b) {
@@ -103,10 +104,12 @@ public class TheoryTable extends JTextArea {
 				if (mode == 2) {
 					btnNext.setEnabled(false);
 					btnAnimate.setVisible(true);
+					btnTry.setVisible(true);
 				}else {
 					btnNext.setEnabled(true);
 					btnBack.setEnabled(true);
 					btnAnimate.setVisible(false);
+					btnTry.setVisible(false);
 				}
 			}
 		});
@@ -138,8 +141,8 @@ public class TheoryTable extends JTextArea {
 		btnBack.setEnabled(false);
 		add(btnBack);
 
-		btnAnimate.setPreferredSize(new Dimension(75, 25));
-		btnAnimate.setBounds(400,332, 75, 25);
+		btnAnimate.setPreferredSize(new Dimension(95, 25));
+		btnAnimate.setBounds(400,332, 95, 25);
 		btnAnimate.setBackground(new Color(221,197,141));
 		btnAnimate.setMargin(new Insets(1,1,1,1));
 		btnAnimate.addActionListener(new ActionListener() {
@@ -157,6 +160,22 @@ public class TheoryTable extends JTextArea {
 		btnAnimate.setFocusPainted(false);
 		btnAnimate.setVisible(false);
 		add(btnAnimate);
+		
+
+		btnTry.setPreferredSize(new Dimension(90, 25));
+		btnTry.setBounds(310,332, 90, 25);
+		btnTry.setBackground(new Color(221,197,141));
+		btnTry.setMargin(new Insets(1,1,1,1));
+		btnTry.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				main.setMode(1);
+				main.switchGame(5);
+			}
+		});
+		btnTry.setFocusPainted(false);
+		btnTry.setVisible(false);
+		add(btnTry);
 		
 		jLabel = new JTextArea();
 		jLabel.setOpaque(false);
@@ -202,7 +221,8 @@ public class TheoryTable extends JTextArea {
 	        jt.setBounds(900, 900, 220, 220);
 			break;
 		case 2:
-			jLabel.setText(" Øešení: \n \n - Øešení lze nalézt na rùznì velkých šachovnicích. \n \n - Napøíklad na šachovnici 5x5 existuje 1 768 øešení. \n \n - Dokážete nalézt alespoò jedno?");
+			jLabel.setText(" Øešení: \n \n - Øešení lze nalézt na rùznì velkých šachovnicích. \n \n - Napøíklad na šachovnici 5x5 existuje 1 768 øešení. "
+					+ "\n \n - Dokážete nalézt alespoò jedno?  \n \n - Vyzkoušet si to mùžete tlaèítkem \"Chci to zkusit\" ");
 			break;
 		default:
 			break;
