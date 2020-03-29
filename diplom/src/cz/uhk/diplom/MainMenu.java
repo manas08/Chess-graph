@@ -39,7 +39,7 @@ public class MainMenu extends JFrame implements ActionListener {
 	public MainMenu(MainWindow mainWindow) {
 		this.mainWindow = mainWindow;
 		buttons = new ArrayList<>();
-		setTitle("ChessGraph");
+		setTitle("CheGra");
 		setSize(672, 470);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);

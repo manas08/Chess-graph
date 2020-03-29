@@ -217,7 +217,7 @@ public class HelpNote extends JTextArea {
 			btnNext.setVisible(false);
 			btnShow.setVisible(true);
 			btnTry.setVisible(false);
-			text1.setText(" \n \n - Projeïte každé pole šachovnice. \n \n - Každé pole musíte navštívit právì 1x. \n \n - Krok zpìt naleznete na dolní lištì.");
+			text1.setText(" \n - Projeïte každé pole šachovnice. \n \n - Konì pøesunete tahem \n nebo kliknutím na zeléné pole\n \n - Každé pole musíte navštívit právì 1x. \n \n - Krok zpìt naleznete na dolní lištì.");
 			break;
 		case 2:
 			jLabel.setVisible(false);

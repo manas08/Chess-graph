@@ -1,4 +1,4 @@
-Tento soubor obsahuje vygenerovaná øešení algoritmem Backtracking.
+Tento soubor obsahuje všechna možná øešení vygenerovaná algoritmem Backtracking.
 Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice 10x3.
 Každé èíslo reprezentuje krok jezdcovy procházky.
 Èíslo 0 je políèko, kde jezdec zaèíná

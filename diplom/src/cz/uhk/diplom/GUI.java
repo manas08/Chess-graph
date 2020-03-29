@@ -65,7 +65,7 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frame,
-						"ChessGraph.\n\n\n"
+						"CheGra.\n\n\n"
 						+ "Program vytvoøen pro úèely FIM UHK pro den Pí.\nImplementovány hry založené na matematické oblasti teorie grafù."
 						+ "\nObsahuje popis problému jezdcovy procházky s názornými pøíklady jeho øešení."
 						+ "\n\n\n© 2020 Radim Krátký\nUniverzita Hradec Králové\nFakulta informatiky a managementu\nAplikovaná informatika",

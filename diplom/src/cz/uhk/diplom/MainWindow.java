@@ -61,7 +61,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	BufferedImage img1 = null;
 	
 	public MainWindow() {
-		setTitle("ChessGraph");
+		setTitle("CheGra");
 		setSize(500, 500);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
