@@ -1,0 +1,5 @@
+Tento soubor obsahuje 1 vygenerovanıch øešení Warnsdorffovım algoritmem.
+Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice 59x59.
+Kadé èíslo reprezentuje krok jezdcovy procházky.
+Èíslo 0 je políèko, kde jezdec zaèíná
+Èíslo 1 je políèko, kam se jezdec pøesunul z kroku 0 atd...

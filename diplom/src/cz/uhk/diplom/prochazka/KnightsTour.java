@@ -37,7 +37,7 @@ public class KnightsTour {
 	/**
 	 * Pocet reseni
 	 */
-	private int solutionsCount;
+	private int solutionsCount, pocetReseni;
 	/**
 	 * Pole pro reseni 0 -> pocatecni pozice kone 1 -> prvni tah 2 -> druhy tah
 	 * . . . n -> n-ty tah
@@ -62,9 +62,10 @@ public class KnightsTour {
 	 */
 	// private long start;
 
-	public KnightsTour(int xSize, int ySize, String n2) {
+	public KnightsTour(int xSize, int ySize, String n2, int pocetReseni) {
 		this.xSize = xSize;
 		this.ySize = ySize;
+		this.pocetReseni = pocetReseni;
 		if (n2 == "uzavøené cesty") {
 			uzav = true;
 			podm = false;
@@ -87,7 +88,7 @@ public class KnightsTour {
 		System.setOut(out);
 
 
-		System.out.println("Tento soubor obsahuje všechna možná øešení vygenerovaná algoritmem Backtracking.");
+		System.out.println("Tento soubor obsahuje " + pocetReseni + " øešení vygenerovaná algoritmem Backtracking.");
 		System.out.println("Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice " + xSize + "x" + ySize + ".");
 		System.out.println("Každé èíslo reprezentuje krok jezdcovy procházky.");
 		System.out.println("Èíslo 0 je políèko, kde jezdec zaèíná");
@@ -108,8 +109,9 @@ public class KnightsTour {
 		}
 		
 		System.setOut(originalStdout);
-		JOptionPane.showMessageDialog(null, "Celkový poèet cest na šachovnici " + xSize + "x" + ySize + ", které jsou "
-				+ n2 + " je: " + solutionsCount + "\nVšechna lze nalézt v souboru backtracking.txt ve složce s aplikací.", "Výsledek", JOptionPane.INFORMATION_MESSAGE, null);
+		JOptionPane.showMessageDialog(null, "Právì bylo vygenerováno " + pocetReseni + " cest jezdcovy procházky "
+				+ "\n na šachovnici " + xSize + "x" + ySize + ", jedná se o "
+				+ n2 + ".\nLze je nalézt v souboru backtracking.txt ve složce s aplikací.", "Hotovo", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 
 	/**
@@ -170,7 +172,10 @@ public class KnightsTour {
 	 *            cislo tahu
 	 */
 	private void takeTurn(int x, int y, int turnNr) {
-
+		//omezeni poctem
+		if (pocetReseni == solutionsCount) {
+			return;
+		}
 		solutionBoard[y][x] = turnNr;
 		if (turnNr == (xSize * ySize) - 1) {
 			// System.out.println(System.currentTimeMillis() - start + " " +
