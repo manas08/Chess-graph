@@ -321,7 +321,9 @@ public class MainMenu extends JFrame implements ActionListener {
 				if (warnsdorff && t.getText() != null) {
 		            jml = Integer.parseInt(t.getText());
 					if (jml > 0) {
-						if (jml > 35) {
+						if (jml < 5) {
+						    JOptionPane.showMessageDialog(this, "Pøíliš malá šachovnice. Na této šachovnici neexistuje jezdcova procházka.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						}else if (jml > 35) {
 						    JPanel jPanel = new JPanel();
 					        jPanel.add(new JLabel("Jedná se o velkou šachovnici pro Warnsdorffa. Mùže dojít k zacyklení algoritmu. V takovém pøípadì bude nutné ukonèit program pomocí správce úloh!!!"
 					        		+ " Pokraèovat?"));
@@ -339,7 +341,9 @@ public class MainMenu extends JFrame implements ActionListener {
 					    JOptionPane.showMessageDialog(this, "Zadejte kladná nenulová èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
 				}else if (!warnsdorff) {
-					if ((c.getSelectedIndex()+3 > 8 && c1.getSelectedIndex()+3 > 8) || (c1.getSelectedIndex()+c.getSelectedIndex()+6>16) || ((c1.getSelectedIndex()+c.getSelectedIndex()+6==16) && c.getSelectedIndex()-c1.getSelectedIndex()>4)) {
+					if (c.getSelectedIndex()+3 < 5 && c1.getSelectedIndex()+3 < 5) {
+					    JOptionPane.showMessageDialog(this, "Pøíliš malá šachovnice. Na této šachovnici neexistuje øešení.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					}else if ((c.getSelectedIndex()+3 > 8 && c1.getSelectedIndex()+3 > 8) || (c1.getSelectedIndex()+c.getSelectedIndex()+6>16) || ((c1.getSelectedIndex()+c.getSelectedIndex()+6==16) && c.getSelectedIndex()-c1.getSelectedIndex()>4)) {
 						JOptionPane.showMessageDialog(this, "Pøíliš velká šachovnice pro algoritmus Backtracking.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}else if (c.getSelectedIndex()+3 > 6 && c1.getSelectedIndex()+3 > 6) {
 						JPanel jPanel = new JPanel();
@@ -486,7 +490,9 @@ public class MainMenu extends JFrame implements ActionListener {
 							if (jml1%2 != 0 && jml2%2!=0) {
 							    JOptionPane.showMessageDialog(this, "Oba rozmìry nemohou být lichá èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
 							}else {
-								if (jml1>23 && jml2>23) {
+								if (jml1 < 5 && jml2 < 5) {
+								    JOptionPane.showMessageDialog(this, "Pøíliš malá šachovnice. Na této šachovnici neexistuje øešení.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								}else if (jml1>23 && jml2>23) {
 									JPanel jPanel = new JPanel();
 							        jPanel.add(new JLabel("Chvilku to bude trvat, ale øešení se vygeneruje (Jedno øešení šachovnice 26x26 - cca 25 minut ; 28x28 - 2 hodiny). Vypnutí pouze pomocí správce úloh."
 							        		+ " Pokraèovat?"));
