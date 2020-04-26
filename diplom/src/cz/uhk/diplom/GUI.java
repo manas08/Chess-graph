@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -64,8 +63,7 @@ public class GUI {
 		aboutApp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frame,
-						"CheGra.\n\n\n"
+				JOptionPane.showMessageDialog(frame, "CheGra.\n\n\n"
 						+ "Program vytvoøen pro úèely FIM UHK pro den Pí.\nImplementovány hry založené na matematické oblasti teorie grafù."
 						+ "\nObsahuje popis problému jezdcovy procházky s názornými pøíklady jeho øešení."
 						+ "\n\n\n© 2020 Radim Krátký\nUniverzita Hradec Králové\nFakulta informatiky a managementu\nAplikovaná informatika",
@@ -249,7 +247,7 @@ public class GUI {
 			jMenuBar.remove(kun);
 			jMenuBar.remove(hranaZpet);
 			jMenuBar.remove(zpet);
-		}else if (game == 1) {
+		} else if (game == 1) {
 			jMenuBar.remove(kun);
 			jMenuBar.remove(hranaZpet);
 			jMenuBar.add(zpet);
@@ -289,11 +287,11 @@ public class GUI {
 		this.hranaZpet.setEnabled(enable);
 		this.zpet.setEnabled(enable);
 	}
-	
+
 	public void clearButtonSelection() {
 		effectsGroup.clearSelection();
 	}
-	
+
 	public void enableChessSize(boolean b) {
 		sachovnice.setEnabled(b);
 	}

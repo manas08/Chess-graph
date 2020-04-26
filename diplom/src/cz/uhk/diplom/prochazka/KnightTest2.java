@@ -7,17 +7,15 @@ import java.io.PrintStream;
 import javax.swing.JOptionPane;
 
 public class KnightTest2 {
-	
-	
+
 	/**
 	 * 
 	 * @author manas08
 	 *
-	 * Warnsdorff algoritm 
-	 * for searching Knight's tours in chessboard
+	 *         Warnsdorff algoritm for searching Knight's tours in chessboard
 	 *
 	 */
-	
+
 	public static PrintStream originalStdout;
 	public static int n;
 	public static int numberOfBoards;
@@ -28,19 +26,14 @@ public class KnightTest2 {
 	public static int[] DX = { 1, 2, 2, 1, -1, -2, -2, -1 };
 	public static int[] DY = { -2, -1, 1, 2, 2, 1, -1, -2 };
 
-	/**
-	 * for testing
-	 */
-	// private static long start;
-	// private static float moje;
 	private static int numberofsolution = 0;
 
 	public static void output_label() {
 		for (int j = 0; j < n; j++) {
-			System.out.print(label[0][j]-1);
+			System.out.print(label[0][j] - 1);
 			for (int i = 1; i < n; i++) {
 				System.out.print(" ");
-				System.out.print(label[i][j]-1);
+				System.out.print(label[i][j] - 1);
 			}
 			System.out.print("\n");
 		}
@@ -55,20 +48,13 @@ public class KnightTest2 {
 		System.out.println(numberofsolution + ". øešení (Warnsdorff)");
 		output_label();
 
-		/*
-		 * if (numberofsolution == 0) { moje = (System.currentTimeMillis() -
-		 * start)/1000F; }
-		 */
 		if (numberofsolution == numberOfBoards) {
-			// System.out.println();
-			// System.out.println(moje + " " + (System.currentTimeMillis() -
-			// start)/1000F);
-			// System.out.println();
-
 			System.setOut(originalStdout);
-			JOptionPane.showMessageDialog(null, "Právì bylo vygenerováno " + numberofsolution + " cest jezdcovy procházky "
-					+ "\n na šachovnici " + n + "x" + n + ", jedná se o "
-					+ n2 + ".\nLze je nalézt v souboru warnsdorff.txt ve složce s aplikací.", "Hotovo", JOptionPane.INFORMATION_MESSAGE, null);
+			JOptionPane.showMessageDialog(null,
+					"Právì bylo vygenerováno " + numberofsolution + " cest jezdcovy procházky " + "\n na šachovnici "
+							+ n + "x" + n + ", jedná se o " + n2
+							+ ".\nLze je nalézt v souboru warnsdorff.txt ve složce s aplikací.",
+					"Hotovo", JOptionPane.INFORMATION_MESSAGE, null);
 		}
 	}
 
@@ -101,7 +87,7 @@ public class KnightTest2 {
 		if (numberofsolution == numberOfBoards) {
 			return;
 		}
-		
+
 		int u;
 		int v;
 		int t;
@@ -179,7 +165,6 @@ public class KnightTest2 {
 	}
 
 	public void Main(int n, String n2, int numberOfBoards) {
-		// start = System.currentTimeMillis();
 		this.n = n;
 		this.n2 = n2;
 		this.numberOfBoards = numberOfBoards;
@@ -189,11 +174,11 @@ public class KnightTest2 {
 		try {
 			out = new PrintStream(new FileOutputStream("warnsdorff.txt"));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.setOut(out);
-		System.out.println("Tento soubor obsahuje " + numberOfBoards + " vygenerovaných øešení Warnsdorffovým algoritmem.");
+		System.out.println(
+				"Tento soubor obsahuje " + numberOfBoards + " vygenerovaných øešení Warnsdorffovým algoritmem.");
 		System.out.println("Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice " + n + "x" + n + ".");
 		System.out.println("Každé èíslo reprezentuje krok jezdcovy procházky.");
 		System.out.println("Èíslo 0 je políèko, kde jezdec zaèíná");
@@ -201,7 +186,7 @@ public class KnightTest2 {
 		// r = open, c = closed
 		if (n2 == "uzavøené cesty") {
 			response = "c";
-		}else {
+		} else {
 			response = "r";
 		}
 		init();

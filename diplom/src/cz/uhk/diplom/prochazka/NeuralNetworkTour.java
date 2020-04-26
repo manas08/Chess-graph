@@ -22,11 +22,10 @@ import cz.uhk.diplom.utils.Link;
  * 
  * @author manas08
  *
- * Algoritm based on Hopfield's neural network
- * for searching Knight's tours in chessboard
+ *         Algoritm based on Hopfield's neural network for searching Knight's
+ *         tours in chessboard
  *
  */
-
 
 public class NeuralNetworkTour {
 
@@ -57,11 +56,6 @@ public class NeuralNetworkTour {
 
 	MainWindow main;
 
-	/**
-	 * for testing
-	 */
-	// private long start;
-
 	public NeuralNetworkTour() {
 		try {
 			img3 = ImageIO.read(getClass().getResourceAsStream("/textures/brick.jpg"));
@@ -72,7 +66,6 @@ public class NeuralNetworkTour {
 			img8 = ImageIO.read(getClass().getResourceAsStream("/textures/verysmallbricks2.jpg"));
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -96,19 +89,18 @@ public class NeuralNetworkTour {
 		try {
 			out = new PrintStream(new FileOutputStream("solutions.txt"));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.setOut(out);
 
-
-		System.out.println("Tento soubor obsahuje " + numberOfBoards + " vygenerovaných øešení Hopfieldovou neuronovou sítí.");
+		System.out.println(
+				"Tento soubor obsahuje " + numberOfBoards + " vygenerovaných øešení Hopfieldovou neuronovou sítí.");
 		System.out.println("Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice " + x + "x" + y + ".");
 		System.out.println("Každé èíslo reprezentuje krok jezdcovy procházky.");
 		System.out.println("Èíslo 0 je políèko, kde jezdec zaèíná");
 		System.out.println("Èíslo 1 je políèko, kam se jezdec pøesunul z kroku 0 atd...");
 		System.out.println();
-		
+
 		do {
 
 			Initialize();
@@ -191,10 +183,6 @@ public class NeuralNetworkTour {
 			if (t > 1000) {
 				hamiltonian = false;
 			} else if (CheckHamiltonian()) {
-				// System.out.println();
-				// System.out.println(System.currentTimeMillis() - start + " " +
-				// (System.currentTimeMillis() - start)/1000F);
-				// System.out.println();
 				numHamiltonian++;
 				hamiltonian = true;
 				DrawNeurons();
@@ -390,14 +378,11 @@ public class NeuralNetworkTour {
 			for (int i = 0; i < points.size(); i = i + 4) {
 
 				if (path.size() == w) {
-					// System.out.println("Neni souvisly!!!!!");
 					main.clear();
 					cmdGoClick(main, CSIZE, DSIZE);
 					return;
 				}
-				// System.out.println(path.size() + "> " + path.get(w)[0] + " "
-				// +path.get(w)[1] +" "+ points.get(i) + " " + points.get(i+1) +
-				// " "+ points.get(i+2) + " "+ points.get(i+3));
+
 				if ((path.get(w)[0] == points.get(i)) && (path.get(w)[1] == points.get(i + 1))) {
 					vertex = new Integer[3];
 					vertex[0] = points.get(i + 2);
@@ -433,7 +418,6 @@ public class NeuralNetworkTour {
 		}
 
 		number++;
-		
 
 		System.out.println(number + ". øešení (Neural network)");
 		if (CSIZE == DSIZE) {
@@ -463,7 +447,6 @@ public class NeuralNetworkTour {
 			System.out.println();
 			System.out.println();
 		}
-
 
 	}
 

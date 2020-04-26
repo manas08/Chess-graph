@@ -7,10 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +28,7 @@ import cz.uhk.diplom.prochazka.KnightsTour;
 import cz.uhk.diplom.prochazka.NeuralNetworkTour;
 
 public class MainMenu extends JFrame implements ActionListener {
-	JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, bZpet;
+	JButton b0, b1, b2, b3, b4, b5, b7, b8, b9, b10, b11, b12, b13, bZpet;
 	JLabel l1;
 	JPanel panel1;
 	MainWindow mainWindow;
@@ -52,9 +49,9 @@ public class MainMenu extends JFrame implements ActionListener {
 
 		setLayout(new BorderLayout());
 		try {
-			setContentPane(new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/textures/chessmenu.png")))));
+			setContentPane(
+					new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/textures/chessmenu.png")))));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -70,7 +67,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		b0.setPreferredSize(new Dimension(100, 30));
 		b0.addActionListener(this);
 		b0.setBounds(75, 150, 150, 30);
-		
+
 		b1 = new JButton("Najdi procházku");
 		b1.setPreferredSize(new Dimension(100, 30));
 		b1.addActionListener(this);
@@ -96,7 +93,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		b5.addActionListener(this);
 		b5.setBounds(75, 350, 150, 30);
 		// pro studenty
-		//b5.setBounds(75, 310, 150, 30);
+		// b5.setBounds(75, 310, 150, 30);
 
 		b10 = new JButton("Neural network");
 		b10.setPreferredSize(new Dimension(100, 30));
@@ -118,12 +115,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		add(b5);
 		add(b10);
 
-
-		b6 = new JButton("3x3");
-		b6.setPreferredSize(new Dimension(100, 30));
-		b6.addActionListener(this);
-		b6.setBounds(75, 150, 120, 30);
-		
 		b7 = new JButton("4x4");
 		b7.setPreferredSize(new Dimension(100, 30));
 		b7.addActionListener(this);
@@ -155,14 +146,12 @@ public class MainMenu extends JFrame implements ActionListener {
 		b13.setBounds(75, 310, 120, 30);
 
 		bZpet.setVisible(false);
-		b6.setVisible(false);
 		b7.setVisible(false);
 		b8.setVisible(false);
 		b9.setVisible(false);
 		b11.setVisible(false);
 		b12.setVisible(false);
 		b13.setVisible(false);
-		add(b6);
 		add(b7);
 		add(b8);
 		add(b9);
@@ -177,7 +166,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		buttons.add(b3);
 		buttons.add(b4);
 		buttons.add(b5);
-		buttons.add(b6);
 		buttons.add(b7);
 		buttons.add(b8);
 		buttons.add(b9);
@@ -209,7 +197,6 @@ public class MainMenu extends JFrame implements ActionListener {
 			jButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
 
-		// Just for refresh :) Not optional!
 		setSize(671, 469);
 		setSize(672, 470);
 	}
@@ -219,12 +206,12 @@ public class MainMenu extends JFrame implements ActionListener {
 		if (e.getSource() == bZpet) {
 			this.dispose();
 			mainWindow.openMenu(mainWindow);
-		}else if (e.getSource() == b0) {
+		} else if (e.getSource() == b0) {
 			this.dispose();
 			mode = 0;
 			mainWindow.setMode(mode);
 			mainWindow.switchGame(0);
-		}else if (e.getSource() == b1) {
+		} else if (e.getSource() == b1) {
 			mode = 1;
 			bZpet.setVisible(true);
 			b0.setVisible(false);
@@ -235,7 +222,6 @@ public class MainMenu extends JFrame implements ActionListener {
 			b5.setVisible(false);
 			b10.setVisible(false);
 
-			//b6.setVisible(true);
 			b7.setVisible(true);
 			b8.setVisible(true);
 			b9.setVisible(true);
@@ -250,7 +236,6 @@ public class MainMenu extends JFrame implements ActionListener {
 			b5.setVisible(false);
 			b10.setVisible(false);
 
-			//b6.setVisible(true);
 			b7.setVisible(true);
 			b7.setBounds(75, 150, 120, 30);
 			b8.setVisible(true);
@@ -269,7 +254,6 @@ public class MainMenu extends JFrame implements ActionListener {
 			b5.setVisible(false);
 			b10.setVisible(false);
 
-			//b6.setVisible(true);
 			b7.setVisible(true);
 			b8.setVisible(true);
 			b9.setVisible(true);
@@ -284,9 +268,9 @@ public class MainMenu extends JFrame implements ActionListener {
 					JOptionPane.QUESTION_MESSAGE, null, options3, options3[0]);
 			if (n3 == "Warnsdorffùv algoritmus") {
 				warnsdorff = true;
-			}else if (n3 == "Backtracking") {
+			} else if (n3 == "Backtracking") {
 				warnsdorff = false;
-			}else {
+			} else {
 				mainWindow.openMenu(mainWindow);
 				mainWindow.setMode(mode);
 				return;
@@ -306,7 +290,7 @@ public class MainMenu extends JFrame implements ActionListener {
 					t = new JTextField(4);
 					t.setRequestFocusEnabled(true);
 					myPanel.add(t);
-				}else {
+				} else {
 					myPanel.add(new JLabel("Výška šachovnice: "));
 					c = new JComboBox<>(options);
 					c1 = new JComboBox<>(options1);
@@ -315,73 +299,86 @@ public class MainMenu extends JFrame implements ActionListener {
 					myPanel.add(new JLabel("Šíøka šachovnice: "));
 					myPanel.add(c1);
 				}
-				
+
 				result = JOptionPane.showConfirmDialog(null, myPanel, "Velikost šachovnice",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (warnsdorff && t.getText() != null) {
-		            jml = Integer.parseInt(t.getText());
+					jml = Integer.parseInt(t.getText());
 					if (jml > 0) {
 						if (jml < 5) {
-						    JOptionPane.showMessageDialog(this, "Pøíliš malá šachovnice. Na této šachovnici neexistuje jezdcova procházka.", "Chyba", JOptionPane.ERROR_MESSAGE);
-						}else if (jml > 35) {
-						    JPanel jPanel = new JPanel();
-					        jPanel.add(new JLabel("Jedná se o velkou šachovnici pro Warnsdorffa. Mùže dojít k zacyklení algoritmu. V takovém pøípadì bude nutné ukonèit program pomocí správce úloh!!!"
-					        		+ " Pokraèovat?"));
-						    Object[] optionsContinue = { "Ano", "Zmìnit šachovnici" };
-						    int result1 = JOptionPane.showOptionDialog(null, jPanel, "!!! Upozornìní !!!",
-					                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
-					                null, optionsContinue, null);
-						    if (result1 != 1 && result1 != -1) {
+							JOptionPane.showMessageDialog(this,
+									"Pøíliš malá šachovnice. Na této šachovnici neexistuje jezdcova procházka.",
+									"Chyba", JOptionPane.ERROR_MESSAGE);
+						} else if (jml > 35) {
+							JPanel jPanel = new JPanel();
+							jPanel.add(new JLabel(
+									"Jedná se o velkou šachovnici pro Warnsdorffa. Mùže dojít k zacyklení algoritmu. V takovém pøípadì bude nutné ukonèit program pomocí správce úloh!!!"
+											+ " Pokraèovat?"));
+							Object[] optionsContinue = { "Ano", "Zmìnit šachovnici" };
+							int result1 = JOptionPane.showOptionDialog(null, jPanel, "!!! Upozornìní !!!",
+									JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
+									optionsContinue, null);
+							if (result1 != 1 && result1 != -1) {
 								break;
 							}
-						}else {
+						} else {
 							break;
 						}
-					}else {
-					    JOptionPane.showMessageDialog(this, "Zadejte kladná nenulová èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(this, "Zadejte kladná nenulová èísla.", "Chyba",
+								JOptionPane.ERROR_MESSAGE);
 					}
-				}else if (!warnsdorff) {
-					if (c.getSelectedIndex()+3 < 5 && c1.getSelectedIndex()+3 < 5) {
-					    JOptionPane.showMessageDialog(this, "Pøíliš malá šachovnice. Na této šachovnici neexistuje øešení.", "Chyba", JOptionPane.ERROR_MESSAGE);
-					}else if ((c.getSelectedIndex()+3 > 8 && c1.getSelectedIndex()+3 > 8) || (c1.getSelectedIndex()+c.getSelectedIndex()+6>16) || ((c1.getSelectedIndex()+c.getSelectedIndex()+6==16) && c.getSelectedIndex()-c1.getSelectedIndex()>4)) {
-						JOptionPane.showMessageDialog(this, "Pøíliš velká šachovnice pro algoritmus Backtracking.", "Chyba", JOptionPane.ERROR_MESSAGE);
-					}else if (c.getSelectedIndex()+3 > 6 && c1.getSelectedIndex()+3 > 6) {
+				} else if (!warnsdorff) {
+					if (c.getSelectedIndex() + 3 < 5 && c1.getSelectedIndex() + 3 < 5) {
+						JOptionPane.showMessageDialog(this,
+								"Pøíliš malá šachovnice. Na této šachovnici neexistuje øešení.", "Chyba",
+								JOptionPane.ERROR_MESSAGE);
+					} else if ((c.getSelectedIndex() + 3 > 8 && c1.getSelectedIndex() + 3 > 8)
+							|| (c1.getSelectedIndex() + c.getSelectedIndex() + 6 > 16)
+							|| ((c1.getSelectedIndex() + c.getSelectedIndex() + 6 == 16)
+									&& c.getSelectedIndex() - c1.getSelectedIndex() > 4)) {
+						JOptionPane.showMessageDialog(this, "Pøíliš velká šachovnice pro algoritmus Backtracking.",
+								"Chyba", JOptionPane.ERROR_MESSAGE);
+					} else if (c.getSelectedIndex() + 3 > 6 && c1.getSelectedIndex() + 3 > 6) {
 						JPanel jPanel = new JPanel();
-				        jPanel.add(new JLabel("Chvilku to bude trvat, ale øešení se vygenerují. Poèet øešení zadejte s rozumem."
-				        		+ " Pokraèovat?"));
-					    Object[] optionsContinue = { "Ano", "Zmìnit šachovnici" };
-					    int result1 = JOptionPane.showOptionDialog(null, jPanel, "!!! Upozornìní !!!",
-				                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
-				                null, optionsContinue, null);
-					    if (result1 != 1 && result1 != -1) {
+						jPanel.add(new JLabel(
+								"Chvilku to bude trvat, ale øešení se vygenerují. Poèet øešení zadejte s rozumem."
+										+ " Pokraèovat?"));
+						Object[] optionsContinue = { "Ano", "Zmìnit šachovnici" };
+						int result1 = JOptionPane.showOptionDialog(null, jPanel, "!!! Upozornìní !!!",
+								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, optionsContinue,
+								null);
+						if (result1 != 1 && result1 != -1) {
 							break;
 						}
-					}else {
+					} else {
 						break;
 					}
 				}
 			}
 
 			// Warnsdorff, na lichých nejsou uzavøené øešení
-			if (warnsdorff && jml%2 != 0) {
+			if (warnsdorff && jml % 2 != 0) {
 				lichost = true;
-			}else if (!warnsdorff && (c.getSelectedIndex()+3)%2 != 0 && c.getSelectedIndex()==c1.getSelectedIndex()) {
+			} else if (!warnsdorff && (c.getSelectedIndex() + 3) % 2 != 0
+					&& c.getSelectedIndex() == c1.getSelectedIndex()) {
 				lichost = true;
-			} 
-			
+			}
+
 			if (result != 2 && result != -1) {
 				String[] options2 = { "otevøené cesty", "uzavøené cesty" };
 				String[] optionsL = { "otevøené cesty" };
 
 				String n2 = null;
 				if (lichost) {
-					n2 = (String) JOptionPane.showInputDialog(null, "V tomto rozmìru šachovnice existují jen otevøená øešení.", "Typ cesty",
+					n2 = (String) JOptionPane.showInputDialog(null,
+							"V tomto rozmìru šachovnice existují jen otevøená øešení.", "Typ cesty",
 							JOptionPane.QUESTION_MESSAGE, null, optionsL, optionsL[0]);
-				}else {
+				} else {
 					n2 = (String) JOptionPane.showInputDialog(null, "Typ cesty??", "Typ cesty",
 							JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
 				}
-				
+
 				if (n2 != null) {
 					if (warnsdorff) {
 						boolean podm = true;
@@ -393,24 +390,25 @@ public class MainMenu extends JFrame implements ActionListener {
 							myPanel.add(t1);
 							result = JOptionPane.showConfirmDialog(null, myPanel, "Kolik šachovnic hledat",
 									JOptionPane.OK_CANCEL_OPTION);
-	
+
 							if (result != 2 && result != -1) {
 								if (t1.getText() != null) {
-						            jml1 = Integer.parseInt(t1.getText());
+									jml1 = Integer.parseInt(t1.getText());
 
 									if (jml1 > 0) {
 										KnightTest2 knightTest2 = new KnightTest2();
 										knightTest2.Main(jml, n2, jml1);
 										break;
-									}else {
-									    JOptionPane.showMessageDialog(this, "Zadejte kladná nenulová èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
+									} else {
+										JOptionPane.showMessageDialog(this, "Zadejte kladná nenulová èísla.", "Chyba",
+												JOptionPane.ERROR_MESSAGE);
 									}
 								}
-							}else {
+							} else {
 								break;
 							}
 						}
-					}else {
+					} else {
 						boolean podm = true;
 						while (podm) {
 							myPanel = new JPanel();
@@ -420,28 +418,30 @@ public class MainMenu extends JFrame implements ActionListener {
 							myPanel.add(t1);
 							result = JOptionPane.showConfirmDialog(null, myPanel, "Kolik šachovnic hledat",
 									JOptionPane.OK_CANCEL_OPTION);
-	
+
 							if (result != 2 && result != -1) {
 								if (t1.getText() != null) {
-						            jml1 = Integer.parseInt(t1.getText());
+									jml1 = Integer.parseInt(t1.getText());
 
 									if (jml1 > 0) {
-										KnightsTour kt = new KnightsTour(c.getSelectedIndex() + 3, c1.getSelectedIndex() + 3, n2, jml1);
+										KnightsTour kt = new KnightsTour(c.getSelectedIndex() + 3,
+												c1.getSelectedIndex() + 3, n2, jml1);
 										break;
-									}else {
-									    JOptionPane.showMessageDialog(this, "Zadejte kladná nenulová èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
+									} else {
+										JOptionPane.showMessageDialog(this, "Zadejte kladná nenulová èísla.", "Chyba",
+												JOptionPane.ERROR_MESSAGE);
 									}
 								}
-							}else {
+							} else {
 								break;
 							}
 						}
 					}
 					MainWindow.openMenu(mainWindow);
-				}else {
+				} else {
 					mainWindow.openMenu(mainWindow);
 				}
-			}else if(result == 2){
+			} else if (result == 2) {
 				mainWindow.openMenu(mainWindow);
 			}
 		} else if (e.getSource() == b5) {
@@ -449,9 +449,6 @@ public class MainMenu extends JFrame implements ActionListener {
 			mode = 5;
 			mainWindow.setMode(mode);
 			mainWindow.switchGame(0);
-		} else if (e.getSource() == b6) {
-			this.dispose();
-			mainWindow.switchGame(3);
 		} else if (e.getSource() == b7) {
 			this.dispose();
 			mainWindow.switchGame(4);
@@ -461,7 +458,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		} else if (e.getSource() == b9) {
 			this.dispose();
 			mainWindow.switchGame(6);
-		}else if (e.getSource() == b10) {
+		} else if (e.getSource() == b10) {
 			this.dispose();
 			mode = 6;
 			NeuralNetworkTour form = new NeuralNetworkTour();
@@ -483,38 +480,44 @@ public class MainMenu extends JFrame implements ActionListener {
 
 				if (result != 2 && result != -1) {
 					if (t1.getText() != null && t2.getText() != null) {
-			            int jml1 = Integer.parseInt(t1.getText());
-			            int jml2 = Integer.parseInt(t2.getText());
+						int jml1 = Integer.parseInt(t1.getText());
+						int jml2 = Integer.parseInt(t2.getText());
 
 						if (jml1 > 0 && jml2 > 0) {
-							if (jml1%2 != 0 && jml2%2!=0) {
-							    JOptionPane.showMessageDialog(this, "Oba rozmìry nemohou být lichá èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
-							}else {
+							if (jml1 % 2 != 0 && jml2 % 2 != 0) {
+								JOptionPane.showMessageDialog(this, "Oba rozmìry nemohou být lichá èísla.", "Chyba",
+										JOptionPane.ERROR_MESSAGE);
+							} else {
 								if (jml1 < 5 && jml2 < 5) {
-								    JOptionPane.showMessageDialog(this, "Pøíliš malá šachovnice. Na této šachovnici neexistuje øešení.", "Chyba", JOptionPane.ERROR_MESSAGE);
-								}else if (jml1>23 && jml2>23) {
+									JOptionPane.showMessageDialog(this,
+											"Pøíliš malá šachovnice. Na této šachovnici neexistuje øešení.", "Chyba",
+											JOptionPane.ERROR_MESSAGE);
+								} else if (jml1 > 23 && jml2 > 23) {
 									JPanel jPanel = new JPanel();
-							        jPanel.add(new JLabel("Chvilku to bude trvat, ale øešení se vygeneruje (Jedno øešení šachovnice 26x26 - cca 25 minut ; 28x28 - 2 hodiny). Vypnutí pouze pomocí správce úloh."
-							        		+ " Pokraèovat?"));
-								    Object[] optionsContinue = { "Ano", "Zmìnit šachovnici" };
-								    int result1 = JOptionPane.showOptionDialog(null, jPanel, "!!! Upozornìní - SILNÌ NEDOPORUÈUJEME !!!",
-							                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
-							                null, optionsContinue, null);
-								    if (result1 != 1 && result1 != -1) {
+									jPanel.add(new JLabel(
+											"Chvilku to bude trvat, ale øešení se vygeneruje (Jedno øešení šachovnice 26x26 - cca 25 minut ; 28x28 - 2 hodiny). Vypnutí pouze pomocí správce úloh."
+													+ " Pokraèovat?"));
+									Object[] optionsContinue = { "Ano", "Zmìnit šachovnici" };
+									int result1 = JOptionPane.showOptionDialog(null, jPanel,
+											"!!! Upozornìní - SILNÌ NEDOPORUÈUJEME !!!",
+											JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
+											optionsContinue, null);
+									if (result1 != 1 && result1 != -1) {
 										break;
 									}
-								}else if (jml1>19 || jml2>19) {
+								} else if (jml1 > 19 || jml2 > 19) {
 									JPanel jPanel = new JPanel();
-							        jPanel.add(new JLabel("Chvilku to bude trvat, ale øešení se vygeneruje (Jedno øešení šachovnice 26x26 - cca 25 minut)."
-							        		+ " Pokraèovat?"));
-								    Object[] optionsContinue = { "Ano", "Zmìnit šachovnici" };
-								    int result1 = JOptionPane.showOptionDialog(null, jPanel, "!!! Upozornìní !!!",
-							                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
-							                null, optionsContinue, null);
-								    if (result1 != 1 && result1 != -1) {
+									jPanel.add(new JLabel(
+											"Chvilku to bude trvat, ale øešení se vygeneruje (Jedno øešení šachovnice 26x26 - cca 25 minut)."
+													+ " Pokraèovat?"));
+									Object[] optionsContinue = { "Ano", "Zmìnit šachovnici" };
+									int result1 = JOptionPane.showOptionDialog(null, jPanel, "!!! Upozornìní !!!",
+											JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
+											optionsContinue, null);
+									if (result1 != 1 && result1 != -1) {
 										break;
 									}
-								}else  {
+								} else {
 									boolean podm = true;
 									while (poc) {
 										myPanel = new JPanel();
@@ -528,17 +531,18 @@ public class MainMenu extends JFrame implements ActionListener {
 
 										if (result != 2 && result != -1) {
 											if (t1.getText() != null) {
-									            jml1 = Integer.parseInt(t1.getText());
+												jml1 = Integer.parseInt(t1.getText());
 
 												if (jml1 > 0) {
 													form.setNumberOfBoards(jml1);
 													poc = false;
 													break;
-												}else {
-												    JOptionPane.showMessageDialog(this, "Zadejte kladné èíslo.", "Chyba", JOptionPane.ERROR_MESSAGE);
+												} else {
+													JOptionPane.showMessageDialog(this, "Zadejte kladné èíslo.",
+															"Chyba", JOptionPane.ERROR_MESSAGE);
 												}
 											}
-										}else {
+										} else {
 											podm = false;
 											break;
 										}
@@ -550,50 +554,46 @@ public class MainMenu extends JFrame implements ActionListener {
 									if (jml1 > jml2) {
 										form.cmdGoClick(mainWindow, jml1, jml2);
 										break;
-									}else if (jml1 == jml2 && jml1%2==0 && jml2%2==0) {
+									} else if (jml1 == jml2 && jml1 % 2 == 0 && jml2 % 2 == 0) {
 										form.cmdGoClick(mainWindow, jml1, jml2);
-									    JOptionPane.showMessageDialog(this, "Vaše øešení (" + form.getNumberOfBoards() + ") byla nalezeny. \n "
-									    		+ "Najdete je v souboru solutions.txt ve složce s programem", "Úspìch", JOptionPane.INFORMATION_MESSAGE);
+										JOptionPane.showMessageDialog(this,
+												"Vaše øešení (" + form.getNumberOfBoards() + ") byla nalezeny. \n "
+														+ "Najdete je v souboru solutions.txt ve složce s programem",
+												"Úspìch", JOptionPane.INFORMATION_MESSAGE);
 										break;
-									}else if (jml1 < jml2){
+									} else if (jml1 < jml2) {
 										form.cmdGoClick(mainWindow, jml2, jml1);
-									    JOptionPane.showMessageDialog(this, "Vaše øešení (" + form.getNumberOfBoards() + ") byla nalezeny. \n "
-									    		+ "Najdete je v souboru solutions.txt ve složce s programem", "Úspìch", JOptionPane.INFORMATION_MESSAGE);
+										JOptionPane.showMessageDialog(this,
+												"Vaše øešení (" + form.getNumberOfBoards() + ") byla nalezeny. \n "
+														+ "Najdete je v souboru solutions.txt ve složce s programem",
+												"Úspìch", JOptionPane.INFORMATION_MESSAGE);
 										break;
-									}else {
-									    JOptionPane.showMessageDialog(this, "Ètvercové šachovnice musí mít sudé velikosti.", "Chyba", JOptionPane.ERROR_MESSAGE);
+									} else {
+										JOptionPane.showMessageDialog(this,
+												"Ètvercové šachovnice musí mít sudé velikosti.", "Chyba",
+												JOptionPane.ERROR_MESSAGE);
 									}
 								}
 							}
-						}else {
-						    JOptionPane.showMessageDialog(this, "Zadejte nenulová èísla.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(this, "Zadejte nenulová èísla.", "Chyba",
+									JOptionPane.ERROR_MESSAGE);
 						}
 					}
-				}else {
+				} else {
 					mainWindow.openMenu(mainWindow);
 					break;
 				}
 			}
-			
-			mainWindow.setMenuEnable(true);
-			
-			//NeuralNetwork network = new NeuralNetwork();
-			//network.Main();
 
-			//KnightsTour kt = new KnightsTour(9, 9, "cesty");
-			
-			//KnightTest2 knightTest2 = new KnightTest2();
-			//knightTest2.Main();
-			
-			//PythonTest pythonTest = new PythonTest(mainWindow);
-			//MainTest mainTest = new MainTest(mainWindow);
-		}else if (e.getSource() == b11) {
+			mainWindow.setMenuEnable(true);
+		} else if (e.getSource() == b11) {
 			this.dispose();
 			mainWindow.switchGame(6);
-		}else if (e.getSource() == b12) {
+		} else if (e.getSource() == b12) {
 			this.dispose();
 			mainWindow.switchGame(7);
-		}else if (e.getSource() == b13) {
+		} else if (e.getSource() == b13) {
 			this.dispose();
 			mainWindow.switchGame(8);
 		}

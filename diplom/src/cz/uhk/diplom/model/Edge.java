@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
-import java.awt.geom.AffineTransform;
 
 public class Edge implements GraphicsObject {
 	private int x1, y1, x2, y2;
@@ -35,7 +34,7 @@ public class Edge implements GraphicsObject {
 			Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9 }, 0);
 			g.setStroke(dashed);
 			g.drawLine(x1, y1, x2, y2);
-		}else {
+		} else {
 			g.setColor(new Color(238, 238, 238));
 			g.setStroke(new BasicStroke(3));
 			g.drawLine(x1, y1, x2, y2);

@@ -67,20 +67,19 @@ public class Vertex implements GraphicsObject {
 			break;
 		}
 	}
-	
+
 	public Vertex(int x1, int y1, String text, int mode) {
 		this.x1 = x1;
 		this.y1 = y1;
 		this.text = text;
 		this.mode = mode;
-		color = new Color(255,255,255);
+		color = new Color(255, 255, 255);
 	}
 
 	@Override
 	public void nakresli(Graphics2D g) {
-	    RenderingHints rhints = g.getRenderingHints();
-	    boolean antialiasOn = rhints.containsValue(RenderingHints.VALUE_ANTIALIAS_ON);
-	    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		RenderingHints rhints = g.getRenderingHints();
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		if (mode == 1) {
 			g.setColor(color);
 			g.fillOval(x1, y1, x2, y2);
@@ -94,17 +93,17 @@ public class Vertex implements GraphicsObject {
 			g.fillOval(x1, y1, x2, y2);
 		}
 		if (mode == 5) {
-			g.drawImage(img, x1-20, y1-20, null);
+			g.drawImage(img, x1 - 20, y1 - 20, null);
 		}
 		if (mode == 6) {
-			g.drawImage(img, x1-10, y1-10, null);
+			g.drawImage(img, x1 - 10, y1 - 10, null);
 		}
 		if (mode == 7) {
-			g.drawImage(img, x1-30, y1-30, null);
+			g.drawImage(img, x1 - 30, y1 - 30, null);
 		}
 		if (mode == 10) {
 			g.setColor(color);
-			g.setFont(new Font("TimesRoman", Font.PLAIN, 18)); 
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
 			g.drawString(text, x1, y1);
 		}
 	}

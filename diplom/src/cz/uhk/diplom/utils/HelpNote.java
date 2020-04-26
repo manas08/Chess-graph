@@ -21,24 +21,23 @@ import cz.uhk.diplom.MainWindow;
 
 public class HelpNote extends JTextArea {
 
-    private BufferedImage img;
-    JTextField jLabel, jLabel1, jLabel2;
-    JTextArea text1, text2, text3;
-    JButton btnNext = new JButton(">");
-    JButton btnBack = new JButton("<");
-    JButton btnShow = new JButton("Ukaž øešení");
-    JButton btnTry = new JButton("Zkusím to sám");
-    int size, mode = 0, limit;
+	private BufferedImage img;
+	JTextField jLabel, jLabel1, jLabel2;
+	JTextArea text1, text2, text3;
+	JButton btnNext = new JButton(">");
+	JButton btnBack = new JButton("<");
+	JButton btnShow = new JButton("Ukaž øešení");
+	JButton btnTry = new JButton("Zkusím to sám");
+	int size, mode = 0, limit;
 	MainWindow main;
 	boolean podm = false;
 
-    public HelpNote(int a, int b) {
-        super(a,b);
+	public HelpNote(int a, int b) {
+		super(a, b);
 
-        setSize(a, b);
-        setBounds(20, 200, a, b);
+		setSize(a, b);
+		setBounds(20, 200, a, b);
 		setVisible(true);
-		//setBorder(BorderFactory.createSoftBevelBorder(0, Color.WHITE, Color.BLACK));
 		setEditable(false);
 		jLabel = new JTextField();
 		jLabel.setText("Jezdcova procházka");
@@ -46,12 +45,12 @@ public class HelpNote extends JTextArea {
 		jLabel.setBorder(null);
 		jLabel.setEditable(false);
 		jLabel.setEnabled(false);
-		jLabel.setBackground(new Color(1,1,1, (float) 0.0001));
+		jLabel.setBackground(new Color(1, 1, 1, (float) 0.0001));
 		jLabel.setDisabledTextColor(Color.BLACK);
 
 		jLabel.setFont(new Font("serif", Font.BOLD, 19));
-		jLabel.setSize(250,25);
-		jLabel.setBounds(90,80,250,25);
+		jLabel.setSize(250, 25);
+		jLabel.setBounds(90, 80, 250, 25);
 		add(jLabel);
 
 		jLabel1 = new JTextField();
@@ -60,12 +59,12 @@ public class HelpNote extends JTextArea {
 		jLabel1.setBorder(null);
 		jLabel1.setEditable(false);
 		jLabel1.setEnabled(false);
-		jLabel1.setBackground(new Color(1,1,1, (float) 0.0001));
+		jLabel1.setBackground(new Color(1, 1, 1, (float) 0.0001));
 		jLabel1.setDisabledTextColor(Color.BLACK);
 
 		jLabel1.setFont(new Font("serif", Font.BOLD, 19));
-		jLabel1.setSize(200,25);
-		jLabel1.setBounds(130,80,200,25);
+		jLabel1.setSize(200, 25);
+		jLabel1.setBounds(130, 80, 200, 25);
 		add(jLabel1);
 
 		jLabel2 = new JTextField();
@@ -74,12 +73,12 @@ public class HelpNote extends JTextArea {
 		jLabel2.setBorder(null);
 		jLabel2.setEditable(false);
 		jLabel2.setEnabled(false);
-		jLabel2.setBackground(new Color(1,1,1, (float) 0.0001));
+		jLabel2.setBackground(new Color(1, 1, 1, (float) 0.0001));
 		jLabel2.setDisabledTextColor(Color.BLACK);
 
 		jLabel2.setFont(new Font("serif", Font.BOLD, 18));
-		jLabel2.setSize(300,25);
-		jLabel2.setBounds(45,80,300,25);
+		jLabel2.setSize(300, 25);
+		jLabel2.setBounds(45, 80, 300, 25);
 		add(jLabel2);
 
 		text1 = new JTextArea();
@@ -89,14 +88,14 @@ public class HelpNote extends JTextArea {
 		text1.setBorder(null);
 		text1.setEditable(false);
 		text1.setEnabled(false);
-		text1.setBackground(new Color(1,1,1, (float) 0.0001));
+		text1.setBackground(new Color(1, 1, 1, (float) 0.0001));
 		text1.setDisabledTextColor(Color.BLACK);
 		add(text1);
-		
+
 		btnNext.setPreferredSize(new Dimension(30, 25));
-		btnNext.setBounds(180,320, 30, 25);
-		btnNext.setBackground(new Color(228,228,228));
-		btnNext.setMargin(new Insets(1,1,1,1));
+		btnNext.setBounds(180, 320, 30, 25);
+		btnNext.setBackground(new Color(228, 228, 228));
+		btnNext.setMargin(new Insets(1, 1, 1, 1));
 		btnNext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -107,7 +106,7 @@ public class HelpNote extends JTextArea {
 				if (mode == 4) {
 					btnBack.setEnabled(true);
 					btnNext.setEnabled(false);
-				}else {
+				} else {
 					btnNext.setEnabled(true);
 					btnBack.setEnabled(false);
 				}
@@ -118,9 +117,9 @@ public class HelpNote extends JTextArea {
 		add(btnNext);
 
 		btnBack.setPreferredSize(new Dimension(30, 25));
-		btnBack.setBounds(140,320, 30, 25);
-		btnBack.setBackground(new Color(228,228,228));
-		btnBack.setMargin(new Insets(1,1,1,1));
+		btnBack.setBounds(140, 320, 30, 25);
+		btnBack.setBackground(new Color(228, 228, 228));
+		btnBack.setMargin(new Insets(1, 1, 1, 1));
 		btnBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -131,7 +130,7 @@ public class HelpNote extends JTextArea {
 				if (mode == 3) {
 					btnBack.setEnabled(false);
 					btnNext.setEnabled(true);
-				}else {
+				} else {
 					btnNext.setEnabled(false);
 					btnBack.setEnabled(true);
 				}
@@ -139,19 +138,19 @@ public class HelpNote extends JTextArea {
 		});
 		btnBack.setFocusPainted(false);
 		add(btnBack);
-		
 
 		btnShow.setPreferredSize(new Dimension(100, 25));
-		btnShow.setBounds(140,310, 100, 25);
-		btnShow.setBackground(new Color(228,228,228));
-		btnShow.setMargin(new Insets(1,1,1,1));
+		btnShow.setBounds(140, 310, 100, 25);
+		btnShow.setBackground(new Color(228, 228, 228));
+		btnShow.setMargin(new Insets(1, 1, 1, 1));
 		btnShow.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				switch (mode) {
 				case 1:
 					if (main.getChesssize() == 4) {
-					    JOptionPane.showMessageDialog(main, "Šachovnice 4x4 nemá øešení jezdcovy procházky. :)", "Chyták!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(main, "Šachovnice 4x4 nemá øešení jezdcovy procházky. :)",
+								"Chyták!", JOptionPane.INFORMATION_MESSAGE);
 						break;
 					}
 					main.clear();
@@ -172,9 +171,9 @@ public class HelpNote extends JTextArea {
 		add(btnShow);
 
 		btnTry.setPreferredSize(new Dimension(100, 25));
-		btnTry.setBounds(140,310, 100, 25);
-		btnTry.setBackground(new Color(228,228,228));
-		btnTry.setMargin(new Insets(1,1,1,1));
+		btnTry.setBounds(140, 310, 100, 25);
+		btnTry.setBackground(new Color(228, 228, 228));
+		btnTry.setMargin(new Insets(1, 1, 1, 1));
 		btnTry.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -186,28 +185,26 @@ public class HelpNote extends JTextArea {
 		});
 		btnTry.setFocusPainted(false);
 		add(btnTry);
-		
+
 		setDisabledTextColor(Color.BLACK);
 		setEnabled(false);
-		setBorder(BorderFactory.createCompoundBorder(
-		        getBorder(), 
-		        BorderFactory.createEmptyBorder(105, 80, 60, 60)));
-		setBackground(new Color(1,1,1, (float) 0.01));
-        try{
-    		img= ImageIO.read(getClass().getResourceAsStream("/textures/notestick.png"));
-        } catch(IOException e) {
-            System.out.println(e.toString());
-        }
-    }
+		setBorder(BorderFactory.createCompoundBorder(getBorder(), BorderFactory.createEmptyBorder(105, 80, 60, 60)));
+		setBackground(new Color(1, 1, 1, (float) 0.01));
+		try {
+			img = ImageIO.read(getClass().getResourceAsStream("/textures/notestick.png"));
+		} catch (IOException e) {
+			System.out.println(e.toString());
+		}
+	}
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        g.drawImage(img,0,0,null);
-        super.paintComponent(g);
-    }
+	@Override
+	protected void paintComponent(Graphics g) {
+		g.drawImage(img, 0, 0, null);
+		super.paintComponent(g);
+	}
 
 	public void setText(int s) {
-		this.mode=s;
+		this.mode = s;
 		switch (s) {
 		case 1:
 			jLabel.setVisible(true);
@@ -217,7 +214,8 @@ public class HelpNote extends JTextArea {
 			btnNext.setVisible(false);
 			btnShow.setVisible(true);
 			btnTry.setVisible(false);
-			text1.setText(" \n - Projeïte každé pole šachovnice. \n \n - Konì pøesunete tahem \n nebo kliknutím na zeléné pole\n \n - Každé pole musíte navštívit právì 1x. \n \n - Krok zpìt naleznete na dolní lištì.");
+			text1.setText(
+					" \n - Projeïte každé pole šachovnice. \n \n - Konì pøesunete tahem \n nebo kliknutím na zeléné pole\n \n - Každé pole musíte navštívit právì 1x. \n \n - Krok zpìt naleznete na dolní lištì.");
 			break;
 		case 2:
 			jLabel.setVisible(false);
@@ -227,8 +225,9 @@ public class HelpNote extends JTextArea {
 			btnNext.setVisible(false);
 			btnShow.setVisible(true);
 			btnTry.setVisible(false);
-			text1.setText(" \n - Umístìte konì na šachovnici, \n tak aby každé pole bylo kryto. \n \n - Kryté pole oznaèeno èervenì. \n \n - Máte omezený poèet koní. ( " + limit + " ) \n \n"
-					+ " - Pøidání konì naleznete na dolní lištì.");
+			text1.setText(
+					" \n - Umístìte konì na šachovnici, \n tak aby každé pole bylo kryto. \n \n - Kryté pole oznaèeno èervenì. \n \n - Máte omezený poèet koní. ( "
+							+ limit + " ) \n \n" + " - Pøidání konì naleznete na dolní lištì.");
 			break;
 		case 3:
 			if (!podm) {
@@ -240,8 +239,9 @@ public class HelpNote extends JTextArea {
 				btnShow.setVisible(false);
 				btnTry.setVisible(false);
 			}
-			text1.setText(" \n - Spojte body pomocí hran. \n \n - Navštivte každý bod \n a vrate se do poèáteèního bodu.\n \n "
-					+ " - Krok zpìt naleznete na dolní lištì.");
+			text1.setText(
+					" \n - Spojte body pomocí hran. \n \n - Navštivte každý bod \n a vrate se do poèáteèního bodu.\n \n "
+							+ " - Krok zpìt naleznete na dolní lištì.");
 			break;
 		case 4:
 			btnBack.setVisible(true);
@@ -260,7 +260,8 @@ public class HelpNote extends JTextArea {
 			btnNext.setVisible(false);
 			btnShow.setVisible(false);
 			btnTry.setVisible(true);
-			text1.setText(" \n \n - Vygenerované øešení. \n \n - Èervené èáry znaèí jezdcovu cestu. \n \n - Jedná se o otevøené øešení úlohy.");
+			text1.setText(
+					" \n \n - Vygenerované øešení. \n \n - Èervené èáry znaèí jezdcovu cestu. \n \n - Jedná se o otevøené øešení úlohy.");
 			break;
 		default:
 			break;
@@ -287,5 +288,5 @@ public class HelpNote extends JTextArea {
 	public void setMain(MainWindow mainWindow) {
 		this.main = mainWindow;
 	}
-    
+
 }

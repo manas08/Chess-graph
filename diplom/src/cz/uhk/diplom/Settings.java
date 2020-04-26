@@ -71,10 +71,6 @@ public class Settings {
 		steps = new ArrayList<>();
 
 		switch (mode) {
-		case 3:
-			drawBoard3x3();
-			vertex = new Vertex(845, 378, img1, 3);
-			break;
 		case 4:
 			drawBoard4x4();
 			vertex = new Vertex(795, 328, img1, 3);
@@ -107,62 +103,6 @@ public class Settings {
 		main.setObrazek(this.obrazek);
 		main.setVertices(this.vertices);
 		main.setPoints(this.points);
-	}
-
-	private void drawBoard3x3() {
-		// prvni vykresleni
-		vertex = new Vertex(20, 20, img1, 3);
-		// kone.add(vertex);
-		obrazek.pridej(vertex);
-		vertex = new Vertex(50, 50, img2, 3);
-		// kone.add(vertex);
-		obrazek.pridej(vertex);
-
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		double width = screenSize.getWidth();
-		double height = screenSize.getHeight();
-		double pom1 = ((width / 2) - 150) / 100.0;
-		double pom2 = ((height / 2) - 200) / 100.0;
-
-		boolean obr = false;
-		int row = 1;
-		for (double i = pom2; i < pom2 + 3; i++) {
-			int collumn = 1;
-
-			for (double j = pom1; j < pom1 + 3; j++) {
-				if (obr) {
-					vertex = new Vertex((int) (j * 100), (int) (i * 100), img4, 2);
-					vertex.setCollumn(collumn);
-					vertex.setRow(row);
-					vertex.setWhite(true);
-					collumn++;
-					vertices.add(vertex);
-					obrazek.pridej(vertex);
-					obr = false;
-				} else {
-					vertex = new Vertex((int) (j * 100), (int) (i * 100), img3, 2);
-					vertex.setCollumn(collumn);
-					vertex.setRow(row);
-					vertex.setWhite(false);
-					collumn++;
-					vertices.add(vertex);
-					obrazek.pridej(vertex);
-					obr = true;
-				}
-			}
-			row++;
-		}
-
-		vertex = new Vertex((int) (pom1 * 100 - 65), (int) (pom2 * 100 + 303), kraj9, 2);
-		obrazek.pridej(vertex);
-		vertex = new Vertex((int) (pom1 * 100 - 65), (int) (pom2 * 100 - 65), kraj10, 2);
-		obrazek.pridej(vertex);
-		vertex = new Vertex((int) (pom1 * 100 - 3), (int) (pom2 * 100 - 65), kraj11, 2);
-		obrazek.pridej(vertex);
-		vertex = new Vertex((int) (pom1 * 100 + 303), (int) (pom2 * 100 - 4), kraj12, 2);
-		obrazek.pridej(vertex);
-
-		vertices.get(0).setEnable(false);
 	}
 
 	private void drawBoard4x4() {
@@ -351,50 +291,6 @@ public class Settings {
 		}
 
 		switch (mode) {
-		case 3:
-			if (i - 7 >= 0) {
-				vertex = vertices.get(i - 7);
-				if (vertex != null && vertex.getRow() < row) {
-					vertex.setEnable(true);
-					steps.add(vertex);
-				}
-			}
-			if (i - 5 >= 0) {
-				vertex = vertices.get(i - 5);
-				if (vertex != null && vertex.getRow() < row) {
-					vertex.setEnable(true);
-					steps.add(vertex);
-				}
-			}
-			if (i - 1 >= 0) {
-				vertex = vertices.get(i - 1);
-				if (vertex != null && vertex.getRow() < row) {
-					vertex.setEnable(true);
-					steps.add(vertex);
-				}
-			}
-			if (i + 1 <= 8) {
-				vertex = vertices.get(i + 1);
-				if (vertex != null && vertex.getRow() > row) {
-					vertex.setEnable(true);
-					steps.add(vertex);
-				}
-			}
-			if (i + 5 <= 8) {
-				vertex = vertices.get(i + 5);
-				if (vertex != null && vertex.getRow() > row) {
-					vertex.setEnable(true);
-					steps.add(vertex);
-				}
-			}
-			if (i + 7 <= 8) {
-				vertex = vertices.get(i + 7);
-				if (vertex != null && vertex.getRow() > row) {
-					vertex.setEnable(true);
-					steps.add(vertex);
-				}
-			}
-			break;
 		case 4:
 			if (i - 9 >= 0) {
 				vertex = vertices.get(i - 9);
@@ -595,30 +491,33 @@ public class Settings {
 
 		checkEndGame();
 	}
-	
+
 	public void checkEndGame() {
 		switch (mode) {
 		case 4:
 			if (points.size() == 16) {
-			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			return;
 		case 5:
 			if (points.size() == 25) {
-			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			return;
 		case 6:
 			if (points.size() == 36) {
-			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			return;
 		default:
 			return;
 		}
 	}
-	
-	public List<Vertex> getSteps(){
+
+	public List<Vertex> getSteps() {
 		return steps;
 	}
 
@@ -629,7 +528,7 @@ public class Settings {
 			} else {
 				v.setImg(img3R);
 			}
-		}else {
+		} else {
 			if (v.isWhite()) {
 				v.setImg(img4G);
 			} else {
@@ -637,7 +536,7 @@ public class Settings {
 			}
 		}
 	}
-	
+
 	public MainWindow getMain() {
 		return main;
 	}

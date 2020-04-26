@@ -21,8 +21,9 @@ public class Hamilton {
 	private int level;
 	private double width;
 	private double height;
-	BufferedImage img1, img1R, img1G, img1T, img2, img2R, img2G, img2T, img3, img3R, img3G, img3T, img3D, img4, img4R, img4G, img4T,
-	img5, img5R, img5G, img5T, img6, img6R, img6G, img6T, img7, img7R, img7G, img7T, img7D, img8, img8R, img8G, img8T, img9, img9R, img9G, img9T;
+	BufferedImage img1, img1R, img1G, img1T, img2, img2R, img2G, img2T, img3, img3R, img3G, img3T, img3D, img4, img4R,
+			img4G, img4T, img5, img5R, img5G, img5T, img6, img6R, img6G, img6T, img7, img7R, img7G, img7T, img7D, img8,
+			img8R, img8G, img8T, img9, img9R, img9G, img9T;
 
 	public Hamilton(Image obrazek, List<Edge> edges, List<Vertex> points, MainWindow main) {
 		this.obrazek = obrazek;
@@ -83,8 +84,9 @@ public class Hamilton {
 		Vertex v2 = new Vertex((int) (width / 3), (int) (height / 2), img1, 5);
 		Vertex v3 = new Vertex((int) (2 * width / 3), (int) (height / 2), img1, 5);
 		Vertex v4 = new Vertex((int) (width / 4), (int) (height / 8), img1T, 6);
-		Vertex v5 = new Vertex((int) (width / 4), (int) (height / 10), "Pomozte studentovi navštívit všechny hospody.", 10);
-		this.obrazek.pridej(v4);		
+		Vertex v5 = new Vertex((int) (width / 4), (int) (height / 10), "Pomozte studentovi navštívit všechny hospody.",
+				10);
+		this.obrazek.pridej(v4);
 		this.obrazek.pridej(v5);
 		points.add(v1);
 		points.add(v2);
@@ -116,7 +118,7 @@ public class Hamilton {
 		Vertex v4 = new Vertex((int) (2 * width / 3), (int) (2 * height / 5), img2, 6);
 		Vertex v5 = new Vertex((int) (width / 4), (int) (height / 8), img2T, 6);
 		Vertex v6 = new Vertex((int) (width / 4), (int) (height / 10), "Posbírejte pro koèièku všechny klubka.", 10);
-		this.obrazek.pridej(v5);		
+		this.obrazek.pridej(v5);
 		this.obrazek.pridej(v6);
 		points.add(v1);
 		points.add(v2);
@@ -153,9 +155,10 @@ public class Hamilton {
 		Vertex v4 = new Vertex((int) (7 * width / 12), (int) (9 * height / 18), img3, 7);
 		Vertex v5 = new Vertex((int) (width / 4), (int) (height / 8), img3T, 6);
 		Vertex v6 = new Vertex((int) (5 * width / 16), (int) (height / 8), img3D, 6);
-		Vertex v7 = new Vertex((int) (width / 4), (int) (height / 10), "Naplánujte kosmonautovi cestu po všech hvìzdách.", 10);
-		this.obrazek.pridej(v5);		
-		this.obrazek.pridej(v6);		
+		Vertex v7 = new Vertex((int) (width / 4), (int) (height / 10),
+				"Naplánujte kosmonautovi cestu po všech hvìzdách.", 10);
+		this.obrazek.pridej(v5);
+		this.obrazek.pridej(v6);
 		this.obrazek.pridej(v7);
 		points.add(v1);
 		points.add(v2);
@@ -201,8 +204,9 @@ public class Hamilton {
 		Vertex v5 = new Vertex((int) (43 * width / 100), (int) (63 * height / 100), img4, 6);
 		Vertex v6 = new Vertex((int) (60 * width / 100), (int) (65 * height / 100), img4, 6);
 		Vertex v7 = new Vertex((int) (width / 4), (int) (height / 8), img4T, 6);
-		Vertex v8 = new Vertex((int) (width / 4), (int) (height / 10), "Pomozte jekovi posbírat všechny jablíèka.", 10);
-		this.obrazek.pridej(v7);		
+		Vertex v8 = new Vertex((int) (width / 4), (int) (height / 10), "Pomozte jekovi posbírat všechny jablíèka.",
+				10);
+		this.obrazek.pridej(v7);
 		this.obrazek.pridej(v8);
 		points.add(v1);
 		points.add(v2);
@@ -258,13 +262,14 @@ public class Hamilton {
 		Vertex v1 = new Vertex((int) (50 * width / 100), (int) (15 * height / 100), img5, 6);
 		Vertex v2 = new Vertex((int) (40 * width / 100), (int) (40 * height / 100), img5, 6);
 		Vertex v3 = new Vertex((int) (60 * width / 100), (int) (40 * height / 100), img5, 6);
-		Vertex v4 = new Vertex((int) (50* width / 100), (int) (45 * height / 100), img5, 6);
+		Vertex v4 = new Vertex((int) (50 * width / 100), (int) (45 * height / 100), img5, 6);
 		Vertex v5 = new Vertex((int) (35 * width / 100), (int) (55 * height / 100), img5, 6);
 		Vertex v6 = new Vertex((int) (65 * width / 100), (int) (55 * height / 100), img5, 6);
 		Vertex v7 = new Vertex((int) (50 * width / 100), (int) (65 * height / 100), img5, 6);
 		Vertex v8 = new Vertex((int) (width / 4), (int) (height / 8), img5T, 6);
-		Vertex v9 = new Vertex((int) (width / 4), (int) (height / 10), "Pomozte Archimedovi posbírat všechny kıble.", 10);
-		this.obrazek.pridej(v8);		
+		Vertex v9 = new Vertex((int) (width / 4), (int) (height / 10), "Pomozte Archimedovi posbírat všechny kıble.",
+				10);
+		this.obrazek.pridej(v8);
 		this.obrazek.pridej(v9);
 		points.add(v1);
 		points.add(v2);
@@ -321,12 +326,12 @@ public class Hamilton {
 		Vertex v1 = new Vertex((int) (38 * width / 100), (int) (20 * height / 100), img6, 6);
 		Vertex v2 = new Vertex((int) (50 * width / 100), (int) (15 * height / 100), img6, 6);
 		Vertex v3 = new Vertex((int) (58 * width / 100), (int) (22 * height / 100), img6, 6);
-		Vertex v4 = new Vertex((int) (50* width / 100), (int) (55 * height / 100), img6, 6);
+		Vertex v4 = new Vertex((int) (50 * width / 100), (int) (55 * height / 100), img6, 6);
 		Vertex v5 = new Vertex((int) (55 * width / 100), (int) (55 * height / 100), img6, 6);
 		Vertex v6 = new Vertex((int) (60 * width / 100), (int) (45 * height / 100), img6, 6);
 		Vertex v7 = new Vertex((int) (width / 4), (int) (height / 8), img6T, 6);
 		Vertex v8 = new Vertex((int) (width / 4), (int) (height / 10), "Seberte Homerovi všechny donuty.", 10);
-		this.obrazek.pridej(v7);		
+		this.obrazek.pridej(v7);
 		this.obrazek.pridej(v8);
 		points.add(v1);
 		points.add(v2);
@@ -382,16 +387,17 @@ public class Hamilton {
 		Vertex v1 = new Vertex((int) (40 * width / 100), (int) (20 * height / 100), img7, 6);
 		Vertex v2 = new Vertex((int) (50 * width / 100), (int) (15 * height / 100), img7, 6);
 		Vertex v3 = new Vertex((int) (60 * width / 100), (int) (20 * height / 100), img7, 6);
-		Vertex v4 = new Vertex((int) (45* width / 100), (int) (45 * height / 100), img7, 6);
+		Vertex v4 = new Vertex((int) (45 * width / 100), (int) (45 * height / 100), img7, 6);
 		Vertex v5 = new Vertex((int) (55 * width / 100), (int) (45 * height / 100), img7, 6);
 		Vertex v6 = new Vertex((int) (40 * width / 100), (int) (70 * height / 100), img7, 6);
 		Vertex v7 = new Vertex((int) (50 * width / 100), (int) (75 * height / 100), img7, 6);
 		Vertex v8 = new Vertex((int) (60 * width / 100), (int) (70 * height / 100), img7, 6);
 		Vertex v9 = new Vertex((int) (width / 4), (int) (height / 8), img7T, 6);
 		Vertex v10 = new Vertex((int) (5 * width / 16), (int) (height / 8), img7D, 6);
-		Vertex v11 = new Vertex((int) (width / 4), (int) (height / 10), "Naplánujte pošákovi cestu pro rozvoz pošty.", 10);
-		this.obrazek.pridej(v9);		
-		this.obrazek.pridej(v10);		
+		Vertex v11 = new Vertex((int) (width / 4), (int) (height / 10), "Naplánujte pošákovi cestu pro rozvoz pošty.",
+				10);
+		this.obrazek.pridej(v9);
+		this.obrazek.pridej(v10);
 		this.obrazek.pridej(v11);
 		points.add(v1);
 		points.add(v2);
@@ -461,12 +467,12 @@ public class Hamilton {
 		Vertex v1 = new Vertex((int) (35 * width / 100), (int) (25 * height / 100), img8, 6);
 		Vertex v2 = new Vertex((int) (46 * width / 100), (int) (15 * height / 100), img8, 6);
 		Vertex v3 = new Vertex((int) (54 * width / 100), (int) (18 * height / 100), img8, 6);
-		Vertex v4 = new Vertex((int) (66* width / 100), (int) (30 * height / 100), img8, 6);
+		Vertex v4 = new Vertex((int) (66 * width / 100), (int) (30 * height / 100), img8, 6);
 		Vertex v5 = new Vertex((int) (37 * width / 100), (int) (45 * height / 100), img8, 6);
 		Vertex v6 = new Vertex((int) (50 * width / 100), (int) (60 * height / 100), img8, 6);
 		Vertex v7 = new Vertex((int) (width / 4), (int) (height / 8), img8T, 6);
 		Vertex v8 = new Vertex((int) (width / 4), (int) (height / 10), "Pomozte tenistovi sebrat všechny míèky.", 10);
-		this.obrazek.pridej(v7);		
+		this.obrazek.pridej(v7);
 		this.obrazek.pridej(v8);
 		points.add(v1);
 		points.add(v2);
@@ -514,11 +520,11 @@ public class Hamilton {
 		Vertex v1 = new Vertex((int) (40 * width / 100), (int) (25 * height / 100), img9, 6);
 		Vertex v2 = new Vertex((int) (60 * width / 100), (int) (18 * height / 100), img9, 6);
 		Vertex v3 = new Vertex((int) (62 * width / 100), (int) (35 * height / 100), img9, 6);
-		Vertex v4 = new Vertex((int) (45* width / 100), (int) (50 * height / 100), img9, 6);
+		Vertex v4 = new Vertex((int) (45 * width / 100), (int) (50 * height / 100), img9, 6);
 		Vertex v5 = new Vertex((int) (52 * width / 100), (int) (55 * height / 100), img9, 6);
 		Vertex v6 = new Vertex((int) (width / 4), (int) (height / 8), img9T, 6);
 		Vertex v7 = new Vertex((int) (width / 4), (int) (height / 10), "Naplánujte popeláøùj nejlepší cestu.", 10);
-		this.obrazek.pridej(v6);		
+		this.obrazek.pridej(v6);
 		this.obrazek.pridej(v7);
 		points.add(v1);
 		points.add(v2);
@@ -580,8 +586,7 @@ public class Hamilton {
 		this.obrazek = obrazek;
 		edges.clear();
 		points.clear();
-		
-		
+
 		switch (level) {
 		case 0:
 			drawLevel0();
@@ -662,7 +667,7 @@ public class Hamilton {
 			default:
 				break;
 			}
-		}else if(b == 1) {
+		} else if (b == 1) {
 			switch (level) {
 			case 0:
 				vertex.setImg(img1G);
@@ -694,7 +699,7 @@ public class Hamilton {
 			default:
 				break;
 			}
-		}else {
+		} else {
 			switch (level) {
 			case 0:
 				vertex.setImg(img1R);
@@ -728,7 +733,7 @@ public class Hamilton {
 			}
 		}
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}

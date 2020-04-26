@@ -6,8 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collector.Characteristics;
 
 import javax.imageio.ImageIO;
 
@@ -60,7 +58,6 @@ public class Simulation {
 			kraj15 = ImageIO.read(getClass().getResourceAsStream("/textures/kraj15.jpg"));
 			kraj16 = ImageIO.read(getClass().getResourceAsStream("/textures/kraj16.jpg"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -74,7 +71,7 @@ public class Simulation {
 		this.mode = mode;
 		this.policko = 0;
 		this.prohledej = true;
-		
+
 		switch (mode) {
 		case 4:
 			drawBoard4x4();
@@ -521,46 +518,40 @@ public class Simulation {
 
 		edge = new Edge(kun.getX1() + 16, kun.getY1() + 14, kun.getX1() + 16, kun.getY1() + 14, 1);
 
-		/*
-		 * try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
-		
 		if (this.vertices.size() == kun.getId()) {
 			main.breakLoop();
 			return false;
 		}
-			Vertex actual = this.vertices.get(kun.getId());
-			if (path.size() == 0) {
-				actual = this.vertices.get(policko);
-				actual.setId(policko);
-				path.add(actual);
-				actual.setEnable(false);
-				this.vertices.get(actual.getId()).setEnable(false);
-			}
+		Vertex actual = this.vertices.get(kun.getId());
+		if (path.size() == 0) {
+			actual = this.vertices.get(policko);
+			actual.setId(policko);
+			path.add(actual);
+			actual.setEnable(false);
+			this.vertices.get(actual.getId()).setEnable(false);
+		}
 
-			boolean correct = false;
-			for (int i = 0; i < steps.size(); i++) {
-				// System.out.println();
-				if (!actual.getVisited().contains(steps.get(i))) {
-					kun.setId(steps.get(i).getId());
-					steps.get(i).setEnable(false);
-					this.vertices.get(steps.get(i).getId()).setEnable(false);
+		boolean correct = false;
+		for (int i = 0; i < steps.size(); i++) {
+			if (!actual.getVisited().contains(steps.get(i))) {
+				kun.setId(steps.get(i).getId());
+				steps.get(i).setEnable(false);
+				this.vertices.get(steps.get(i).getId()).setEnable(false);
 
-					path.add(steps.get(i));
-					actual.getVisited().add(steps.get(i));
-					correct = true;
-					break;
-				}
+				path.add(steps.get(i));
+				actual.getVisited().add(steps.get(i));
+				correct = true;
+				break;
 			}
-			main.setVertices(this.vertices);
-			if (!correct) {
-				prohledej = false;
-				return false;
-			} else {
-				prohledej = true;
-				return true;
-			}
+		}
+		main.setVertices(this.vertices);
+		if (!correct) {
+			prohledej = false;
+			return false;
+		} else {
+			prohledej = true;
+			return true;
+		}
 
 	}
 
@@ -569,8 +560,6 @@ public class Simulation {
 	}
 
 	public Vertex moveHorse(MainWindow main) {
-
-		// System.out.println(path.size() + " SIZE");
 		if (prohledej) {
 
 			kun.setX1(path.get(path.size() - 1).getX1() + 35);

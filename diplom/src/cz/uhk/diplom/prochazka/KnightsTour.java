@@ -9,18 +9,14 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class KnightsTour {
-	
 
 	/**
 	 * 
 	 * @author manas08
 	 *
-	 * Backtracking algoritm
-	 * for searching Knight's tours in chessboard
+	 *         Backtracking algoritm for searching Knight's tours in chessboard
 	 *
 	 */
-	
-	
 
 	/**
 	 * Priznak nenavstivenosti policka
@@ -39,8 +35,8 @@ public class KnightsTour {
 	 */
 	private int solutionsCount, pocetReseni;
 	/**
-	 * Pole pro reseni 0 -> pocatecni pozice kone 1 -> prvni tah 2 -> druhy tah
-	 * . . . n -> n-ty tah
+	 * Pole pro reseni 0 -> pocatecni pozice kone 1 -> prvni tah 2 -> druhy tah . .
+	 * . n -> n-ty tah
 	 */
 	private int[][] solutionBoard;
 
@@ -57,11 +53,6 @@ public class KnightsTour {
 	 *            typ hledane cesty
 	 */
 
-	/**
-	 * Pro testování
-	 */
-	// private long start;
-
 	public KnightsTour(int xSize, int ySize, String n2, int pocetReseni) {
 		this.xSize = xSize;
 		this.ySize = ySize;
@@ -76,57 +67,55 @@ public class KnightsTour {
 		solutionsCount = 0;
 
 		solutionBoard = new int[ySize][xSize];
-		
+
+		// výstup
 		PrintStream originalStdout = System.out;
 		PrintStream out = null;
 		try {
 			out = new PrintStream(new FileOutputStream("backtracking.txt"));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.setOut(out);
 
-
 		System.out.println("Tento soubor obsahuje " + pocetReseni + " øešení vygenerovaná algoritmem Backtracking.");
-		System.out.println("Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice " + xSize + "x" + ySize + ".");
+		System.out.println(
+				"Øešení jsou vypsána v podobì èísel ve tvaru velikosti šachovnice " + xSize + "x" + ySize + ".");
 		System.out.println("Každé èíslo reprezentuje krok jezdcovy procházky.");
 		System.out.println("Èíslo 0 je políèko, kde jezdec zaèíná");
 		System.out.println("Èíslo 1 je políèko, kam se jezdec pøesunul z kroku 0 atd...");
 		System.out.println();
-		
-		// start = System.currentTimeMillis();
+
 		for (int i = 0; i < ySize; i++) {
 			for (int j = 0; j < xSize; j++) {
 				solutionBoard[i][j] = NOT_VISITED;
 			}
 		}
 		solve();
+
 		System.out.println("<td>" + solutionsCount + "</td>");
 
 		if (uzav) {
 			solutionsCount = solutionsCount / 2;
 		}
-		
+
 		System.setOut(originalStdout);
-		JOptionPane.showMessageDialog(null, "Právì bylo vygenerováno " + pocetReseni + " cest jezdcovy procházky "
-				+ "\n na šachovnici " + xSize + "x" + ySize + ", jedná se o "
-				+ n2 + ".\nLze je nalézt v souboru backtracking.txt ve složce s aplikací.", "Hotovo", JOptionPane.INFORMATION_MESSAGE, null);
+		JOptionPane.showMessageDialog(null,
+				"Právì bylo vygenerováno " + pocetReseni + " cest jezdcovy procházky " + "\n na šachovnici " + xSize
+						+ "x" + ySize + ", jedná se o " + n2
+						+ ".\nLze je nalézt v souboru backtracking.txt ve složce s aplikací.",
+				"Hotovo", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 
 	/**
 	 * Resi jezdcovu prochazku
 	 */
 	public void solve() {
-		if (uzav) {
-			takeTurn(2, 2, 0);
-			solutionBoard[2][2] = NOT_VISITED; // reset pole
-		} else {
-			for (int i = 0; i < ySize; i++) {
-				for (int j = 0; j < xSize; j++) {
-					takeTurn(j, i, 0);
-					solutionBoard[i][j] = NOT_VISITED; // reset pole
-				}
+		// hledání øešení od všech možných výchozích pozic jezdce
+		for (int i = 0; i < ySize; i++) {
+			for (int j = 0; j < xSize; j++) {
+				takeTurn(j, i, 0);
+				solutionBoard[i][j] = NOT_VISITED; // rekurzivní reset pole
 			}
 		}
 	}
@@ -172,32 +161,34 @@ public class KnightsTour {
 	 *            cislo tahu
 	 */
 	private void takeTurn(int x, int y, int turnNr) {
-		//omezeni poctem
+		// pokud máme všechna øešení co jsme chtìli -> konec
 		if (pocetReseni == solutionsCount) {
 			return;
 		}
 		solutionBoard[y][x] = turnNr;
+
+		// pokud bylo nalezno øešení
 		if (turnNr == (xSize * ySize) - 1) {
-			// System.out.println(System.currentTimeMillis() - start + " " +
-			// (System.currentTimeMillis() - start)/1000F);
+			// podmínka pro výstup uzavøených øešení
 			if (uzav) {
 				for (Coords c : getFields(x, y)) {
 					if (solutionBoard[c.getY()][c.getX()] == 0) {
-						// System.out.println();
-						// System.out.println();
 						podm = true;
 					}
 				}
 			}
 
-			printSolution();
+			printSolution(); // tisk øešení
 			return;
+
+			// pokud ještì nebylo øešení nalezeno
 		} else {
+			// provedení tahu na ještì nenavštívené pole dle pravidel šachu
 			for (Coords c : getFields(x, y)) {
 				if (solutionBoard[c.getY()][c.getX()] == NOT_VISITED) {
 					takeTurn(c.getX(), c.getY(), turnNr + 1);
-					solutionBoard[c.getY()][c.getX()] = NOT_VISITED; // reset
-																		// policka
+					// rekurzivní reset pole
+					solutionBoard[c.getY()][c.getX()] = NOT_VISITED;
 				}
 			}
 		}
@@ -247,16 +238,10 @@ public class KnightsTour {
 			this.y = y;
 		}
 
-		/**
-		 * @return the x
-		 */
 		public int getX() {
 			return x;
 		}
 
-		/**
-		 * @return the y
-		 */
 		public int getY() {
 			return y;
 		}

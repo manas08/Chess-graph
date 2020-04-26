@@ -91,20 +91,20 @@ public class CoverGame {
 		default:
 			break;
 		}
-		
+
 		if (mode == 6) {
 			vertex.setX1(this.vertices.get(1).getX1() + 35);
 			vertex.setY1(this.vertices.get(1).getY1() + 38);
 			this.vertex.setId(1);
 			this.vertex.setRow(1);
 			this.vertex.setCollumn(2);
-		}else if (mode == 8) {
+		} else if (mode == 8) {
 			vertex.setX1(this.vertices.get(2).getX1() + 35);
 			vertex.setY1(this.vertices.get(2).getY1() + 38);
 			this.vertex.setId(2);
 			this.vertex.setRow(1);
 			this.vertex.setCollumn(3);
-		}else {
+		} else {
 			vertex.setX1(this.vertices.get(0).getX1() + 35);
 			vertex.setY1(this.vertices.get(0).getY1() + 38);
 			this.vertex.setId(0);
@@ -118,7 +118,7 @@ public class CoverGame {
 		main.setObrazek(this.obrazek);
 		main.setVertices(this.vertices);
 	}
-	
+
 	private void drawBoard4x4() {
 		vertex = new Vertex(20, 20, img1, 3);
 		obrazek.pridej(vertex);
@@ -266,7 +266,7 @@ public class CoverGame {
 			}
 			row++;
 		}
-		
+
 		switch (this.mode) {
 		case 6:
 			vertices.get(20).setEnable(false);
@@ -379,7 +379,8 @@ public class CoverGame {
 			if (mode == 4) {
 				if (v.getId() - 9 >= 0) {
 					vertex = vertices.get(v.getId() - 9);
-					if (vertex != null && vertex.getRow() < v.getRow() && v.getCollumn() > vertex.getCollumn() && !steps.contains(vertex)) {
+					if (vertex != null && vertex.getRow() < v.getRow() && v.getCollumn() > vertex.getCollumn()
+							&& !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
@@ -421,11 +422,12 @@ public class CoverGame {
 				}
 				if (v.getId() + 9 <= 15) {
 					vertex = vertices.get(v.getId() + 9);
-					if (vertex != null && vertex.getRow() > v.getRow() && v.getCollumn() < vertex.getCollumn() && !steps.contains(vertex)) {
+					if (vertex != null && vertex.getRow() > v.getRow() && v.getCollumn() < vertex.getCollumn()
+							&& !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
-			}else if (mode == 5) {
+			} else if (mode == 5) {
 
 				if (v.getId() - 11 >= 0) {
 					vertex = vertices.get(v.getId() - 11);
@@ -465,7 +467,7 @@ public class CoverGame {
 				}
 				if (v.getId() + 9 <= 24) {
 					vertex = vertices.get(v.getId() + 9);
-					if (vertex != null && vertex.getRow() == v.getRow() + 2 && !steps.contains(vertex) ) {
+					if (vertex != null && vertex.getRow() == v.getRow() + 2 && !steps.contains(vertex)) {
 						steps.add(vertex);
 					}
 				}
@@ -475,7 +477,7 @@ public class CoverGame {
 						steps.add(vertex);
 					}
 				}
-			}else {
+			} else {
 
 				if (v.getId() - 11 >= 0) {
 					vertex = vertices.get(v.getId() - 11);
@@ -545,12 +547,12 @@ public class CoverGame {
 				}
 			}
 		}
-		
+
 		for (Vertex v2 : kone) {
 			for (Vertex v : vertices) {
 				if (v.getRow() == v2.getRow() && v.getCollumn() == v2.getCollumn()) {
 					if (v.getImg() != img4G || v.getImg() != img3G) {
-						count++;	
+						count++;
 					}
 					if (v.isWhite()) {
 						v.setImg(img4G);
@@ -560,8 +562,7 @@ public class CoverGame {
 				}
 			}
 		}
-		
-		System.out.println("-------------------");
+
 		if (check) {
 			checkEndGame();
 		}
@@ -586,40 +587,40 @@ public class CoverGame {
 			p++;
 		}
 
-		int x = 0,y = 0;
+		int x = 0, y = 0;
 		switch (mode) {
 		case 4:
-			x = p%4 + 1;
-			y = (p/4) + 1;
-			vertex = new Vertex(795 + (100*(x-1)), 328 + (100*(y-1)), img2, 3);
+			x = p % 4 + 1;
+			y = (p / 4) + 1;
+			vertex = new Vertex(795 + (100 * (x - 1)), 328 + (100 * (y - 1)), img2, 3);
 			break;
 		case 5:
-			x = p%5 + 1;
-			y = (p/5) + 1;
-			vertex = new Vertex(745 + (100*(x-1)), 278 + (100*(y-1)), img2, 3);
+			x = p % 5 + 1;
+			y = (p / 5) + 1;
+			vertex = new Vertex(745 + (100 * (x - 1)), 278 + (100 * (y - 1)), img2, 3);
 			break;
 		case 6:
-			x = p%5 + 1;
-			y = (p/5) + 1;
-			vertex = new Vertex(745 + (100*(x-1)), 278 + (100*(y-1)), img2, 3);
+			x = p % 5 + 1;
+			y = (p / 5) + 1;
+			vertex = new Vertex(745 + (100 * (x - 1)), 278 + (100 * (y - 1)), img2, 3);
 			break;
 		case 7:
-			x = p%5 + 1;
-			y = (p/5) + 1;
-			vertex = new Vertex(745 + (100*(x-1)), 278 + (100*(y-1)), img2, 3);
+			x = p % 5 + 1;
+			y = (p / 5) + 1;
+			vertex = new Vertex(745 + (100 * (x - 1)), 278 + (100 * (y - 1)), img2, 3);
 			break;
 		case 8:
-			x = p%5 + 1;
-			y = (p/5) + 1;
-			vertex = new Vertex(745 + (100*(x-1)), 278 + (100*(y-1)), img2, 3);
+			x = p % 5 + 1;
+			y = (p / 5) + 1;
+			vertex = new Vertex(745 + (100 * (x - 1)), 278 + (100 * (y - 1)), img2, 3);
 			break;
 		default:
 			break;
 		}
-		
+
 		this.vertex.setRow(y);
 		this.vertex.setCollumn(x);
-		this.vertex.setId(p);		
+		this.vertex.setId(p);
 		this.kone.add(vertex);
 		this.obrazek.pridej(vertex);
 
@@ -643,33 +644,37 @@ public class CoverGame {
 			return 0;
 		}
 	}
-	
+
 	public void checkEndGame() {
-		System.out.println(count + "--+++++++------" + mode);
 		switch (mode) {
 		case 4:
 			if (count == 16) {
-			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			return;
 		case 5:
 			if (count == 25) {
-			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			return;
 		case 6:
 			if (count == 12) {
-			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			return;
 		case 7:
 			if (count == 19) {
-			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			return;
 		case 8:
 			if (count == 9) {
-			    JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(main, "Správnì splnìný úkol.", "Hotovo.",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			return;
 		default:
@@ -689,28 +694,28 @@ public class CoverGame {
 			this.vertex.setCollumn(2);
 			this.vertex.setId(5);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);		
+			this.obrazek.pridej(vertex);
 
 			vertex = new Vertex(995, 428, img2, 3);
 			this.vertex.setRow(2);
 			this.vertex.setCollumn(3);
 			this.vertex.setId(6);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
-			
+			this.obrazek.pridej(vertex);
+
 			vertex = new Vertex(895, 528, img2, 3);
 			this.vertex.setRow(3);
 			this.vertex.setCollumn(2);
 			this.vertex.setId(9);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
+			this.obrazek.pridej(vertex);
 
 			vertex = new Vertex(995, 528, img2, 3);
 			this.vertex.setRow(3);
 			this.vertex.setCollumn(3);
 			this.vertex.setId(10);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
+			this.obrazek.pridej(vertex);
 			break;
 		case 5:
 			vertex = new Vertex(745, 478, img2, 3);
@@ -718,35 +723,35 @@ public class CoverGame {
 			this.vertex.setCollumn(1);
 			this.vertex.setId(10);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);		
+			this.obrazek.pridej(vertex);
 
 			vertex = new Vertex(845, 478, img2, 3);
 			this.vertex.setRow(3);
 			this.vertex.setCollumn(2);
 			this.vertex.setId(11);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
-			
+			this.obrazek.pridej(vertex);
+
 			vertex = new Vertex(945, 478, img2, 3);
 			this.vertex.setRow(3);
 			this.vertex.setCollumn(3);
 			this.vertex.setId(12);
 			this.kone.add(vertex);
 			this.obrazek.pridej(vertex);
-			
+
 			vertex = new Vertex(1045, 478, img2, 3);
 			this.vertex.setRow(3);
 			this.vertex.setCollumn(4);
 			this.vertex.setId(13);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
+			this.obrazek.pridej(vertex);
 
 			vertex = new Vertex(1145, 478, img2, 3);
 			this.vertex.setRow(3);
 			this.vertex.setCollumn(5);
 			this.vertex.setId(14);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
+			this.obrazek.pridej(vertex);
 			break;
 		case 6:
 			vertex = new Vertex(845, 278, img2, 3);
@@ -754,14 +759,14 @@ public class CoverGame {
 			this.vertex.setCollumn(2);
 			this.vertex.setId(1);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);		
+			this.obrazek.pridej(vertex);
 
 			vertex = new Vertex(945, 478, img2, 3);
 			this.vertex.setRow(3);
 			this.vertex.setCollumn(3);
 			this.vertex.setId(12);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
+			this.obrazek.pridej(vertex);
 
 			vertex = new Vertex(1045, 478, img2, 3);
 			this.vertex.setRow(3);
@@ -776,28 +781,28 @@ public class CoverGame {
 			this.vertex.setCollumn(1);
 			this.vertex.setId(0);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);		
+			this.obrazek.pridej(vertex);
 
 			vertex = new Vertex(945, 478, img2, 3);
 			this.vertex.setRow(3);
 			this.vertex.setCollumn(3);
 			this.vertex.setId(12);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
-			
+			this.obrazek.pridej(vertex);
+
 			vertex = new Vertex(1045, 478, img2, 3);
 			this.vertex.setRow(3);
 			this.vertex.setCollumn(4);
 			this.vertex.setId(13);
 			this.kone.add(vertex);
 			this.obrazek.pridej(vertex);
-			
+
 			vertex = new Vertex(945, 578, img2, 3);
 			this.vertex.setRow(4);
 			this.vertex.setCollumn(3);
 			this.vertex.setId(17);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
+			this.obrazek.pridej(vertex);
 			break;
 		case 8:
 			vertex = new Vertex(945, 278, img2, 3);
@@ -805,14 +810,14 @@ public class CoverGame {
 			this.vertex.setCollumn(3);
 			this.vertex.setId(2);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);		
+			this.obrazek.pridej(vertex);
 
 			vertex = new Vertex(945, 478, img2, 3);
 			this.vertex.setRow(2);
 			this.vertex.setCollumn(1);
 			this.vertex.setId(5);
 			this.kone.add(vertex);
-			this.obrazek.pridej(vertex);	
+			this.obrazek.pridej(vertex);
 
 			vertex = new Vertex(1045, 478, img2, 3);
 			this.vertex.setRow(4);
