@@ -302,12 +302,16 @@ public class MainMenu extends JFrame implements ActionListener {
 
 				result = JOptionPane.showConfirmDialog(null, myPanel, "Velikost šachovnice",
 						JOptionPane.OK_CANCEL_OPTION);
+
+				if (result == 2 || result == -1) {
+					break;
+				}
 				if (warnsdorff && t.getText() != null) {
 					jml = Integer.parseInt(t.getText());
 					if (jml > 0) {
 						if (jml < 5) {
 							JOptionPane.showMessageDialog(this,
-									"Pøíliš malá šachovnice. Na této šachovnici neexistuje jezdcova procházka.",
+									"Pøíliš malá šachovnice, musí být vìtší než 4x4. Na této šachovnici neexistuje jezdcova procházka.",
 									"Chyba", JOptionPane.ERROR_MESSAGE);
 						} else if (jml > 35) {
 							JPanel jPanel = new JPanel();
@@ -331,13 +335,13 @@ public class MainMenu extends JFrame implements ActionListener {
 				} else if (!warnsdorff) {
 					if (c.getSelectedIndex() + 3 < 5 && c1.getSelectedIndex() + 3 < 5) {
 						JOptionPane.showMessageDialog(this,
-								"Pøíliš malá šachovnice. Na této šachovnici neexistuje øešení.", "Chyba",
+								"Pøíliš malá šachovnice, musí být vìtší než 4x4. Na této šachovnici neexistuje øešení.", "Chyba",
 								JOptionPane.ERROR_MESSAGE);
 					} else if ((c.getSelectedIndex() + 3 > 8 && c1.getSelectedIndex() + 3 > 8)
 							|| (c1.getSelectedIndex() + c.getSelectedIndex() + 6 > 16)
 							|| ((c1.getSelectedIndex() + c.getSelectedIndex() + 6 == 16)
 									&& c.getSelectedIndex() - c1.getSelectedIndex() > 4)) {
-						JOptionPane.showMessageDialog(this, "Pøíliš velká šachovnice pro algoritmus Backtracking.",
+						JOptionPane.showMessageDialog(this, "Šachovnice nesmí být vìtší než 8x8 nebo 10x6",
 								"Chyba", JOptionPane.ERROR_MESSAGE);
 					} else if (c.getSelectedIndex() + 3 > 6 && c1.getSelectedIndex() + 3 > 6) {
 						JPanel jPanel = new JPanel();
@@ -441,7 +445,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				} else {
 					mainWindow.openMenu(mainWindow);
 				}
-			} else if (result == 2) {
+			} else if (result == 2 || result == -1) {
 				mainWindow.openMenu(mainWindow);
 			}
 		} else if (e.getSource() == b5) {
@@ -490,7 +494,7 @@ public class MainMenu extends JFrame implements ActionListener {
 							} else {
 								if (jml1 < 5 && jml2 < 5) {
 									JOptionPane.showMessageDialog(this,
-											"Pøíliš malá šachovnice. Na této šachovnici neexistuje øešení.", "Chyba",
+											"Pøíliš malá šachovnice, musí být vìtší než 4x4. Na této šachovnici neexistuje øešení.", "Chyba",
 											JOptionPane.ERROR_MESSAGE);
 								} else if (jml1 > 23 && jml2 > 23) {
 									JPanel jPanel = new JPanel();

@@ -60,11 +60,12 @@ public class GUI {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
 		aboutApp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frame, "CheGra.\n\n\n"
-						+ "Program vytvoøen pro úèely FIM UHK pro den Pí.\nImplementovány hry založené na matematické oblasti teorie grafù."
+						+ "Program vytvoøen pro úèely FIM UHK.\nImplementovány hry založené na matematické oblasti teorie grafù."
 						+ "\nObsahuje popis problému jezdcovy procházky s názornými pøíklady jeho øešení."
 						+ "\n\n\n© 2020 Radim Krátký\nUniverzita Hradec Králové\nFakulta informatiky a managementu\nAplikovaná informatika",
 						"O programu", JOptionPane.INFORMATION_MESSAGE);
