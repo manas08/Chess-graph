@@ -1,1 +1,11 @@
+CheGra
 
+
+Application for searching Hamiltonian path and cycle.
+Implemented by backtracking, Warnsdorffs algorithm and neural network based on Hopfield's architecture
+
+Radim Krátký
+Diploma thesis
+2020
+FIM
+Univerzita Hradec Králové 
